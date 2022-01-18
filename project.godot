@@ -13,14 +13,27 @@ _global_script_classes=[ {
 "class": "GitAPI",
 "language": "NativeScript",
 "path": "res://addons/godot-git-plugin/git_api.gdns"
+}, {
+"base": "Node2D",
+"class": "Island",
+"language": "GDScript",
+"path": "res://src/prefabs/Island.gd"
+}, {
+"base": "Node2D",
+"class": "Ship",
+"language": "GDScript",
+"path": "res://src/prefabs/Ship.gd"
 } ]
 _global_script_class_icons={
-"GitAPI": ""
+"GitAPI": "",
+"Island": "",
+"Ship": ""
 }
 
 [application]
 
 config/name="Currents"
+run/main_scene="res://src/GameScene.tscn"
 config/icon="res://assets/icon.png"
 
 [display]

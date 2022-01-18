@@ -1,34 +1,32 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://assets/island-sheet.png" type="Texture" id=1]
-[ext_resource path="res://src/prefabs/Island.gd" type="Script" id=2]
-[ext_resource path="res://src/prefabs/Ship.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/island-dest-path-arrow.png" type="Texture" id=4]
+[ext_resource path="res://assets/ship-sheet.png" type="Texture" id=1]
+[ext_resource path="res://src/prefabs/Ship.gd" type="Script" id=2]
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
 atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 100, 100 )
+region = Rect2( 0, 0, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=2]
 flags = 4
 atlas = ExtResource( 1 )
-region = Rect2( 100, 0, 100, 100 )
+region = Rect2( 48, 0, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=3]
 flags = 4
 atlas = ExtResource( 1 )
-region = Rect2( 200, 0, 100, 100 )
+region = Rect2( 96, 0, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=4]
 flags = 4
 atlas = ExtResource( 1 )
-region = Rect2( 300, 0, 100, 100 )
+region = Rect2( 144, 0, 48, 48 )
 
 [sub_resource type="AtlasTexture" id=5]
 flags = 4
 atlas = ExtResource( 1 )
-region = Rect2( 400, 0, 100, 100 )
+region = Rect2( 192, 0, 48, 48 )
 
 [sub_resource type="SpriteFrames" id=6]
 animations = [ {
@@ -38,10 +36,8 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="Island" type="Node2D"]
+[node name="Ship" type="Node2D"]
 script = ExtResource( 2 )
-shipPrefab = ExtResource( 3 )
-pathArrowTex = ExtResource( 4 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 6 )
