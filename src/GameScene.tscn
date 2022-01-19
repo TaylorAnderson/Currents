@@ -12,6 +12,14 @@
 
 [node name="GameScene" type="Node2D"]
 
+[node name="GameManager" type="Node2D" parent="."]
+script = ExtResource( 8 )
+playBtnPath = NodePath("../PlayStateBtn")
+editBtnPath = NodePath("../EditStateBtn")
+currentsPath = NodePath("../Currents")
+windsPath = NodePath("../Winds")
+islandPaths = [ NodePath("../Islands/Island"), NodePath("../Islands/Island2"), NodePath("../Islands/Island3"), NodePath("../Islands/Island4") ]
+
 [node name="Bg" type="Sprite" parent="."]
 position = Vector2( 480, 270 )
 texture = ExtResource( 3 )
@@ -20,10 +28,6 @@ texture = ExtResource( 3 )
 radius = 32
 color = Color( 0.168627, 0.560784, 0.839216, 1 )
 arrowTex = ExtResource( 7 )
-
-[node name="Frame" type="Sprite" parent="."]
-position = Vector2( 480, 270 )
-texture = ExtResource( 2 )
 
 [node name="Islands" type="Node2D" parent="."]
 
@@ -52,6 +56,11 @@ color = Color( 0.168627, 0.560784, 0.839216, 0 )
 arrowTex = ExtResource( 9 )
 arrowInterval = 8
 mouseButton = 2
+strength = 0.5
+
+[node name="Frame" type="Sprite" parent="."]
+position = Vector2( 480, 270 )
+texture = ExtResource( 2 )
 
 [node name="EditStateBtn" type="TextureButton" parent="."]
 margin_left = 5.0
@@ -69,10 +78,5 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GameManager" type="Node2D" parent="."]
-script = ExtResource( 8 )
-playBtnPath = NodePath("../PlayStateBtn")
-editBtnPath = NodePath("../EditStateBtn")
-currentsPath = NodePath("../Currents")
-windsPath = NodePath("../Winds")
-islandPaths = [ NodePath("../Islands/Island"), NodePath("../Islands/Island2"), NodePath("../Islands/Island3"), NodePath("../Islands/Island4") ]
+[connection signal="pressed" from="EditStateBtn" to="GameManager" method="onButtonPressed"]
+[connection signal="pressed" from="PlayStateBtn" to="GameManager" method="onButtonPressed"]

@@ -4,6 +4,7 @@ class PathPoint:
 	var vec:Vector2
 	var pos:Vector2
 	var radius:int
+	var strength:float
 
 var isDrawing = false;
 var boundary = 40;
@@ -20,6 +21,8 @@ export(int) var arrowInterval = 5;
 export(int) var mouseButton = 1;
 
 var padRadius = 0;
+
+export(float) var strength = 1;
 
 func _ready() -> void:
 	padRadius = radius/4
@@ -88,6 +91,7 @@ func addPoint():
 	point.pos = currentPoint;
 	point.vec = currentPoint - getLastPoint();
 	point.radius = radius;
+	point.strength = strength;
 	currentPath.append(point);
 
 func getLastPoint(offset = 0):

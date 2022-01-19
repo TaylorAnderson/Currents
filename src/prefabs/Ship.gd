@@ -8,14 +8,16 @@ class_name Ship
 var vel:Vector2 = Vector2(0,0);
 var accel:Vector2 = Vector2(0,0);
 var currentPoint:Vector2;
-var radius = 40
+var radius = 20
 var drag = 0.99
-var accelMax = 0.15;
-var velMax = 2;
+var accelMax = 0.07 # 0.15;
+var velMax = 3 # 2;
 var island
 var setFrame = false;
+var pointVelMultiplier = 0.0005
+
 onready var spr = get_node("AnimatedSprite") as AnimatedSprite;
-# onready var gm:GameManager = get_node("/root/GameScene/GameManager") as GameManager
+onready var gm:GameManager = get_node("/root/GameScene/GameManager") as GameManager
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass;
@@ -28,9 +30,9 @@ func _process(delta: float) -> void:
 	if island != null and not setFrame:
 		setFrame = true;
 		spr.frame = island.dest.img.frame;
-	# for point in gm.allPoints:
-		# if (global_position.distance_to(point.pos) < radius + point.radius):
-			# accel += point.vec;
+	for point in gm.allPoints:
+		if (global_position.distance_to(point.pos) < radius + point.radius):
+			accel += point.vec * point.strength
 	
 	if accel.length() > accelMax:
 		accel = accel.normalized() * accelMax

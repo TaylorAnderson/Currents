@@ -23,7 +23,7 @@ export(NodePath) var destPath;
 var dest:Node2D
 onready var img = get_node("AnimatedSprite") as AnimatedSprite;
 onready var gm:GameManager = get_node("/root/GameScene/GameManager") as GameManager
-var initialShipVel = 0.05;
+var initialShipVel = 0.4;
 var hovered = false;
 var arrowInterval = 20;
 var currentMouse;
@@ -52,14 +52,14 @@ func _draw() -> void:
 				draw_texture(pathArrowTex, Vector2.LEFT * pw/2 + Vector2.UP * ph/2, Color(1, 1, 1, 0.3));
 				draw_set_transform(Vector2.ZERO, 0, Vector2.ONE);
 				pixelsTravelled = 0;
-		
+
 func spawnShip():
 	var destVec = (dest.global_position - global_position).normalized();
 	var ship = shipPrefab.instance() as Ship
 	add_child(ship);
 	gm.ships.append(ship);
 	ship.island = self;
-	ship.z_index = z_index - 1;
+	# ship.z_index = z_index - 1;
 	ship.global_position += destVec * radius;
 	ship.vel = destVec * initialShipVel;
 func _unhandled_input(event: InputEvent) -> void:
