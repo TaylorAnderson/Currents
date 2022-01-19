@@ -7,7 +7,7 @@ class PathPoint:
 	var strength:float
 
 var isDrawing = false;
-var boundary = 40;
+var boundary = 50;
 var paths:Array = []; 
 var currentPath:Array = [];
 var lastPoint:Vector2 = Vector2.ZERO;
@@ -28,8 +28,9 @@ func _ready() -> void:
 	padRadius = radius/4
 
 func _process(_delta: float) -> void:
-	if (Input.is_key_pressed(KEY_R)):
+	if (Input.is_key_pressed(KEY_R) and not disabled):
 		paths = [];
+		update();
 
 func _draw() -> void:
 	

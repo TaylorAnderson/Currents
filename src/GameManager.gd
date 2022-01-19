@@ -26,6 +26,7 @@ export(Array, NodePath) var islandPaths = [];
 var islands = [];
 var ships = [];
 var switchDelay = 0;
+var obstacles = [];
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	playBtn = get_node(playBtnPath) as TextureButton
@@ -69,7 +70,7 @@ func changeState():
 		
 		for isle in islands:
 			# this is temp: later we'd want to turn on ship spawning instead of just direct spawn
-			isle.spawnShip();
+			isle.onPlayModeStart();
 	if state == States.EDIT:
 		winds.disabled = false;
 		currents.disabled = false;
@@ -77,6 +78,9 @@ func changeState():
 			if ship.get_parent():
 				ship.get_parent().remove_child(ship);
 		ships = [];
+		obstacles = [];
+		for isle in islands:
+			isle.onEditModeStart();
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

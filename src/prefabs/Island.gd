@@ -23,15 +23,19 @@ export(NodePath) var destPath;
 var dest:Node2D
 onready var img = get_node("AnimatedSprite") as AnimatedSprite;
 onready var gm:GameManager = get_node("/root/GameScene/GameManager") as GameManager
-var initialShipVel = 0.4;
+onready var winAnim:AnimatedSprite = get_node("WinAnim") as AnimatedSprite;
+var initialShipVel = 0.5;
 var hovered = false;
 var arrowInterval = 20;
 var currentMouse;
+var shipsExpecting = 0;
+var shipsReceived = 0;
 export(Texture) var pathArrowTex:Texture
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	img.frame = colorFrames.find(islandColor);
 	dest = get_node(destPath) as Island;
+	dest.shipsExpecting+=1;
 	
 func _process(_delta: float) -> void:
 	pass;
@@ -69,3 +73,23 @@ func _unhandled_input(event: InputEvent) -> void:
 		else:
 			hovered = false;
 		update();
+		
+func acceptShip():
+	shipsReceived +=1;
+	if shipsReceived == shipsExpecting:
+		playVictory();
+func playVictory():
+	winAnim.play("default");
+
+func onEditModeStart():
+	winAnim.frame = 0;
+	winAnim.visible = false;
+
+func onPlayModeStart():
+	winAnim.frame = 0;
+	winAnim.visible = true;
+	spawnShip()
+	
+func _on_WinAnim_animation_finished() -> void:
+	winAnim.playing = false;
+	winAnim.frame = 13;
