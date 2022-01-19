@@ -22,7 +22,7 @@ var radius = 50;
 export(NodePath) var destPath;
 var dest:Node2D
 onready var img = get_node("AnimatedSprite") as AnimatedSprite;
-# onready var gm:GameManager = get_node("/root/GameScene/GameManager") as GameManager
+onready var gm:GameManager = get_node("/root/GameScene/GameManager") as GameManager
 var initialShipVel = 0.05;
 var hovered = false;
 var arrowInterval = 20;
@@ -57,7 +57,7 @@ func spawnShip():
 	var destVec = (dest.global_position - global_position).normalized();
 	var ship = shipPrefab.instance() as Ship
 	add_child(ship);
-	# gm.ships.append(ship);
+	gm.ships.append(ship);
 	ship.island = self;
 	ship.z_index = z_index - 1;
 	ship.global_position += destVec * radius;

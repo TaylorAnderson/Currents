@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node2D",
+"class": "GameManager",
+"language": "GDScript",
+"path": "res://src/GameManager.gd"
+}, {
 "base": "",
 "class": "GitAPI",
 "language": "NativeScript",
@@ -25,6 +30,7 @@ _global_script_classes=[ {
 "path": "res://src/prefabs/Ship.gd"
 } ]
 _global_script_class_icons={
+"GameManager": "",
 "GitAPI": "",
 "Island": "",
 "Ship": ""
@@ -35,6 +41,10 @@ _global_script_class_icons={
 config/name="Currents"
 run/main_scene="res://src/GameScene.tscn"
 config/icon="res://assets/icon.png"
+
+[autoload]
+
+Global="*res://src/Global.gd"
 
 [display]
 
