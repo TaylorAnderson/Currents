@@ -34,6 +34,7 @@ var completed = false;
 export(Texture) var pathArrowTex:Texture
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	z_index = Math.getZIndex(global_position.y);
 	img.frame = colorFrames.find(islandColor);
 	dest = get_node(destPath) as Island;
 	if dest:
@@ -62,11 +63,10 @@ func _draw() -> void:
 func spawnShip():
 	var destVec = (dest.global_position - global_position).normalized();
 	var ship = shipPrefab.instance() as Ship
-	add_child(ship);
+	get_parent().add_child(ship);
 	gm.ships.append(ship);
 	ship.island = self;
-	# ship.z_index = z_index - 1;
-	ship.global_position += destVec * radius;
+	ship.global_position = global_position + destVec * radius;
 	ship.vel = destVec * initialShipVel;
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:

@@ -24,10 +24,20 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/prefabs/Island.gd"
 }, {
+"base": "Node",
+"class": "Math",
+"language": "GDScript",
+"path": "res://src/Math.gd"
+}, {
 "base": "Node2D",
 "class": "Obstacle",
 "language": "GDScript",
 "path": "res://src/Obstacle.gd"
+}, {
+"base": "Node2D",
+"class": "PathEditor",
+"language": "GDScript",
+"path": "res://src/prefabs/PathEditor.gd"
 }, {
 "base": "Node2D",
 "class": "Ship",
@@ -43,7 +53,9 @@ _global_script_class_icons={
 "GameManager": "",
 "GitAPI": "",
 "Island": "",
+"Math": "",
 "Obstacle": "",
+"PathEditor": "",
 "Ship": "",
 "Whirlpool": ""
 }

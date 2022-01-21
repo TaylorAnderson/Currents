@@ -1,4 +1,5 @@
 extends Node2D
+class_name PathEditor
 
 class PathPoint: 
 	var vec:Vector2
@@ -102,6 +103,7 @@ func addPoint():
 func getLastPoint(offset = 0):
 	if currentPath.size() == 0: return currentPoint;
 	return currentPath[currentPath.size()-1 + offset].pos;
+
 func deletePathOverMouse(position:Vector2):
 	for i in range(paths.size()):
 		var path = paths[i];
@@ -113,9 +115,24 @@ func deletePathOverMouse(position:Vector2):
 		if deletingPath:
 			paths.remove(i);
 			break;
+
 func getPoints():
 	var pointArr = [];
 	for path in paths:
 		for point in path:
 			pointArr.append(point);
 	return pointArr;
+	
+func getJson():
+	var objPoints = [];
+	for path in paths:
+		var pathPointArr = [];
+		for point in path:
+			pathPointArr.append({
+				"vec": {"x": point.vec.x, "y": point.vec.y},
+				"pos": {"x": point.pos.x, "y": point.pos.y},
+				"radius": point.radius,
+				"strength": point.strength
+			})
+		objPoints.append(pathPointArr);
+	return objPoints;

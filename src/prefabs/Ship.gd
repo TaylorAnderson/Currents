@@ -22,7 +22,7 @@ onready var gm:GameManager = get_node("/root/GameScene/GameManager") as GameMana
 var dead = false;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass;
+	z_as_relative = false
 	
 func _draw() -> void:
 	pass;
@@ -48,7 +48,8 @@ func _process(delta: float) -> void:
 			vel = vel.normalized() * velMax 
 		accel = Vector2.ZERO;
 		global_position += vel;
-		
+	
+		z_index = Math.getZIndex(global_position.y);
 		for ship in gm.ships:
 			if (global_position.distance_to(ship.global_position) < radius + ship.radius) and ship != self and not ship.dead:
 				explode();
@@ -58,8 +59,10 @@ func _process(delta: float) -> void:
 				if obstacle.collides(self):
 					explode();
 			if obstacle is Whirlpool:
-				if (global_position.distance_to(obstacle.global_position) < ship.radius + obstacle.radius):
-					
+				if (global_position.distance_to(obstacle.global_position) < radius + obstacle.radius):
+					var whirlpoolCenter = obstacle.global_position + Vector2.DOWN * obstacle.offsetY
+					var velToCenter = (whirlpoolCenter - global_position).normalized();
+					vel += velToCenter * 0.1;
 		
 		if island:
 			if global_position.distance_to(island.dest.global_position) < radius + island.dest.radius:

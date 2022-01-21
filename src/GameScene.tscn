@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://src/LevelManager.gd" type="Script" id=1]
 [ext_resource path="res://assets/frame.png" type="Texture" id=2]
@@ -9,12 +9,16 @@
 [ext_resource path="res://assets/current-arrow.png" type="Texture" id=7]
 [ext_resource path="res://src/GameManager.gd" type="Script" id=8]
 [ext_resource path="res://assets/wind-arrow.png" type="Texture" id=9]
-[ext_resource path="res://src/prefabs/Levels/Level1.tscn" type="PackedScene" id=10]
-[ext_resource path="res://src/prefabs/Levels/Level2.tscn" type="PackedScene" id=11]
+[ext_resource path="res://src/prefabs/Levels/Intro.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/prefabs/Levels/RockIntro.tscn" type="PackedScene" id=11]
 [ext_resource path="res://assets/nextLevelBtn.png" type="Texture" id=12]
 [ext_resource path="res://assets/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=13]
-[ext_resource path="res://src/prefabs/Levels/Level4.tscn" type="PackedScene" id=14]
+[ext_resource path="res://src/prefabs/Levels/WhirlpoolIntro.tscn" type="PackedScene" id=14]
 [ext_resource path="res://assets/roundedRect.png" type="Texture" id=15]
+[ext_resource path="res://src/prefabs/Levels/RockChallenge.tscn" type="PackedScene" id=16]
+[ext_resource path="res://assets/saveBtn.png" type="Texture" id=17]
+[ext_resource path="res://src/prefabs/Levels/PermaCurrentIntro.tscn" type="PackedScene" id=18]
+[ext_resource path="res://src/prefabs/PermanentPath.tscn" type="PackedScene" id=19]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -22,25 +26,47 @@ font_data = ExtResource( 13 )
 
 [node name="GameScene" type="Node2D"]
 
+[node name="fd" type="CanvasLayer" parent="."]
+
+[node name="FileDialog" type="FileDialog" parent="fd"]
+margin_left = 102.0
+margin_top = 72.0
+margin_right = 846.0
+margin_bottom = 479.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="LevelManager" type="Node2D" parent="."]
 position = Vector2( -1, 0 )
 script = ExtResource( 1 )
-levels = [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 14 ) ]
+levels = [ ExtResource( 18 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 16 ), ExtResource( 14 ) ]
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource( 8 )
-playBtnPath = NodePath("../PlayStateBtn")
-editBtnPath = NodePath("../EditStateBtn")
-nextLevelBtnPath = NodePath("../NextLevelBtn")
+playBtnPath = NodePath("../Buttons/PlayStateBtn")
+editBtnPath = NodePath("../Buttons/EditStateBtn")
+nextLevelBtnPath = NodePath("../Buttons/NextLevelBtn")
 currentsPath = NodePath("../Currents")
 windsPath = NodePath("../Winds")
+permCurrentsPath = NodePath("../PermanentCurrents")
+permWindPath = NodePath("../PermanentWind")
 levelCompleteMenuPath = NodePath("../levelComplete")
 
 [node name="Bg" type="Sprite" parent="."]
 position = Vector2( 480, 270 )
+z_index = -100
 texture = ExtResource( 3 )
 
+[node name="PermanentCurrents" parent="." instance=ExtResource( 19 )]
+radius = 32
+color = Color( 0.113725, 0.423529, 0.639216, 1 )
+arrowTex = ExtResource( 7 )
+pathType = "current"
+
 [node name="Currents" parent="." instance=ExtResource( 6 )]
+z_index = -50
+z_as_relative = false
 radius = 32
 color = Color( 0.168627, 0.560784, 0.839216, 1 )
 arrowTex = ExtResource( 7 )
@@ -48,6 +74,8 @@ arrowTex = ExtResource( 7 )
 [node name="Level" type="Node2D" parent="."]
 
 [node name="Winds" parent="." instance=ExtResource( 6 )]
+z_index = 99
+z_as_relative = false
 radius = 24
 color = Color( 0.168627, 0.560784, 0.839216, 0 )
 arrowTex = ExtResource( 9 )
@@ -55,11 +83,31 @@ arrowInterval = 8
 mouseButton = 2
 strength = 0.75
 
+[node name="PermanentWind" parent="." instance=ExtResource( 19 )]
+radius = 24
+color = Color( 1, 0, 0, 0 )
+arrowTex = ExtResource( 9 )
+pathType = "wind"
+
 [node name="Frame" type="Sprite" parent="."]
 position = Vector2( 480, 270 )
+z_index = 100
 texture = ExtResource( 2 )
 
-[node name="EditStateBtn" type="TextureButton" parent="."]
+[node name="Buttons" type="Node2D" parent="."]
+z_index = 101
+
+[node name="SaveBtn" type="TextureButton" parent="Buttons"]
+margin_left = 843.0
+margin_right = 959.0
+margin_bottom = 75.0
+rect_pivot_offset = Vector2( 0, -311 )
+texture_normal = ExtResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EditStateBtn" type="TextureButton" parent="Buttons"]
 margin_left = 5.0
 margin_top = 460.0
 margin_right = 121.0
@@ -70,15 +118,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayStateBtn" type="TextureButton" parent="."]
+[node name="PlayStateBtn" type="TextureButton" parent="Buttons"]
 margin_left = 5.0
 margin_top = 460.0
+margin_right = 121.0
+margin_bottom = 535.0
 texture_normal = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NextLevelBtn" type="TextureButton" parent="."]
+[node name="NextLevelBtn" type="TextureButton" parent="Buttons"]
 visible = false
 margin_left = 728.0
 margin_top = 460.0
@@ -92,6 +142,7 @@ __meta__ = {
 [node name="levelComplete" type="Node2D" parent="."]
 visible = false
 position = Vector2( 456, 214 )
+z_index = 101
 
 [node name="bg" type="NinePatchRect" parent="levelComplete"]
 self_modulate = Color( 0, 0, 0, 0.290196 )
@@ -156,8 +207,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="pressed" from="EditStateBtn" to="GameManager" method="onButtonPressed"]
-[connection signal="pressed" from="PlayStateBtn" to="GameManager" method="onButtonPressed"]
-[connection signal="pressed" from="NextLevelBtn" to="GameManager" method="_on_NextLevelBtn_pressed"]
+[connection signal="file_selected" from="fd/FileDialog" to="GameManager" method="onFileSelected"]
+[connection signal="pressed" from="Buttons/SaveBtn" to="GameManager" method="onSavePressed"]
+[connection signal="pressed" from="Buttons/EditStateBtn" to="GameManager" method="onButtonPressed"]
+[connection signal="pressed" from="Buttons/PlayStateBtn" to="GameManager" method="onButtonPressed"]
+[connection signal="pressed" from="Buttons/NextLevelBtn" to="GameManager" method="_on_NextLevelBtn_pressed"]
 [connection signal="pressed" from="levelComplete/nextLevelBtn" to="GameManager" method="_on_NextLevelBtn_pressed"]
 [connection signal="pressed" from="levelComplete/editBtn" to="GameManager" method="onButtonPressed"]

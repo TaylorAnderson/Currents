@@ -15,8 +15,14 @@ export(NodePath) var nextLevelBtnPath;
 export(NodePath) var currentsPath
 export(NodePath) var windsPath
 
+export(NodePath) var permCurrentsPath;
+export(NodePath) var permWindPath;
+
 var currents
 var winds
+
+var permCurrents;
+var permWinds;
 
 var playBtn:TextureButton;
 var editBtn:TextureButton;
@@ -33,6 +39,8 @@ var levelComplete = false;
 export(NodePath) var levelCompleteMenuPath;
 var levelCompleteMenu:Node2D
 onready var levelManager = get_node("/root/GameScene/LevelManager");
+onready var fileDialog:FileDialog = get_node("/root/GameScene/fd/FileDialog")
+var jsonToSave;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:	
 	levelCompleteMenu = get_node(levelCompleteMenuPath) as Node2D;
@@ -42,6 +50,9 @@ func _ready() -> void:
 	
 	currents = get_node(currentsPath);
 	winds = get_node(windsPath);
+	
+	permCurrents = get_node(permCurrentsPath);
+	permWinds = get_node(permWindPath);
 	
 	goToNextLevel();
 func _process(delta: float) -> void:
@@ -104,10 +115,18 @@ func showLevelCompleteMenu():
 func goToNextLevel():
 	currents.clear();
 	winds.clear();
+	permCurrents.clear();
+	permWinds.clear();
 	levelComplete = false;
 	levelManager.loadNextLevel();
 	islands = levelManager.currentLevel.get_node("Islands").get_children()
 	obstacles = levelManager.currentLevel.get_node("Obstacles").get_children();
+	
+	var permPathConfig = levelManager.currentLevel.get_node("PermanentPathConfig")
+	if (permPathConfig and permPathConfig.configJson.length() > 0):
+		permCurrents.loadJson(permPathConfig.configJson);
+		permWinds.loadJson(permPathConfig.configJson);
+
 	if (state == States.PLAY):
 		state = States.EDIT;
 		changeState();
@@ -115,9 +134,25 @@ func goToNextLevel():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:
 #	pass
-
-
 func _on_NextLevelBtn_pressed() -> void:
 	goToNextLevel();
 	levelCompleteMenu.visible = false;
 
+
+
+func onSavePressed() -> void:
+	saveJson();
+
+func saveJson():
+	var obj = {}
+	obj["current"] = currents.getJson();
+	obj["wind"] = winds.getJson();
+	jsonToSave = to_json(obj);
+	fileDialog.popup();
+
+
+func onFileSelected(path: String) -> void:
+	var file = File.new();
+	file.open(path, File.WRITE);
+	file.store_string(jsonToSave);
+	file.close();
