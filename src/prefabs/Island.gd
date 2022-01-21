@@ -30,19 +30,21 @@ var arrowInterval = 20;
 var currentMouse;
 var shipsExpecting = 0;
 var shipsReceived = 0;
+var completed = false;
 export(Texture) var pathArrowTex:Texture
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	img.frame = colorFrames.find(islandColor);
 	dest = get_node(destPath) as Island;
-	dest.shipsExpecting+=1;
+	if dest:
+		dest.shipsExpecting+=1;
 	
 func _process(_delta: float) -> void:
 	pass;
 	# if dest.dest:
 		# if (dest.dest == self): arrowInterval = 30;
 func _draw() -> void:
-	if hovered:
+	if hovered and dest:
 		var currentPos = Vector2.DOWN * 10;
 		var pixelsTravelled = 0;
 		var vec = ((dest.global_position + Vector2.DOWN * 10) - (global_position + Vector2.DOWN * 10)) as Vector2
@@ -75,21 +77,29 @@ func _unhandled_input(event: InputEvent) -> void:
 		update();
 		
 func acceptShip():
+	winAnim.play("ship_add");
 	shipsReceived +=1;
 	if shipsReceived == shipsExpecting:
 		playVictory();
+
 func playVictory():
-	winAnim.play("default");
+	completed = true;
+	winAnim.play("all_ships_added");
 
 func onEditModeStart():
 	winAnim.frame = 0;
 	winAnim.visible = false;
 
 func onPlayModeStart():
+	if shipsExpecting == 0:
+		completed = true;
+	shipsReceived = 0;
 	winAnim.frame = 0;
 	winAnim.visible = true;
-	spawnShip()
+	if dest: spawnShip()
 	
 func _on_WinAnim_animation_finished() -> void:
+	if completed:
+		gm.checkLevelComplete();
 	winAnim.playing = false;
 	winAnim.frame = 13;

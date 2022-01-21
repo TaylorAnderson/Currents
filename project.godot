@@ -25,15 +25,27 @@ _global_script_classes=[ {
 "path": "res://src/prefabs/Island.gd"
 }, {
 "base": "Node2D",
+"class": "Obstacle",
+"language": "GDScript",
+"path": "res://src/Obstacle.gd"
+}, {
+"base": "Node2D",
 "class": "Ship",
 "language": "GDScript",
 "path": "res://src/prefabs/Ship.gd"
+}, {
+"base": "Node2D",
+"class": "Whirlpool",
+"language": "GDScript",
+"path": "res://src/prefabs/Whirlpool.gd"
 } ]
 _global_script_class_icons={
 "GameManager": "",
 "GitAPI": "",
 "Island": "",
-"Ship": ""
+"Obstacle": "",
+"Ship": "",
+"Whirlpool": ""
 }
 
 [application]

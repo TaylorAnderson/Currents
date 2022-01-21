@@ -1,8 +1,42 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://assets/ship-sheet.png" type="Texture" id=1]
 [ext_resource path="res://src/prefabs/Ship.gd" type="Script" id=2]
 [ext_resource path="res://assets/ship-destroy-anim.png" type="Texture" id=3]
+[ext_resource path="res://assets/shipwreck-sheet.png" type="Texture" id=4]
+
+[sub_resource type="AtlasTexture" id=20]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=21]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 48, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=22]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 96, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=23]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 144, 0, 48, 48 )
+
+[sub_resource type="AtlasTexture" id=24]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 192, 0, 48, 48 )
+
+[sub_resource type="SpriteFrames" id=25]
+animations = [ {
+"frames": [ SubResource( 20 ), SubResource( 21 ), SubResource( 22 ), SubResource( 23 ), SubResource( 24 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
@@ -36,16 +70,6 @@ animations = [ {
 "name": "default",
 "speed": 5.0
 } ]
-
-[sub_resource type="AtlasTexture" id=7]
-flags = 4
-atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 180, 180 )
-
-[sub_resource type="AtlasTexture" id=8]
-flags = 4
-atlas = ExtResource( 3 )
-region = Rect2( 180, 0, 180, 180 )
 
 [sub_resource type="AtlasTexture" id=9]
 flags = 4
@@ -87,19 +111,9 @@ flags = 4
 atlas = ExtResource( 3 )
 region = Rect2( 180, 360, 180, 180 )
 
-[sub_resource type="AtlasTexture" id=17]
-flags = 4
-atlas = ExtResource( 3 )
-region = Rect2( 360, 360, 180, 180 )
-
-[sub_resource type="AtlasTexture" id=18]
-flags = 4
-atlas = ExtResource( 3 )
-region = Rect2( 540, 360, 180, 180 )
-
 [sub_resource type="SpriteFrames" id=19]
 animations = [ {
-"frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
@@ -108,7 +122,11 @@ animations = [ {
 [node name="Ship" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="DeadSprite" type="AnimatedSprite" parent="."]
+visible = false
+frames = SubResource( 25 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 6 )
 
 [node name="Explosion" type="AnimatedSprite" parent="."]

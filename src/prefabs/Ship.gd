@@ -10,12 +10,13 @@ var accel:Vector2 = Vector2(0,0);
 var currentPoint:Vector2;
 var radius = 20
 var drag = 0.99
-var accelMax = 0.09 # 0.15;
+var accelMax = 0.11 # 0.15;
 var velMax = 3 # 2;
 var island
 var setFrame = false;
-
-onready var spr = get_node("AnimatedSprite") as AnimatedSprite;
+var toBeKilled = false;
+onready var spr = get_node("Sprite") as AnimatedSprite;
+onready var deadSpr = get_node("DeadSprite") as AnimatedSprite;
 onready var explosion = get_node("Explosion") as AnimatedSprite;
 onready var gm:GameManager = get_node("/root/GameScene/GameManager") as GameManager
 var dead = false;
@@ -28,9 +29,11 @@ func _draw() -> void:
 	# at some point we'll make a water trail here
 	
 func _process(delta: float) -> void:
+	if toBeKilled: dead = true;
 	if island != null and not setFrame:
 		setFrame = true;
 		spr.frame = island.dest.img.frame;
+		deadSpr.frame = island.dest.img.frame;
 		
 	if not dead:
 		for point in gm.allPoints:
@@ -49,6 +52,14 @@ func _process(delta: float) -> void:
 		for ship in gm.ships:
 			if (global_position.distance_to(ship.global_position) < radius + ship.radius) and ship != self and not ship.dead:
 				explode();
+				
+		for obstacle in gm.obstacles:
+			if obstacle is Obstacle:
+				if obstacle.collides(self):
+					explode();
+			if obstacle is Whirlpool:
+				if (global_position.distance_to(obstacle.global_position) < ship.radius + obstacle.radius):
+					
 		
 		if island:
 			if global_position.distance_to(island.dest.global_position) < radius + island.dest.radius:
@@ -56,8 +67,10 @@ func _process(delta: float) -> void:
 				get_parent().remove_child(self);
 		
 func explode():
-	dead = true;
+	toBeKilled = true;
+	
 	spr.visible = false;
+	deadSpr.visible = true;
 	explosion.play();
 	explosion.visible = true;
 

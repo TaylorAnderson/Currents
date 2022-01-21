@@ -31,6 +31,10 @@ func _process(_delta: float) -> void:
 	if (Input.is_key_pressed(KEY_R) and not disabled):
 		paths = [];
 		update();
+func clear():
+	paths = [];
+	currentPath = [];
+	update();
 
 func _draw() -> void:
 	

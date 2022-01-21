@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/nextLevelBtn.png" type="Texture" id=2]
+[ext_resource path="res://assets/editBtn.png" type="Texture" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 40
+font_data = ExtResource( 1 )
+
+[node name="Level Complete" type="Node2D"]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = -169.0
+margin_top = -66.0
+margin_right = 205.0
+margin_bottom = 10.0
+custom_fonts/normal_font = SubResource( 1 )
+text = "level complete!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton2" type="TextureButton" parent="."]
+margin_left = -115.0
+margin_top = 11.0
+margin_right = 110.0
+margin_bottom = 86.0
+texture_normal = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="."]
+margin_left = -54.0
+margin_top = 96.0
+margin_right = 62.0
+margin_bottom = 171.0
+texture_normal = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
