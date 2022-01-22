@@ -39,8 +39,7 @@ var levelComplete = false;
 export(NodePath) var levelCompleteMenuPath;
 var levelCompleteMenu:Node2D
 onready var levelManager = get_node("/root/GameScene/LevelManager");
-onready var fileDialog:FileDialog = get_node("/root/GameScene/fd/FileDialog")
-var jsonToSave;
+var permanentPathRootPath:String = "res://src/prefabs/Levels/Permanent Paths/"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:	
 	levelCompleteMenu = get_node(levelCompleteMenuPath) as Node2D;
@@ -123,11 +122,10 @@ func goToNextLevel():
 	levelManager.loadNextLevel();
 	islands = levelManager.currentLevel.get_node("Islands").get_children()
 	obstacles = levelManager.currentLevel.get_node("Obstacles").get_children();
-	
-	var permPathConfig = levelManager.currentLevel.get_node("PermanentPathConfig")
-	if (permPathConfig and permPathConfig.configJson.length() > 0):
-		permCurrents.loadJson(permPathConfig.configJson);
-		permWinds.loadJson(permPathConfig.configJson);
+
+	var path = permanentPathRootPath + (levelManager.currentLevel.name)
+	permCurrents.loadJson(path);
+	permWinds.loadJson(path);
 
 	if (state == States.PLAY):
 		state = States.EDIT;
@@ -149,12 +147,11 @@ func saveJson():
 	var obj = {}
 	obj["current"] = currents.getJson();
 	obj["wind"] = winds.getJson();
-	jsonToSave = to_json(obj);
-	fileDialog.popup();
-
-
-func onFileSelected(path: String) -> void:
+	var jsonToSave = to_json(obj);
+	var path = permanentPathRootPath + (levelManager.currentLevel as Node2D).name
 	var file = File.new();
 	file.open(path, File.WRITE);
 	file.store_string(jsonToSave);
 	file.close();
+
+

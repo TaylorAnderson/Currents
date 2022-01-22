@@ -22,7 +22,7 @@ onready var gm:GameManager = get_node("/root/GameScene/GameManager") as GameMana
 var dead = false;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	z_as_relative = false
+	z_as_relative = false;
 	
 func _draw() -> void:
 	pass;

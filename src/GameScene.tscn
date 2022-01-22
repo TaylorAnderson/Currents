@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://src/LevelManager.gd" type="Script" id=1]
 [ext_resource path="res://assets/frame.png" type="Texture" id=2]
@@ -19,28 +19,22 @@
 [ext_resource path="res://assets/saveBtn.png" type="Texture" id=17]
 [ext_resource path="res://src/prefabs/Levels/PermaCurrentIntro.tscn" type="PackedScene" id=18]
 [ext_resource path="res://src/prefabs/PermanentPath.tscn" type="PackedScene" id=19]
+[ext_resource path="res://src/prefabs/Levels/PermaWindIntro.tscn" type="PackedScene" id=20]
+[ext_resource path="res://assets/perm-wind-arrow.png" type="Texture" id=21]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
 font_data = ExtResource( 13 )
 
 [node name="GameScene" type="Node2D"]
-
-[node name="fd" type="CanvasLayer" parent="."]
-
-[node name="FileDialog" type="FileDialog" parent="fd"]
-margin_left = 102.0
-margin_top = 72.0
-margin_right = 846.0
-margin_bottom = 479.0
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_horizontal_guides_": [  ]
 }
 
 [node name="LevelManager" type="Node2D" parent="."]
 position = Vector2( -1, 0 )
 script = ExtResource( 1 )
-levels = [ ExtResource( 14 ), ExtResource( 18 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 16 ) ]
+levels = [ ExtResource( 18 ), ExtResource( 20 ), ExtResource( 14 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 16 ) ]
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource( 8 )
@@ -90,7 +84,8 @@ z_index = 99
 z_as_relative = false
 radius = 24
 color = Color( 1, 0, 0, 0 )
-arrowTex = ExtResource( 9 )
+arrowTex = ExtResource( 21 )
+arrowInterval = 10
 pathType = "wind"
 
 [node name="Frame" type="Sprite" parent="."]
@@ -149,7 +144,7 @@ position = Vector2( 456, 214 )
 z_index = 101
 
 [node name="bg" type="NinePatchRect" parent="levelComplete"]
-self_modulate = Color( 0, 0, 0, 0.290196 )
+self_modulate = Color( 0, 0, 0, 0.298039 )
 margin_left = -200.0
 margin_top = -87.0
 margin_right = 215.0
@@ -211,7 +206,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="file_selected" from="fd/FileDialog" to="GameManager" method="onFileSelected"]
 [connection signal="pressed" from="Buttons/SaveBtn" to="GameManager" method="onSavePressed"]
 [connection signal="pressed" from="Buttons/EditStateBtn" to="GameManager" method="onButtonPressed"]
 [connection signal="pressed" from="Buttons/PlayStateBtn" to="GameManager" method="onButtonPressed"]
