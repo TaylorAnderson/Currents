@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://src/LevelManager.gd" type="Script" id=1]
 [ext_resource path="res://assets/frame.png" type="Texture" id=2]
@@ -22,6 +22,7 @@
 [ext_resource path="res://src/prefabs/Levels/PermaWindIntro.tscn" type="PackedScene" id=20]
 [ext_resource path="res://assets/perm-wind-arrow.png" type="Texture" id=21]
 [ext_resource path="res://src/prefabs/Levels/ManyWhirlpools.tscn" type="PackedScene" id=22]
+[ext_resource path="res://assets/deleteBtn.png" type="Texture" id=23]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -35,7 +36,7 @@ __meta__ = {
 [node name="LevelManager" type="Node2D" parent="."]
 position = Vector2( -1, 0 )
 script = ExtResource( 1 )
-levels = [ ExtResource( 22 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 14 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 16 ) ]
+levels = [ ExtResource( 18 ), ExtResource( 16 ), ExtResource( 22 ), ExtResource( 20 ), ExtResource( 14 ), ExtResource( 10 ), ExtResource( 11 ) ]
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource( 8 )
@@ -103,6 +104,17 @@ margin_right = 959.0
 margin_bottom = 75.0
 rect_pivot_offset = Vector2( 0, -311 )
 texture_normal = ExtResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DeleteBtn" type="TextureButton" parent="Buttons"]
+margin_left = 3.0
+margin_top = 2.0
+margin_right = 143.0
+margin_bottom = 77.0
+rect_pivot_offset = Vector2( 0, -311 )
+texture_normal = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -208,6 +220,7 @@ __meta__ = {
 }
 
 [connection signal="pressed" from="Buttons/SaveBtn" to="GameManager" method="onSavePressed"]
+[connection signal="pressed" from="Buttons/DeleteBtn" to="GameManager" method="_on_DeleteBtn_pressed"]
 [connection signal="pressed" from="Buttons/EditStateBtn" to="GameManager" method="onButtonPressed"]
 [connection signal="pressed" from="Buttons/PlayStateBtn" to="GameManager" method="onButtonPressed"]
 [connection signal="pressed" from="Buttons/NextLevelBtn" to="GameManager" method="_on_NextLevelBtn_pressed"]

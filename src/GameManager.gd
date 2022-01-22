@@ -143,6 +143,10 @@ func _on_NextLevelBtn_pressed() -> void:
 func onSavePressed() -> void:
 	saveJson();
 
+func _on_DeleteBtn_pressed() -> void:
+	deleteJson();
+
+
 func saveJson():
 	var obj = {}
 	obj["current"] = currents.getJson();
@@ -153,5 +157,6 @@ func saveJson():
 	file.open(path, File.WRITE);
 	file.store_string(jsonToSave);
 	file.close();
-
-
+func deleteJson():
+	var dir = Directory.new();
+	dir.remove(permanentPathRootPath + (levelManager.currentLevel as Node2D).name)

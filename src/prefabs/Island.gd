@@ -87,6 +87,7 @@ func playVictory():
 	winAnim.play("all_ships_added");
 
 func onEditModeStart():
+	completed = false;
 	winAnim.frame = 0;
 	winAnim.visible = false;
 

@@ -15,7 +15,7 @@ texture = ExtResource( 6 )
 [node name="Islands" type="Node2D" parent="."]
 
 [node name="Island" parent="Islands" instance=ExtResource( 3 )]
-position = Vector2( 226, 358 )
+position = Vector2( 198, 361 )
 islandColor = 3
 destPath = NodePath("../Island2")
 
@@ -27,10 +27,10 @@ destPath = NodePath("../Island")
 [node name="Obstacles" type="Node2D" parent="."]
 
 [node name="Whirlpool1" parent="Obstacles" instance=ExtResource( 1 )]
-position = Vector2( 350, 167 )
+position = Vector2( 297, 165 )
 
 [node name="Whirlpool2" parent="Obstacles" instance=ExtResource( 1 )]
-position = Vector2( 521, 361 )
+position = Vector2( 487, 362 )
 
 [node name="Whirlpool3" parent="Obstacles" instance=ExtResource( 1 )]
 position = Vector2( 674, 181 )
