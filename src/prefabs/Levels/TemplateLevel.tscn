@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://src/prefabs/Levels/Metadata.gd" type="Script" id=2]
+[ext_resource path="res://src/Metadata.gd" type="Script" id=2]
 [ext_resource path="res://assets/frame.png" type="Texture" id=5]
 [ext_resource path="res://assets/bg.png" type="Texture" id=6]
 

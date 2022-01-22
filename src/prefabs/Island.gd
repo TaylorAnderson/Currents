@@ -34,7 +34,6 @@ var completed = false;
 export(Texture) var pathArrowTex:Texture
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	islandColor = IslandColors.BLUE
 	z_index = Math.getZIndex(global_position.y);
 	img.frame = colorFrames.find(islandColor);
 	dest = get_node(destPath) as Island;

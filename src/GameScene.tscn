@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://src/LevelManager.gd" type="Script" id=1]
 [ext_resource path="res://assets/frame.png" type="Texture" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://src/prefabs/PermanentPath.tscn" type="PackedScene" id=19]
 [ext_resource path="res://src/prefabs/Levels/PermaWindIntro.tscn" type="PackedScene" id=20]
 [ext_resource path="res://assets/perm-wind-arrow.png" type="Texture" id=21]
+[ext_resource path="res://src/prefabs/Levels/ManyWhirlpools.tscn" type="PackedScene" id=22]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -34,7 +35,7 @@ __meta__ = {
 [node name="LevelManager" type="Node2D" parent="."]
 position = Vector2( -1, 0 )
 script = ExtResource( 1 )
-levels = [ ExtResource( 18 ), ExtResource( 20 ), ExtResource( 14 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 16 ) ]
+levels = [ ExtResource( 22 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 14 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 16 ) ]
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource( 8 )
