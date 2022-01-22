@@ -83,6 +83,8 @@ func changeState():
 		allPoints = [];
 		allPoints.append_array(currents.getPoints());
 		allPoints.append_array(winds.getPoints());
+		allPoints.append_array(permCurrents.getPoints());
+		allPoints.append_array(permWinds.getPoints())
 		winds.disabled = true;
 		currents.disabled = true;
 

@@ -47,7 +47,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Whirlpool",
 "language": "GDScript",
-"path": "res://src/prefabs/Whirlpool.gd"
+"path": "res://src/prefabs/Obstacles/Whirlpool.gd"
 } ]
 _global_script_class_icons={
 "GameManager": "",

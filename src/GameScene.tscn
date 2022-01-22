@@ -40,7 +40,7 @@ __meta__ = {
 [node name="LevelManager" type="Node2D" parent="."]
 position = Vector2( -1, 0 )
 script = ExtResource( 1 )
-levels = [ ExtResource( 18 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 16 ), ExtResource( 14 ) ]
+levels = [ ExtResource( 14 ), ExtResource( 18 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 16 ) ]
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource( 8 )
@@ -59,6 +59,8 @@ z_index = -100
 texture = ExtResource( 3 )
 
 [node name="PermanentCurrents" parent="." instance=ExtResource( 19 )]
+z_index = -51
+z_as_relative = false
 radius = 32
 color = Color( 0.113725, 0.423529, 0.639216, 1 )
 arrowTex = ExtResource( 7 )
@@ -74,7 +76,7 @@ arrowTex = ExtResource( 7 )
 [node name="Level" type="Node2D" parent="."]
 
 [node name="Winds" parent="." instance=ExtResource( 6 )]
-z_index = 99
+z_index = 98
 z_as_relative = false
 radius = 24
 color = Color( 0.168627, 0.560784, 0.839216, 0 )
@@ -84,6 +86,8 @@ mouseButton = 2
 strength = 0.75
 
 [node name="PermanentWind" parent="." instance=ExtResource( 19 )]
+z_index = 99
+z_as_relative = false
 radius = 24
 color = Color( 1, 0, 0, 0 )
 arrowTex = ExtResource( 9 )
