@@ -15,6 +15,8 @@ var lastPoint:Vector2 = Vector2.ZERO;
 var currentPoint:Vector2 = Vector2.ZERO;
 var disabled = false;
 
+export(String, "current", "wind") var type:String
+
 export(int) var radius = 0;
 export(Color) var color = Color.red;
 export(Texture) var arrowTex:Texture;
@@ -25,6 +27,10 @@ var padRadius = 0;
 
 export(float) var strength = 1;
 
+onready var currentSnd = get_node("CurrentPlaceSnd")
+onready var windSnd = get_node("WindPlaceSnd");
+var soundInterval = 7;
+var soundCounter = 0;
 func _ready() -> void:
 	padRadius = radius/4
 
@@ -93,6 +99,14 @@ func isOnBoundary(pos:Vector2):
 	return pos.x < boundary or pos.x > Global.width - boundary or pos.y < boundary or pos.y > Global.height - boundary
 
 func addPoint():
+	soundCounter+=1;
+	if soundCounter > soundInterval:
+		if (type == "current"):
+			currentSnd.play();
+		else:
+			windSnd.play();
+		soundCounter = 0;
+
 	var point = PathPoint.new();
 	point.pos = currentPoint;
 	point.vec = currentPoint - getLastPoint();

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/potential-ship-got-to-dest.wav-8e2c4020d0c5079a7f783f381eaad784.sample"
+
+[deps]
+
+source_file="res://assets/sounds/potential-ship-got-to-dest.wav"
+dest_files=[ "res://.import/potential-ship-got-to-dest.wav-8e2c4020d0c5079a7f783f381eaad784.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=false
+edit/loop=false
+compress/mode=1

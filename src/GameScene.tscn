@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://src/LevelManager.gd" type="Script" id=1]
 [ext_resource path="res://assets/frame.png" type="Texture" id=2]
@@ -27,6 +27,17 @@
 [ext_resource path="res://assets/restartBtn.png" type="Texture" id=25]
 [ext_resource path="res://assets/exitBtn.png" type="Texture" id=26]
 [ext_resource path="res://src/prefabs/Levels/HardJustIslands.tscn" type="PackedScene" id=27]
+[ext_resource path="res://assets/sounds/button-click.wav" type="AudioStream" id=28]
+[ext_resource path="res://assets/beginBtn.png" type="Texture" id=29]
+[ext_resource path="res://src/prefabs/Levels/HardObstaclesPaths.tscn" type="PackedScene" id=30]
+
+[sub_resource type="DynamicFont" id=3]
+size = 64
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 24
+font_data = ExtResource( 13 )
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
@@ -44,7 +55,7 @@ __meta__ = {
 [node name="LevelManager" type="Node2D" parent="."]
 position = Vector2( -1, 0 )
 script = ExtResource( 1 )
-levels = [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 16 ), ExtResource( 14 ), ExtResource( 22 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 27 ), ExtResource( 24 ) ]
+levels = [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 16 ), ExtResource( 14 ), ExtResource( 22 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 27 ), ExtResource( 24 ), ExtResource( 30 ) ]
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource( 8 )
@@ -56,6 +67,10 @@ windsPath = NodePath("../Winds")
 permCurrentsPath = NodePath("../PermanentCurrents")
 permWindPath = NodePath("../PermanentWind")
 levelCompleteMenuPath = NodePath("../levelComplete")
+
+[node name="ButtonClickSound" type="AudioStreamPlayer" parent="GameManager"]
+stream = ExtResource( 28 )
+volume_db = -21.259
 
 [node name="Bg" type="Sprite" parent="."]
 position = Vector2( 480, 270 )
@@ -73,6 +88,7 @@ pathType = "current"
 [node name="Currents" parent="." instance=ExtResource( 6 )]
 z_index = -50
 z_as_relative = false
+type = "current"
 radius = 32
 color = Color( 0.168627, 0.560784, 0.839216, 1 )
 arrowTex = ExtResource( 7 )
@@ -82,6 +98,7 @@ arrowTex = ExtResource( 7 )
 [node name="Winds" parent="." instance=ExtResource( 6 )]
 z_index = 98
 z_as_relative = false
+type = "wind"
 radius = 24
 color = Color( 0.168627, 0.560784, 0.839216, 0 )
 arrowTex = ExtResource( 9 )
@@ -102,6 +119,156 @@ pathType = "wind"
 position = Vector2( 480, 270 )
 z_index = 100
 texture = ExtResource( 2 )
+
+[node name="gameIntro" type="Node2D" parent="."]
+position = Vector2( 456, 214 )
+z_index = 101
+
+[node name="bg" type="NinePatchRect" parent="gameIntro"]
+self_modulate = Color( 0, 0, 0, 0.411765 )
+margin_left = -412.0
+margin_top = -170.0
+margin_right = 459.0
+margin_bottom = 282.0
+texture = ExtResource( 15 )
+region_rect = Rect2( 0, 0, 240, 240 )
+patch_margin_left = 80
+patch_margin_top = 80
+patch_margin_right = 80
+patch_margin_bottom = 80
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TITLE" type="RichTextLabel" parent="gameIntro"]
+margin_left = -400.0
+margin_top = -127.0
+margin_right = 459.0
+margin_bottom = -26.0
+custom_fonts/normal_font = SubResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center]currents[/center]"
+text = "currents"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VScrollBar2" type="VScrollBar" parent="gameIntro/TITLE"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -12.0
+max_value = 61.0
+step = 1.0
+page = 76.0
+
+[node name="VScrollBar3" type="VScrollBar" parent="gameIntro/TITLE"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="gameIntro"]
+self_modulate = Color( 0.6, 0.584314, 0.584314, 1 )
+margin_left = -400.0
+margin_top = 57.0
+margin_right = 459.0
+margin_bottom = 112.0
+custom_fonts/normal_font = SubResource( 4 )
+bbcode_enabled = true
+bbcode_text = "[center]make currents by dragging edge-to-edge[/center]"
+text = "make currents by dragging edge-to-edge"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VScrollBar2" type="VScrollBar" parent="gameIntro/RichTextLabel2"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -12.0
+max_value = 61.0
+step = 1.0
+page = 76.0
+
+[node name="VScrollBar3" type="VScrollBar" parent="gameIntro/RichTextLabel2"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="gameIntro"]
+self_modulate = Color( 0.6, 0.584314, 0.584314, 1 )
+margin_left = -400.0
+margin_top = 95.0
+margin_right = 459.0
+margin_bottom = 204.0
+custom_fonts/normal_font = SubResource( 4 )
+bbcode_enabled = true
+bbcode_text = "[center]make winds by dragging edge-to-edge with RMB[/center]"
+text = "make winds by dragging edge-to-edge with RMB"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VScrollBar2" type="VScrollBar" parent="gameIntro/RichTextLabel3"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -12.0
+max_value = 61.0
+step = 1.0
+page = 76.0
+
+[node name="VScrollBar3" type="VScrollBar" parent="gameIntro/RichTextLabel3"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="gameIntro"]
+self_modulate = Color( 0.6, 0.584314, 0.584314, 1 )
+margin_left = -299.0
+margin_top = -22.0
+margin_right = 392.0
+margin_bottom = 53.0
+custom_constants/line_separation = -10
+custom_fonts/normal_font = SubResource( 4 )
+bbcode_enabled = true
+bbcode_text = "[center]guide ships to their destinations with currents and winds[/center]"
+text = "guide ships to their destinations with currents and winds"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VScrollBar2" type="VScrollBar" parent="gameIntro/RichTextLabel4"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -12.0
+max_value = 61.0
+step = 1.0
+page = 76.0
+
+[node name="VScrollBar3" type="VScrollBar" parent="gameIntro/RichTextLabel4"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
+[node name="beginBtn" type="TextureButton" parent="gameIntro"]
+margin_left = -33.0
+margin_top = 171.0
+margin_right = 108.0
+margin_bottom = 246.0
+texture_normal = ExtResource( 29 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Buttons" type="Node2D" parent="."]
 z_index = 101
@@ -130,6 +297,7 @@ __meta__ = {
 }
 
 [node name="EditStateBtn" type="TextureButton" parent="Buttons"]
+visible = false
 margin_left = 5.0
 margin_top = 460.0
 margin_right = 121.0
@@ -141,6 +309,7 @@ __meta__ = {
 }
 
 [node name="PlayStateBtn" type="TextureButton" parent="Buttons"]
+visible = false
 margin_left = 5.0
 margin_top = 460.0
 margin_right = 121.0
@@ -151,6 +320,7 @@ __meta__ = {
 }
 
 [node name="NextLevelBtn" type="TextureButton" parent="Buttons"]
+visible = false
 margin_left = 732.0
 margin_top = 460.0
 margin_right = 957.0
@@ -182,10 +352,10 @@ __meta__ = {
 }
 
 [node name="RichTextLabel" type="RichTextLabel" parent="levelComplete"]
-margin_left = -169.0
+margin_left = -143.0
 margin_top = -66.0
-margin_right = 205.0
-margin_bottom = 10.0
+margin_right = 172.0
+margin_bottom = -17.0
 custom_fonts/normal_font = SubResource( 1 )
 text = "level complete!"
 __meta__ = {
@@ -329,6 +499,7 @@ __meta__ = {
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Title" type="RichTextLabel" parent="CanvasLayer"]
+visible = false
 margin_left = 2.0
 margin_top = -2.0
 margin_right = 961.0
@@ -360,6 +531,7 @@ anchor_bottom = 1.0
 step = 1.0
 
 [node name="MinPaths" type="RichTextLabel" parent="CanvasLayer"]
+visible = false
 margin_left = 2.0
 margin_top = 491.0
 margin_right = 961.0
@@ -389,6 +561,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 step = 1.0
 
+[connection signal="pressed" from="gameIntro/beginBtn" to="GameManager" method="startGame"]
 [connection signal="pressed" from="Buttons/SaveBtn" to="GameManager" method="onSavePressed"]
 [connection signal="pressed" from="Buttons/DeleteBtn" to="GameManager" method="_on_DeleteBtn_pressed"]
 [connection signal="pressed" from="Buttons/EditStateBtn" to="GameManager" method="onButtonPressed"]

@@ -32,6 +32,9 @@ var shipsExpecting = 0;
 var shipsReceived = 0;
 var completed = false;
 export(Texture) var pathArrowTex:Texture
+
+onready var sndAcceptShip = get_node("AcceptShipSnd")
+onready var sndHighlight = get_node("HighlightSnd")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	z_index = Math.getZIndex(global_position.y);
@@ -77,10 +80,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		update();
 		
 func acceptShip():
+	sndAcceptShip.play();
 	winAnim.play("ship_add");
 	shipsReceived +=1;
 	if shipsReceived == shipsExpecting:
 		playVictory();
+		yield(get_tree().create_timer(0.4), "timeout")
+		sndHighlight.play();
 
 func playVictory():
 	completed = true;

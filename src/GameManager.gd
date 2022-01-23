@@ -47,7 +47,10 @@ onready var levelManager = get_node("/root/GameScene/LevelManager");
 onready var titleTxt:RichTextLabel = get_node("/root/GameScene/CanvasLayer/Title") as RichTextLabel
 onready var minPathsTxt:RichTextLabel = get_node("/root/GameScene/CanvasLayer/MinPaths") as RichTextLabel
 var permanentPathRootPath:String = "res://src/prefabs/Levels/Permanent Paths/"
-# Called when the node enters the scene tree for the first time.
+
+onready var gameIntro = get_node("/root/GameScene/gameIntro");
+
+onready var sndButtonClick = get_node("ButtonClickSound") as AudioStreamPlayer
 func _ready() -> void:	
 	levelCompleteMenu = get_node(levelCompleteMenuPath) as Node2D;
 	playBtn = get_node(playBtnPath) as TextureButton
@@ -59,8 +62,7 @@ func _ready() -> void:
 	
 	permCurrents = get_node(permCurrentsPath);
 	permWinds = get_node(permWindPath);
-	
-	goToNextLevel();
+
 func _process(delta: float) -> void:
 	switchDelay -= delta;
 	if (Input.is_key_pressed(KEY_SPACE) and switchDelay < 0):
@@ -69,6 +71,7 @@ func _process(delta: float) -> void:
 
 	
 func onButtonPressed():
+	sndButtonClick.play();
 	switchDelay = 0.7
 	if (state == States.EDIT):
 		state = States.PLAY
@@ -150,14 +153,17 @@ func goToNextLevel():
 #func _process(delta: float) -> void:
 #	pass
 func _on_NextLevelBtn_pressed() -> void:
+	sndButtonClick.play();
 	goToNextLevel();
 	levelCompleteMenu.visible = false;
 
 
 func onSavePressed() -> void:
+	sndButtonClick.play();
 	saveJson();
 
 func _on_DeleteBtn_pressed() -> void:
+	sndButtonClick.play();
 	deleteJson();
 
 
@@ -184,3 +190,11 @@ func _on_restartBtn_pressed() -> void:
 func _on_exitBtn_pressed() -> void:
 	get_tree().quit();
 	
+
+
+func startGame() -> void:
+	goToNextLevel();
+	changeState();
+	titleTxt.visible = true;
+	playBtn.visible = true;
+	gameIntro.visible = false;

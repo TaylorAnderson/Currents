@@ -20,12 +20,15 @@ onready var deadSpr = get_node("DeadSprite") as AnimatedSprite;
 onready var explosion = get_node("Explosion") as AnimatedSprite;
 onready var gm:GameManager = get_node("/root/GameScene/GameManager") as GameManager
 onready var particles:CPUParticles2D = get_node("Particles2D")
+export(PackedScene) var onHitDestIslandParticles:PackedScene
 var dead = false;
 
 var waterTrail = [];
 var waterInitRadius = 10;
 var waterTrailInterval = 5;
 var waterTrailCounter = 0;
+
+onready var sndExplosion = get_node("ExplosionSnd");
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	z_as_relative = false;
@@ -81,6 +84,7 @@ func _process(delta: float) -> void:
 				dead = true;
 		
 func explode():
+	sndExplosion.play();
 	toBeKilled = true;
 	
 	spr.visible = false;
