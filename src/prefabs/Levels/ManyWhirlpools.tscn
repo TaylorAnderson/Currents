@@ -41,3 +41,5 @@ texture = ExtResource( 5 )
 
 [node name="Metadata" type="Node2D" parent="."]
 script = ExtResource( 2 )
+levelName = "Swiss Cheese Ocean"
+minPathsToSolve = 3

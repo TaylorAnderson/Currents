@@ -19,14 +19,16 @@ onready var spr = get_node("Sprite") as AnimatedSprite;
 onready var deadSpr = get_node("DeadSprite") as AnimatedSprite;
 onready var explosion = get_node("Explosion") as AnimatedSprite;
 onready var gm:GameManager = get_node("/root/GameScene/GameManager") as GameManager
+onready var particles:CPUParticles2D = get_node("Particles2D")
 var dead = false;
+
+var waterTrail = [];
+var waterInitRadius = 10;
+var waterTrailInterval = 5;
+var waterTrailCounter = 0;
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	z_as_relative = false;
-	
-func _draw() -> void:
-	pass;
-	# at some point we'll make a water trail here
 	
 func _process(delta: float) -> void:
 	if toBeKilled: dead = true;
@@ -35,6 +37,9 @@ func _process(delta: float) -> void:
 		spr.frame = island.dest.img.frame;
 		deadSpr.frame = island.dest.img.frame;
 		
+	particles.visible = false;
+	if not dead:
+		particles.visible = true;
 	if not dead:
 		for point in gm.allPoints:
 			if (global_position.distance_to(point.pos) < radius + point.radius):
@@ -44,11 +49,16 @@ func _process(delta: float) -> void:
 			accel = accel.normalized() * accelMax
 		vel += accel * (delta * 70);
 		vel *= drag;
+		spr.flip_h = vel.x < 0
 		if (vel.length() > velMax):
 			vel = vel.normalized() * velMax 
 		accel = Vector2.ZERO;
 		global_position += vel;
-	
+		particles.direction = Vector2.RIGHT * vel * -1;
+		particles.initial_velocity = vel.length() * 20
+		particles.update();
+
+
 		z_index = Math.getZIndex(global_position.y);
 		for ship in gm.ships:
 			if (global_position.distance_to(ship.global_position) < radius + ship.radius) and ship != self and not ship.dead:

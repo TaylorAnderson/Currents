@@ -52,4 +52,4 @@ texture = ExtResource( 5 )
 [node name="Metadata" parent="." instance=ExtResource( 3 )]
 position = Vector2( 108, 114 )
 levelName = "A bigger obstacle"
-maxPathsToSolve = 2
+minPathsToSolve = 2

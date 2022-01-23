@@ -29,4 +29,4 @@ texture = ExtResource( 5 )
 
 [node name="Metadata" parent="." instance=ExtResource( 2 )]
 levelName = "Beginnings"
-maxPathsToSolve = 1
+minPathsToSolve = 1

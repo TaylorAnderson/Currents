@@ -38,7 +38,14 @@ var switchDelay = 0;
 var levelComplete = false;
 export(NodePath) var levelCompleteMenuPath;
 var levelCompleteMenu:Node2D
+
+var showMinPaths = false;
+
+onready var gameCompleteMenu = get_node("/root/GameScene/gameComplete");
 onready var levelManager = get_node("/root/GameScene/LevelManager");
+
+onready var titleTxt:RichTextLabel = get_node("/root/GameScene/CanvasLayer/Title") as RichTextLabel
+onready var minPathsTxt:RichTextLabel = get_node("/root/GameScene/CanvasLayer/MinPaths") as RichTextLabel
 var permanentPathRootPath:String = "res://src/prefabs/Levels/Permanent Paths/"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:	
@@ -91,6 +98,7 @@ func changeState():
 			isle.onPlayModeStart();
 	
 	if state == States.EDIT:
+		gameCompleteMenu.visible = false;
 		levelCompleteMenu.visible = false;
 		winds.disabled = false;
 		currents.disabled = false;
@@ -108,8 +116,14 @@ func checkLevelComplete():
 			allIslandsComplete = false;
 	if allIslandsComplete:
 		levelComplete = true;
-		showLevelCompleteMenu();
+		if levelManager.doneAllLevels():
+			showGameCompleteMenu();
+		else:
+			showLevelCompleteMenu();
 		
+func showGameCompleteMenu():
+	gameCompleteMenu.visible = true;
+
 func showLevelCompleteMenu():
 	levelCompleteMenu.visible = true;
 
@@ -120,13 +134,14 @@ func goToNextLevel():
 	permWinds.clear();
 	levelComplete = false;
 	levelManager.loadNextLevel();
+	var metadata = levelManager.currentLevel.get_node("Metadata")
+	titleTxt.bbcode_text = "[center]" + metadata.levelName + "[/center]"
+	minPathsTxt.bbcode_text = "[center]Minimum paths: " + str(metadata.minPathsToSolve) + "[/center]";
 	islands = levelManager.currentLevel.get_node("Islands").get_children()
 	obstacles = levelManager.currentLevel.get_node("Obstacles").get_children();
-
 	var path = permanentPathRootPath + (levelManager.currentLevel.name)
 	permCurrents.loadJson(path);
 	permWinds.loadJson(path);
-
 	if (state == States.PLAY):
 		state = States.EDIT;
 		changeState();
@@ -137,7 +152,6 @@ func goToNextLevel():
 func _on_NextLevelBtn_pressed() -> void:
 	goToNextLevel();
 	levelCompleteMenu.visible = false;
-
 
 
 func onSavePressed() -> void:
@@ -160,3 +174,13 @@ func saveJson():
 func deleteJson():
 	var dir = Directory.new();
 	dir.remove(permanentPathRootPath + (levelManager.currentLevel as Node2D).name)
+
+
+func _on_restartBtn_pressed() -> void:
+	levelManager.levelIndex = -1;
+	goToNextLevel();
+
+
+func _on_exitBtn_pressed() -> void:
+	get_tree().quit();
+	

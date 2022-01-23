@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/editBtnLevelComplete.png-e450033309f764db2424c7d96b82771e.stex"
+path="res://.import/restartBtn.png-8ab51c838e0a791652d53a01454c1218.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/editBtnLevelComplete.png"
-dest_files=[ "res://.import/editBtnLevelComplete.png-e450033309f764db2424c7d96b82771e.stex" ]
+source_file="res://assets/restartBtn.png"
+dest_files=[ "res://.import/restartBtn.png-8ab51c838e0a791652d53a01454c1218.stex" ]
 
 [params]
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://src/LevelManager.gd" type="Script" id=1]
 [ext_resource path="res://assets/frame.png" type="Texture" id=2]
@@ -23,9 +23,17 @@
 [ext_resource path="res://assets/perm-wind-arrow.png" type="Texture" id=21]
 [ext_resource path="res://src/prefabs/Levels/ManyWhirlpools.tscn" type="PackedScene" id=22]
 [ext_resource path="res://assets/deleteBtn.png" type="Texture" id=23]
+[ext_resource path="res://src/prefabs/Levels/HardAllObstacles.tscn" type="PackedScene" id=24]
+[ext_resource path="res://assets/restartBtn.png" type="Texture" id=25]
+[ext_resource path="res://assets/exitBtn.png" type="Texture" id=26]
+[ext_resource path="res://src/prefabs/Levels/HardJustIslands.tscn" type="PackedScene" id=27]
 
 [sub_resource type="DynamicFont" id=1]
-size = 40
+size = 32
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 24
 font_data = ExtResource( 13 )
 
 [node name="GameScene" type="Node2D"]
@@ -36,7 +44,7 @@ __meta__ = {
 [node name="LevelManager" type="Node2D" parent="."]
 position = Vector2( -1, 0 )
 script = ExtResource( 1 )
-levels = [ ExtResource( 18 ), ExtResource( 16 ), ExtResource( 22 ), ExtResource( 20 ), ExtResource( 14 ), ExtResource( 10 ), ExtResource( 11 ) ]
+levels = [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 16 ), ExtResource( 14 ), ExtResource( 22 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 27 ), ExtResource( 24 ) ]
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource( 8 )
@@ -99,6 +107,7 @@ texture = ExtResource( 2 )
 z_index = 101
 
 [node name="SaveBtn" type="TextureButton" parent="Buttons"]
+visible = false
 margin_left = 843.0
 margin_right = 959.0
 margin_bottom = 75.0
@@ -109,6 +118,7 @@ __meta__ = {
 }
 
 [node name="DeleteBtn" type="TextureButton" parent="Buttons"]
+visible = false
 margin_left = 3.0
 margin_top = 2.0
 margin_right = 143.0
@@ -141,10 +151,9 @@ __meta__ = {
 }
 
 [node name="NextLevelBtn" type="TextureButton" parent="Buttons"]
-visible = false
-margin_left = 728.0
+margin_left = 732.0
 margin_top = 460.0
-margin_right = 1028.0
+margin_right = 957.0
 margin_bottom = 535.0
 texture_normal = ExtResource( 12 )
 __meta__ = {
@@ -157,7 +166,7 @@ position = Vector2( 456, 214 )
 z_index = 101
 
 [node name="bg" type="NinePatchRect" parent="levelComplete"]
-self_modulate = Color( 0, 0, 0, 0.298039 )
+self_modulate = Color( 0, 0, 0, 0.411765 )
 margin_left = -200.0
 margin_top = -87.0
 margin_right = 215.0
@@ -219,6 +228,167 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="gameComplete" type="Node2D" parent="."]
+visible = false
+position = Vector2( 456, 214 )
+z_index = 101
+
+[node name="bg" type="NinePatchRect" parent="gameComplete"]
+self_modulate = Color( 0, 0, 0, 0.541176 )
+margin_left = -200.0
+margin_top = -147.0
+margin_right = 215.0
+margin_bottom = 243.0
+texture = ExtResource( 15 )
+region_rect = Rect2( 0, 0, 240, 240 )
+patch_margin_left = 80
+patch_margin_top = 80
+patch_margin_right = 80
+patch_margin_bottom = 80
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="gameComplete"]
+margin_left = -162.0
+margin_top = -126.0
+margin_right = 212.0
+margin_bottom = -50.0
+custom_fonts/normal_font = SubResource( 1 )
+text = "game complete!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VScrollBar2" type="VScrollBar" parent="gameComplete/RichTextLabel"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -12.0
+max_value = 61.0
+step = 1.0
+page = 76.0
+
+[node name="VScrollBar3" type="VScrollBar" parent="gameComplete/RichTextLabel"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="gameComplete"]
+margin_left = -167.0
+margin_top = -55.0
+margin_right = 207.0
+margin_bottom = 46.0
+custom_constants/line_separation = -10
+custom_fonts/normal_font = SubResource( 2 )
+bbcode_enabled = true
+bbcode_text = "[center]minimum paths needed is now shown for each level![/center]"
+text = "minimum paths needed is now shown for each level!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VScrollBar2" type="VScrollBar" parent="gameComplete/RichTextLabel2"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -12.0
+max_value = 61.0
+step = 1.0
+page = 76.0
+
+[node name="VScrollBar3" type="VScrollBar" parent="gameComplete/RichTextLabel2"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
+[node name="restartBtn" type="TextureButton" parent="gameComplete"]
+margin_left = -77.0
+margin_top = 49.0
+margin_right = 148.0
+margin_bottom = 124.0
+texture_normal = ExtResource( 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="exitBtn" type="TextureButton" parent="gameComplete"]
+margin_left = -54.0
+margin_top = 134.0
+margin_right = 62.0
+margin_bottom = 209.0
+texture_normal = ExtResource( 26 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Title" type="RichTextLabel" parent="CanvasLayer"]
+margin_left = 2.0
+margin_top = -2.0
+margin_right = 961.0
+margin_bottom = 50.0
+mouse_filter = 2
+input_pass_on_modal_close_click = false
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]Title[/center]"
+text = "Title"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VScrollBar2" type="VScrollBar" parent="CanvasLayer/Title"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -12.0
+max_value = 61.0
+step = 1.0
+page = 76.0
+
+[node name="VScrollBar3" type="VScrollBar" parent="CanvasLayer/Title"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
+[node name="MinPaths" type="RichTextLabel" parent="CanvasLayer"]
+margin_left = 2.0
+margin_top = 491.0
+margin_right = 961.0
+margin_bottom = 543.0
+mouse_filter = 2
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]Minimum paths: 2[/center]"
+text = "Minimum paths: 2"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VScrollBar2" type="VScrollBar" parent="CanvasLayer/MinPaths"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -12.0
+max_value = 61.0
+step = 1.0
+page = 76.0
+
+[node name="VScrollBar3" type="VScrollBar" parent="CanvasLayer/MinPaths"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
 [connection signal="pressed" from="Buttons/SaveBtn" to="GameManager" method="onSavePressed"]
 [connection signal="pressed" from="Buttons/DeleteBtn" to="GameManager" method="_on_DeleteBtn_pressed"]
 [connection signal="pressed" from="Buttons/EditStateBtn" to="GameManager" method="onButtonPressed"]
@@ -226,3 +396,5 @@ __meta__ = {
 [connection signal="pressed" from="Buttons/NextLevelBtn" to="GameManager" method="_on_NextLevelBtn_pressed"]
 [connection signal="pressed" from="levelComplete/nextLevelBtn" to="GameManager" method="_on_NextLevelBtn_pressed"]
 [connection signal="pressed" from="levelComplete/editBtn" to="GameManager" method="onButtonPressed"]
+[connection signal="pressed" from="gameComplete/restartBtn" to="GameManager" method="_on_restartBtn_pressed"]
+[connection signal="pressed" from="gameComplete/exitBtn" to="GameManager" method="_on_exitBtn_pressed"]
