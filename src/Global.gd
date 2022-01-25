@@ -1,3 +1,3 @@
 extends Node
-var width := 960
-var height := 540
+var width := 1024
+var height := 576

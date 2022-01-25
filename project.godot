@@ -72,8 +72,7 @@ Global="*res://src/Global.gd"
 
 [display]
 
-window/size/width=960
-window/size/height=540
+window/size/height=576
 window/size/resizable=false
 
 [gdnative]

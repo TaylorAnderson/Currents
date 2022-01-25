@@ -7,6 +7,7 @@ func _ready() -> void:
 func loadJson(path):
 	var file = File.new();
 	var error = file.open(path, File.READ);
+	if error: print("ono");
 	if not error:
 		var obj:Dictionary = JSON.parse(file.get_as_text()).result
 		file.close();

@@ -16,12 +16,12 @@ func loadNextLevel():
 	if (levelIndex > levels.size()-1):
 		return false;
 	if (levelParent.get_child_count() > 0):
-		levelParent.remove_child(levelParent.get_child(0))
+		levelParent.get_child(0).queue_free();
 	var level = levels[levelIndex].instance();
 	currentLevel = level
 	levelParent.add_child(level)
-	level.remove_child(level.get_node("Frame"))
-	level.remove_child(level.get_node("Bg"))
+	level.get_node("Frame").queue_free();
+	level.get_node("Bg").queue_free();
 	return true;
 
 func doneAllLevels():

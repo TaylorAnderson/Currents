@@ -80,7 +80,7 @@ func _process(delta: float) -> void:
 		if island:
 			if global_position.distance_to(island.dest.global_position) < radius + island.dest.radius:
 				island.dest.acceptShip();
-				get_parent().remove_child(self);
+				queue_free();
 				dead = true;
 		
 func explode():

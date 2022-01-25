@@ -8,7 +8,7 @@ class PathPoint:
 	var strength:float
 
 var isDrawing = false;
-var boundary = 50;
+var boundary = 80;
 var paths:Array = []; 
 var currentPath:Array = [];
 var lastPoint:Vector2 = Vector2.ZERO;
@@ -31,6 +31,7 @@ onready var currentSnd = get_node("CurrentPlaceSnd")
 onready var windSnd = get_node("WindPlaceSnd");
 var soundInterval = 7;
 var soundCounter = 0;
+var finishedOnePath = false;
 func _ready() -> void:
 	padRadius = radius/4
 
@@ -76,6 +77,8 @@ func _unhandled_input(event: InputEvent) -> void:
 					paths.pop_back()
 					currentPath = [];
 					pass
+				else:
+					finishedOnePath = true;
 			else:
 				deletePathOverMouse(mEvent.position);
 			isDrawing = false;

@@ -46,9 +46,11 @@ onready var levelManager = get_node("/root/GameScene/LevelManager");
 
 onready var titleTxt:RichTextLabel = get_node("/root/GameScene/CanvasLayer/Title") as RichTextLabel
 onready var minPathsTxt:RichTextLabel = get_node("/root/GameScene/CanvasLayer/MinPaths") as RichTextLabel
-var permanentPathRootPath:String = "res://src/prefabs/Levels/Permanent Paths/"
+var permanentPathRootPath:String = "res://PermanentPaths/"
 
 onready var gameIntro = get_node("/root/GameScene/gameIntro");
+
+onready var pathTut = get_node("/root/GameScene/PathTut");
 
 onready var sndButtonClick = get_node("ButtonClickSound") as AudioStreamPlayer
 func _ready() -> void:	
@@ -64,6 +66,11 @@ func _ready() -> void:
 	permWinds = get_node(permWindPath);
 
 func _process(delta: float) -> void:
+	if currents.finishedOnePath or winds.finishedOnePath:
+		pathTut.visible = false;
+		titleTxt.visible = true;
+		playBtn.visible = true;
+
 	switchDelay -= delta;
 	if (Input.is_key_pressed(KEY_SPACE) and switchDelay < 0):
 		onButtonPressed();
@@ -106,8 +113,8 @@ func changeState():
 		winds.disabled = false;
 		currents.disabled = false;
 		for ship in ships:
-			if ship.get_parent():
-				ship.get_parent().remove_child(ship);
+			if is_instance_valid(ship):
+				ship.queue_free();
 		ships = [];
 		for isle in islands:
 			isle.onEditModeStart();
@@ -142,7 +149,7 @@ func goToNextLevel():
 	minPathsTxt.bbcode_text = "[center]Minimum paths: " + str(metadata.minPathsToSolve) + "[/center]";
 	islands = levelManager.currentLevel.get_node("Islands").get_children()
 	obstacles = levelManager.currentLevel.get_node("Obstacles").get_children();
-	var path = permanentPathRootPath + (levelManager.currentLevel.name)
+	var path = permanentPathRootPath + (levelManager.currentLevel.name) + ".json";
 	permCurrents.loadJson(path);
 	permWinds.loadJson(path);
 	if (state == States.PLAY):
@@ -172,29 +179,28 @@ func saveJson():
 	obj["current"] = currents.getJson();
 	obj["wind"] = winds.getJson();
 	var jsonToSave = to_json(obj);
-	var path = permanentPathRootPath + (levelManager.currentLevel as Node2D).name
+	var path = permanentPathRootPath + (levelManager.currentLevel as Node2D).name + ".json";
 	var file = File.new();
 	file.open(path, File.WRITE);
-	file.store_string(jsonToSave);
+	file.store_line(jsonToSave);
 	file.close();
+
 func deleteJson():
 	var dir = Directory.new();
-	dir.remove(permanentPathRootPath + (levelManager.currentLevel as Node2D).name)
-
+	dir.remove(permanentPathRootPath + (levelManager.currentLevel as Node2D).name + ".json")
 
 func _on_restartBtn_pressed() -> void:
 	levelManager.levelIndex = -1;
 	goToNextLevel();
 
-
 func _on_exitBtn_pressed() -> void:
 	get_tree().quit();
 	
 
-
 func startGame() -> void:
 	goToNextLevel();
 	changeState();
-	titleTxt.visible = true;
-	playBtn.visible = true;
+	#titleTxt.visible = true;
+	#playBtn.visible = true;
 	gameIntro.visible = false;
+	pathTut.visible = true;
