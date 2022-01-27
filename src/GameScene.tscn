@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://src/LevelManager.gd" type="Script" id=1]
 [ext_resource path="res://assets/frame.png" type="Texture" id=2]
@@ -31,6 +31,15 @@
 [ext_resource path="res://assets/beginBtn.png" type="Texture" id=29]
 [ext_resource path="res://src/prefabs/Levels/HardObstaclesPaths.tscn" type="PackedScene" id=30]
 [ext_resource path="res://assets/path-start-end-prompt.png" type="Texture" id=31]
+[ext_resource path="res://assets/credits-btn.png" type="Texture" id=32]
+[ext_resource path="res://assets/unpauseBtn.png" type="Texture" id=33]
+[ext_resource path="res://assets/pausebutton.png" type="Texture" id=34]
+[ext_resource path="res://assets/settings-btn.png" type="Texture" id=35]
+[ext_resource path="res://assets/music-dial.png" type="Texture" id=36]
+[ext_resource path="res://assets/sound-dial.png" type="Texture" id=37]
+[ext_resource path="res://assets/path-toggle1.png" type="Texture" id=38]
+[ext_resource path="res://src/PathToggle.gd" type="Script" id=39]
+[ext_resource path="res://assets/path-toggle2.png" type="Texture" id=40]
 
 [sub_resource type="DynamicFont" id=3]
 size = 64
@@ -42,6 +51,15 @@ font_data = ExtResource( 13 )
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 28
+font_data = ExtResource( 13 )
+
+[sub_resource type="StyleBoxTexture" id=7]
+
+[sub_resource type="DynamicFont" id=6]
 font_data = ExtResource( 13 )
 
 [sub_resource type="DynamicFont" id=2]
@@ -56,13 +74,13 @@ __meta__ = {
 [node name="LevelManager" type="Node2D" parent="."]
 position = Vector2( -1, 0 )
 script = ExtResource( 1 )
-levels = [ ExtResource( 18 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 16 ), ExtResource( 14 ), ExtResource( 22 ), ExtResource( 20 ), ExtResource( 27 ), ExtResource( 24 ), ExtResource( 30 ) ]
+levels = [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 16 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 14 ), ExtResource( 22 ), ExtResource( 27 ), ExtResource( 24 ), ExtResource( 30 ) ]
 
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource( 8 )
-playBtnPath = NodePath("../Buttons/PlayStateBtn")
-editBtnPath = NodePath("../Buttons/EditStateBtn")
-nextLevelBtnPath = NodePath("../Buttons/NextLevelBtn")
+playBtnPath = NodePath("../buttons/PlayStateBtn")
+editBtnPath = NodePath("../buttons/EditStateBtn")
+nextLevelBtnPath = NodePath("../buttons/NextLevelBtn")
 currentsPath = NodePath("../Currents")
 windsPath = NodePath("../Winds")
 permCurrentsPath = NodePath("../PermanentCurrents")
@@ -72,9 +90,10 @@ levelCompleteMenuPath = NodePath("../levelComplete")
 [node name="ButtonClickSound" type="AudioStreamPlayer" parent="GameManager"]
 stream = ExtResource( 28 )
 volume_db = 7.0
+bus = "Sound"
 
 [node name="Bg" type="Sprite" parent="."]
-position = Vector2( 480, 270 )
+position = Vector2( 482, 270 )
 z_index = -100
 texture = ExtResource( 3 )
 
@@ -105,7 +124,6 @@ radius = 24
 color = Color( 0.168627, 0.560784, 0.839216, 0 )
 arrowTex = ExtResource( 9 )
 arrowInterval = 8
-mouseButton = 2
 strength = 0.75
 
 [node name="PermanentWind" parent="." instance=ExtResource( 19 )]
@@ -121,6 +139,12 @@ pathType = "wind"
 position = Vector2( 512, 288 )
 z_index = 100
 texture = ExtResource( 2 )
+
+[node name="PathTut" type="Sprite" parent="."]
+visible = false
+position = Vector2( 512, 288 )
+z_index = 101
+texture = ExtResource( 31 )
 
 [node name="gameIntro" type="Node2D" parent="."]
 position = Vector2( 490, 232 )
@@ -272,11 +296,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Buttons" type="Node2D" parent="."]
+[node name="buttons" type="Node2D" parent="."]
 position = Vector2( 16, 16 )
 z_index = 102
 
-[node name="SaveBtn" type="TextureButton" parent="Buttons"]
+[node name="SaveBtn" type="TextureButton" parent="buttons"]
+visible = false
 margin_left = 892.0
 margin_top = -16.0
 margin_right = 1008.0
@@ -287,7 +312,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="DeleteBtn" type="TextureButton" parent="Buttons"]
+[node name="DeleteBtn" type="TextureButton" parent="buttons"]
 visible = false
 margin_left = -16.0
 margin_top = -16.0
@@ -299,7 +324,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EditStateBtn" type="TextureButton" parent="Buttons"]
+[node name="EditStateBtn" type="TextureButton" parent="buttons"]
 margin_left = -16.0
 margin_top = 485.0
 margin_right = 100.0
@@ -310,7 +335,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayStateBtn" type="TextureButton" parent="Buttons"]
+[node name="PlayStateBtn" type="TextureButton" parent="buttons"]
 margin_left = -16.0
 margin_top = 485.0
 margin_right = 100.0
@@ -320,16 +345,40 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NextLevelBtn" type="TextureButton" parent="Buttons"]
+[node name="NextLevelBtn" type="TextureButton" parent="buttons"]
 visible = false
-margin_left = 732.0
-margin_top = 460.0
-margin_right = 957.0
-margin_bottom = 535.0
+margin_left = 781.0
+margin_top = 485.0
+margin_right = 1006.0
+margin_bottom = 560.0
 texture_normal = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="PauseButton" type="TextureButton" parent="buttons"]
+margin_left = 914.0
+margin_top = -11.0
+margin_right = 996.0
+margin_bottom = 71.0
+texture_normal = ExtResource( 34 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PathToggle" type="TextureButton" parent="buttons"]
+margin_left = 122.0
+margin_top = 499.0
+margin_right = 289.0
+margin_bottom = 592.0
+rect_scale = Vector2( 0.6, 0.6 )
+texture_normal = ExtResource( 38 )
+script = ExtResource( 39 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+currentTexture = ExtResource( 38 )
+windTexture = ExtResource( 40 )
 
 [node name="levelComplete" type="Node2D" parent="."]
 visible = false
@@ -337,7 +386,7 @@ position = Vector2( 512, 230 )
 z_index = 101
 
 [node name="bg" type="NinePatchRect" parent="levelComplete"]
-self_modulate = Color( 0, 0, 0, 0.411765 )
+self_modulate = Color( 0, 0, 0, 0.756863 )
 margin_left = -200.0
 margin_top = -87.0
 margin_right = 215.0
@@ -399,13 +448,375 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="pauseMenu" type="Node2D" parent="."]
+visible = false
+position = Vector2( 512, 230 )
+z_index = 101
+
+[node name="bigBG" type="NinePatchRect" parent="pauseMenu"]
+self_modulate = Color( 0, 0, 0, 0.513726 )
+margin_left = -434.0
+margin_top = -168.0
+margin_right = 434.0
+margin_bottom = 284.0
+texture = ExtResource( 15 )
+region_rect = Rect2( 0, 0, 240, 240 )
+patch_margin_left = 80
+patch_margin_top = 80
+patch_margin_right = 80
+patch_margin_bottom = 80
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pausemenu" type="NinePatchRect" parent="pauseMenu"]
+self_modulate = Color( 0, 0, 0, 0.733333 )
+margin_left = -154.0
+margin_top = -44.0
+margin_right = 151.0
+margin_bottom = 146.0
+rect_pivot_offset = Vector2( 372, -113 )
+texture = ExtResource( 15 )
+region_rect = Rect2( 0, 0, 240, 240 )
+patch_margin_left = 80
+patch_margin_top = 80
+patch_margin_right = 80
+patch_margin_bottom = 80
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="paused" type="RichTextLabel" parent="pauseMenu/pausemenu"]
+margin_left = -17.0
+margin_top = 29.0
+margin_right = 327.0
+margin_bottom = 83.0
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]paused[/center]"
+text = "paused"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VScrollBar2" type="VScrollBar" parent="pauseMenu/pausemenu/paused"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -12.0
+max_value = 61.0
+step = 1.0
+page = 76.0
+
+[node name="VScrollBar3" type="VScrollBar" parent="pauseMenu/pausemenu/paused"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
+[node name="buttons" type="Node2D" parent="pauseMenu/pausemenu"]
+position = Vector2( 154, 73 )
+
+[node name="credits" type="TextureButton" parent="pauseMenu/pausemenu/buttons"]
+margin_left = -100.0
+margin_top = 24.0
+margin_bottom = 74.0
+texture_normal = ExtResource( 32 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="playBtn" type="TextureButton" parent="pauseMenu/pausemenu/buttons"]
+margin_left = -20.0
+margin_top = 24.0
+margin_right = 30.0
+margin_bottom = 74.0
+texture_normal = ExtResource( 33 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="settings" type="TextureButton" parent="pauseMenu/pausemenu/buttons"]
+margin_left = 60.0
+margin_top = 24.0
+margin_right = 110.0
+margin_bottom = 74.0
+texture_normal = ExtResource( 35 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="settings" type="Node2D" parent="pauseMenu"]
+visible = false
+position = Vector2( 552, 41 )
+
+[node name="bg3" type="NinePatchRect" parent="pauseMenu/settings"]
+self_modulate = Color( 0, 0, 0, 0.733333 )
+margin_left = -394.0
+margin_top = -85.0
+margin_right = -203.0
+margin_bottom = 135.0
+rect_pivot_offset = Vector2( 372, -113 )
+texture = ExtResource( 15 )
+region_rect = Rect2( 0, 0, 240, 240 )
+patch_margin_left = 80
+patch_margin_top = 80
+patch_margin_right = 80
+patch_margin_bottom = 80
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="settings" type="RichTextLabel" parent="pauseMenu/settings"]
+margin_left = -393.0
+margin_top = -66.0
+margin_right = -205.0
+margin_bottom = -16.0
+custom_fonts/normal_font = SubResource( 5 )
+bbcode_enabled = true
+bbcode_text = "[center]settings[/center]"
+text = "settings"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VScrollBar2" type="VScrollBar" parent="pauseMenu/settings/settings"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -12.0
+max_value = 61.0
+step = 1.0
+page = 76.0
+
+[node name="VScrollBar3" type="VScrollBar" parent="pauseMenu/settings/settings"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
+[node name="sound-slider" type="HSlider" parent="pauseMenu/settings"]
+margin_left = -370.0
+margin_top = -6.0
+margin_right = -163.0
+margin_bottom = 62.0
+rect_scale = Vector2( 0.7, 0.7 )
+custom_icons/grabber_disabled = ExtResource( 37 )
+custom_icons/grabber_highlight = ExtResource( 37 )
+custom_icons/grabber = ExtResource( 37 )
+min_value = -24.0
+max_value = 10.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="music-slider" type="HSlider" parent="pauseMenu/settings"]
+margin_left = -370.0
+margin_top = 44.0
+margin_right = -163.0
+margin_bottom = 112.0
+rect_scale = Vector2( 0.7, 0.7 )
+custom_icons/grabber_highlight = ExtResource( 36 )
+custom_icons/grabber = ExtResource( 36 )
+custom_styles/grabber_area = SubResource( 7 )
+min_value = -24.0
+max_value = 0.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="credits" type="Node2D" parent="pauseMenu"]
+visible = false
+position = Vector2( 44, 41 )
+
+[node name="bg3" type="NinePatchRect" parent="pauseMenu/credits"]
+self_modulate = Color( 0, 0, 0, 0.733333 )
+margin_left = -394.0
+margin_top = -87.0
+margin_right = -203.0
+margin_bottom = 163.0
+rect_pivot_offset = Vector2( 372, -113 )
+texture = ExtResource( 15 )
+region_rect = Rect2( 0, 0, 240, 240 )
+patch_margin_left = 80
+patch_margin_top = 80
+patch_margin_right = 80
+patch_margin_bottom = 80
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="bg4" type="NinePatchRect" parent="pauseMenu/credits"]
+self_modulate = Color( 0, 0, 0, 0.733333 )
+margin_left = -394.0
+margin_top = -87.0
+margin_right = -203.0
+margin_bottom = 163.0
+rect_pivot_offset = Vector2( 372, -113 )
+texture = ExtResource( 15 )
+region_rect = Rect2( 0, 0, 240, 240 )
+patch_margin_left = 80
+patch_margin_top = 80
+patch_margin_right = 80
+patch_margin_bottom = 80
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="credits-title" type="RichTextLabel" parent="pauseMenu/credits"]
+margin_left = -393.0
+margin_top = -66.0
+margin_right = -205.0
+margin_bottom = -16.0
+custom_fonts/normal_font = SubResource( 5 )
+bbcode_enabled = true
+bbcode_text = "[center]credits[/center]"
+text = "credits"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VScrollBar2" type="VScrollBar" parent="pauseMenu/credits/credits-title"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -12.0
+max_value = 61.0
+step = 1.0
+page = 76.0
+
+[node name="VScrollBar3" type="VScrollBar" parent="pauseMenu/credits/credits-title"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
+[node name="credits1" type="RichTextLabel" parent="pauseMenu/credits"]
+self_modulate = Color( 0.717647, 0.717647, 0.717647, 1 )
+margin_left = -380.0
+margin_top = -20.0
+margin_right = -239.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 31, 39 )
+custom_constants/line_separation = -5
+custom_fonts/normal_font = SubResource( 6 )
+text = "programming
+design
+sounds"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VScrollBar2" type="VScrollBar" parent="pauseMenu/credits/credits1"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -12.0
+max_value = 61.0
+step = 1.0
+page = 76.0
+
+[node name="VScrollBar3" type="VScrollBar" parent="pauseMenu/credits/credits1"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
+[node name="credits3" type="RichTextLabel" parent="pauseMenu/credits"]
+self_modulate = Color( 0.717647, 0.717647, 0.717647, 1 )
+margin_left = -380.0
+margin_top = 77.0
+margin_right = -309.0
+margin_bottom = 106.0
+rect_pivot_offset = Vector2( 31, 39 )
+custom_constants/line_separation = -5
+custom_fonts/normal_font = SubResource( 6 )
+text = "design"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VScrollBar2" type="VScrollBar" parent="pauseMenu/credits/credits3"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -12.0
+max_value = 61.0
+step = 1.0
+page = 76.0
+
+[node name="VScrollBar3" type="VScrollBar" parent="pauseMenu/credits/credits3"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
+[node name="credits-taylor" type="RichTextLabel" parent="pauseMenu/credits"]
+margin_left = -381.0
+margin_top = 39.0
+margin_right = -209.0
+margin_bottom = 67.0
+custom_fonts/normal_font = SubResource( 6 )
+text = "taylor anderson"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VScrollBar2" type="VScrollBar" parent="pauseMenu/credits/credits-taylor"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -12.0
+max_value = 61.0
+step = 1.0
+page = 76.0
+
+[node name="VScrollBar3" type="VScrollBar" parent="pauseMenu/credits/credits-taylor"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
+[node name="credits-colin" type="RichTextLabel" parent="pauseMenu/credits"]
+margin_left = -381.0
+margin_top = 98.0
+margin_right = -209.0
+margin_bottom = 126.0
+custom_fonts/normal_font = SubResource( 6 )
+text = "colin zarzour"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VScrollBar2" type="VScrollBar" parent="pauseMenu/credits/credits-colin"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -12.0
+max_value = 61.0
+step = 1.0
+page = 76.0
+
+[node name="VScrollBar3" type="VScrollBar" parent="pauseMenu/credits/credits-colin"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+step = 1.0
+
 [node name="gameComplete" type="Node2D" parent="."]
 visible = false
 position = Vector2( 512, 237 )
 z_index = 101
 
 [node name="bg" type="NinePatchRect" parent="gameComplete"]
-self_modulate = Color( 0, 0, 0, 0.541176 )
+self_modulate = Color( 0, 0, 0, 0.733333 )
 margin_left = -200.0
 margin_top = -147.0
 margin_right = 215.0
@@ -497,12 +908,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PathTut" type="Sprite" parent="."]
-visible = false
-position = Vector2( 512, 288 )
-z_index = 101
-texture = ExtResource( 31 )
-
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Title" type="RichTextLabel" parent="CanvasLayer"]
@@ -568,12 +973,19 @@ anchor_bottom = 1.0
 step = 1.0
 
 [connection signal="pressed" from="gameIntro/beginBtn" to="GameManager" method="startGame"]
-[connection signal="pressed" from="Buttons/SaveBtn" to="GameManager" method="onSavePressed"]
-[connection signal="pressed" from="Buttons/DeleteBtn" to="GameManager" method="_on_DeleteBtn_pressed"]
-[connection signal="pressed" from="Buttons/EditStateBtn" to="GameManager" method="onButtonPressed"]
-[connection signal="pressed" from="Buttons/PlayStateBtn" to="GameManager" method="onButtonPressed"]
-[connection signal="pressed" from="Buttons/NextLevelBtn" to="GameManager" method="_on_NextLevelBtn_pressed"]
+[connection signal="pressed" from="buttons/SaveBtn" to="GameManager" method="onSavePressed"]
+[connection signal="pressed" from="buttons/DeleteBtn" to="GameManager" method="_on_DeleteBtn_pressed"]
+[connection signal="pressed" from="buttons/EditStateBtn" to="GameManager" method="onButtonPressed"]
+[connection signal="pressed" from="buttons/PlayStateBtn" to="GameManager" method="onButtonPressed"]
+[connection signal="pressed" from="buttons/NextLevelBtn" to="GameManager" method="_on_NextLevelBtn_pressed"]
+[connection signal="pressed" from="buttons/PauseButton" to="GameManager" method="onPausePressed"]
+[connection signal="pathToggled" from="buttons/PathToggle" to="GameManager" method="onPathToggled"]
+[connection signal="pressed" from="buttons/PathToggle" to="buttons/PathToggle" method="onPressed"]
 [connection signal="pressed" from="levelComplete/nextLevelBtn" to="GameManager" method="_on_NextLevelBtn_pressed"]
 [connection signal="pressed" from="levelComplete/editBtn" to="GameManager" method="onButtonPressed"]
+[connection signal="pressed" from="pauseMenu/pausemenu/buttons/credits" to="GameManager" method="onCreditsPressed"]
+[connection signal="pressed" from="pauseMenu/pausemenu/buttons/playBtn" to="GameManager" method="onUnpausePressed"]
+[connection signal="pressed" from="pauseMenu/pausemenu/buttons/settings" to="GameManager" method="onSettingsPressed"]
+[connection signal="value_changed" from="pauseMenu/settings/sound-slider" to="GameManager" method="onSoundSliderValueChange"]
 [connection signal="pressed" from="gameComplete/restartBtn" to="GameManager" method="_on_restartBtn_pressed"]
 [connection signal="pressed" from="gameComplete/exitBtn" to="GameManager" method="_on_exitBtn_pressed"]

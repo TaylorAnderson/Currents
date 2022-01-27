@@ -53,7 +53,22 @@ onready var gameIntro = get_node("/root/GameScene/gameIntro");
 onready var pathTut = get_node("/root/GameScene/PathTut");
 
 onready var sndButtonClick = get_node("ButtonClickSound") as AudioStreamPlayer
-func _ready() -> void:	
+
+onready var pauseScreen = get_node("/root/GameScene/pauseMenu");
+
+onready var pauseButton = get_node("/root/GameScene/buttons/PauseButton");
+
+var paused = false;
+var saveDataPath = "user://save.json";
+
+onready var settingsMenu = get_node("/root/GameScene/pauseMenu/settings")
+onready var creditsMenu = get_node("/root/GameScene/pauseMenu/credits");
+
+onready var pathToggle:PathToggle = get_node("/root/GameScene/buttons/PathToggle");
+var activePath # can be currents or winds
+
+func _ready() -> void:
+	deleteSave();
 	levelCompleteMenu = get_node(levelCompleteMenuPath) as Node2D;
 	playBtn = get_node(playBtnPath) as TextureButton
 	editBtn = get_node(editBtnPath) as TextureButton
@@ -64,12 +79,13 @@ func _ready() -> void:
 	
 	permCurrents = get_node(permCurrentsPath);
 	permWinds = get_node(permWindPath);
+	
+	onPathToggled();
 
 func _process(delta: float) -> void:
 	if currents.finishedOnePath or winds.finishedOnePath:
 		pathTut.visible = false;
 		titleTxt.visible = true;
-		playBtn.visible = true;
 
 	switchDelay -= delta;
 	if (Input.is_key_pressed(KEY_SPACE) and switchDelay < 0):
@@ -78,8 +94,9 @@ func _process(delta: float) -> void:
 
 	
 func onButtonPressed():
-	sndButtonClick.play();
 	switchDelay = 0.7
+
+	sndButtonClick.play();
 	if (state == States.EDIT):
 		state = States.PLAY
 		# so now we're in play state, so we shld show edit btn
@@ -101,8 +118,7 @@ func changeState():
 		allPoints.append_array(winds.getPoints());
 		allPoints.append_array(permCurrents.getPoints());
 		allPoints.append_array(permWinds.getPoints())
-		winds.disabled = true;
-		currents.disabled = true;
+		activePath.disabled = true;
 
 		for isle in islands:
 			isle.onPlayModeStart();
@@ -110,8 +126,7 @@ func changeState():
 	if state == States.EDIT:
 		gameCompleteMenu.visible = false;
 		levelCompleteMenu.visible = false;
-		winds.disabled = false;
-		currents.disabled = false;
+		activePath.disabled = false;
 		for ship in ships:
 			if is_instance_valid(ship):
 				ship.queue_free();
@@ -144,6 +159,7 @@ func goToNextLevel():
 	permWinds.clear();
 	levelComplete = false;
 	levelManager.loadNextLevel();
+	saveGame();
 	var metadata = levelManager.currentLevel.get_node("Metadata")
 	titleTxt.bbcode_text = "[center]" + metadata.levelName + "[/center]"
 	minPathsTxt.bbcode_text = "[center]Minimum paths: " + str(metadata.minPathsToSolve) + "[/center]";
@@ -153,8 +169,7 @@ func goToNextLevel():
 	permCurrents.loadJson(path);
 	permWinds.loadJson(path);
 	if (state == States.PLAY):
-		state = States.EDIT;
-		changeState();
+		onButtonPressed();
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:
@@ -167,14 +182,14 @@ func _on_NextLevelBtn_pressed() -> void:
 
 func onSavePressed() -> void:
 	sndButtonClick.play();
-	saveJson();
+	savePathJson();
 
 func _on_DeleteBtn_pressed() -> void:
 	sndButtonClick.play();
-	deleteJson();
+	deletePathJson();
 
 
-func saveJson():
+func savePathJson():
 	var obj = {}
 	obj["current"] = currents.getJson();
 	obj["wind"] = winds.getJson();
@@ -185,7 +200,7 @@ func saveJson():
 	file.store_line(jsonToSave);
 	file.close();
 
-func deleteJson():
+func deletePathJson():
 	var dir = Directory.new();
 	dir.remove(permanentPathRootPath + (levelManager.currentLevel as Node2D).name + ".json")
 
@@ -196,11 +211,75 @@ func _on_restartBtn_pressed() -> void:
 func _on_exitBtn_pressed() -> void:
 	get_tree().quit();
 	
-
 func startGame() -> void:
+	pathTut.visible = true;
+	loadGame();
 	goToNextLevel();
 	changeState();
-	#titleTxt.visible = true;
-	#playBtn.visible = true;
+	pauseButton.visible = true;
+	playBtn.visible = true;
 	gameIntro.visible = false;
-	pathTut.visible = true;
+	
+	
+func quickStartGame():
+	pathTut.visible = false;
+	titleTxt.visible = true;
+	playBtn.visible = true;
+	pauseButton.visible = true;
+func saveGame() -> void:
+	var file = File.new();
+	file.open(saveDataPath, File.WRITE);
+	file.store_line(str(levelManager.levelIndex));
+	file.close();
+func loadGame() -> void:
+	var file = File.new()
+	var error = file.open(saveDataPath, File.READ);
+	if not error:
+		quickStartGame();
+		levelManager.levelIndex = int(file.get_as_text()) - 1;
+		file.close()
+
+func deleteSave() -> void:
+	var dir = Directory.new();
+	dir.remove(saveDataPath);
+
+
+func onPausePressed() -> void:
+	togglePause();
+	
+func onSettingsPressed() -> void:
+	settingsMenu.visible = !settingsMenu.visible;
+
+func onCreditsPressed() -> void:
+	creditsMenu.visible = !creditsMenu.visible;
+
+
+func onUnpausePressed() -> void:
+	togglePause();
+
+func togglePause():
+	paused = !paused;
+	pauseScreen.visible = paused;
+	currents.disabled = paused or state == States.PLAY
+	winds.disabled = paused or state == States.PLAY;
+	
+	if paused:
+		settingsMenu.visible = false;
+		creditsMenu.visible = false;
+
+func onSoundSliderValueChange(value: float) -> void:
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Sound"), value)
+
+func onPathToggled() -> void:
+	if pathToggle.pathIsCurrent():
+		activePath = currents;
+		currents.isActive = true;
+		winds.isActive = false;
+	if pathToggle.pathIsWind():
+		activePath = winds;
+		currents.isActive = false;
+		winds.isActive = true;
+	if (state == States.EDIT):
+		activePath.disabled = false;
+	else:
+		activePath.disabled = true;

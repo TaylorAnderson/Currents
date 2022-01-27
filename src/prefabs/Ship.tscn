@@ -164,8 +164,10 @@ color_ramp = SubResource( 27 )
 [node name="ExplosionSnd" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
 volume_db = -16.59
+bus = "Sound"
 
 [node name="GotToDestSnd" type="AudioStreamPlayer" parent="."]
+bus = "Sound"
 
 [node name="OnAccept" type="CPUParticles2D" parent="."]
 visible = false

@@ -13,7 +13,7 @@ var paths:Array = [];
 var currentPath:Array = [];
 var lastPoint:Vector2 = Vector2.ZERO;
 var currentPoint:Vector2 = Vector2.ZERO;
-var disabled = false;
+var disabled = true;
 
 export(String, "current", "wind") var type:String
 
@@ -32,6 +32,7 @@ onready var windSnd = get_node("WindPlaceSnd");
 var soundInterval = 7;
 var soundCounter = 0;
 var finishedOnePath = false;
+var isActive # whether we're the active path
 func _ready() -> void:
 	padRadius = radius/4
 
@@ -60,10 +61,9 @@ func _draw() -> void:
 				draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if disabled: return;
+	if disabled or not isActive: return;
 	if event is InputEventMouseButton:
 		var mEvent = event as InputEventMouseButton
-		if mEvent.button_index != mouseButton: return;
 		if mEvent.pressed:
 			if isOnBoundary(mEvent.position):
 				isDrawing = true;

@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/prefabs/PathEditor.gd"
 }, {
+"base": "TextureButton",
+"class": "PathToggle",
+"language": "GDScript",
+"path": "res://src/PathToggle.gd"
+}, {
 "base": "Node2D",
 "class": "Ship",
 "language": "GDScript",
@@ -56,6 +61,7 @@ _global_script_class_icons={
 "Math": "",
 "Obstacle": "",
 "PathEditor": "",
+"PathToggle": "",
 "Ship": "",
 "Whirlpool": ""
 }
