@@ -71,13 +71,6 @@ func spawnShip():
 	ship.island = self;
 	ship.global_position = global_position + destVec * radius;
 	ship.vel = destVec * initialShipVel;
-func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseMotion:
-		if event.position.distance_to(global_position) < radius:
-			hovered = true;
-		else:
-			hovered = false;
-		update();
 		
 func acceptShip():
 	sndAcceptShip.play();
@@ -110,3 +103,13 @@ func _on_WinAnim_animation_finished() -> void:
 		gm.checkLevelComplete();
 	winAnim.playing = false;
 	winAnim.frame = 13;
+
+
+func onBtnDown() -> void:
+	hovered = true;
+	update();
+
+
+func onBtnUp() -> void:
+	hovered = false;
+	update();

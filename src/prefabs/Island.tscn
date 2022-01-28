@@ -178,4 +178,20 @@ stream = ExtResource( 7 )
 volume_db = -4.815
 bus = "Sound"
 
+[node name="Btn" type="TextureButton" parent="."]
+margin_left = -41.0
+margin_top = -45.0
+margin_right = 46.0
+margin_bottom = 42.0
+focus_mode = 0
+mouse_filter = 1
+toggle_mode = true
+shortcut_in_tooltip = false
+enabled_focus_mode = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="animation_finished" from="WinAnim" to="." method="_on_WinAnim_animation_finished"]
+[connection signal="button_down" from="Btn" to="." method="onBtnDown"]
+[connection signal="button_up" from="Btn" to="." method="onBtnUp"]

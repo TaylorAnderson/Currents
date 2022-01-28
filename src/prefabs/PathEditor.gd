@@ -32,7 +32,7 @@ onready var windSnd = get_node("WindPlaceSnd");
 var soundInterval = 7;
 var soundCounter = 0;
 var finishedOnePath = false;
-var isActive # whether we're the active path
+var isActive # whether we're the active pat
 func _ready() -> void:
 	padRadius = radius/4
 

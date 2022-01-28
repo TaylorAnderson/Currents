@@ -151,7 +151,7 @@ position = Vector2( 490, 232 )
 z_index = 101
 
 [node name="bg" type="NinePatchRect" parent="gameIntro"]
-self_modulate = Color( 0, 0, 0, 0.513726 )
+self_modulate = Color( 0, 0, 0, 0.733333 )
 margin_left = -412.0
 margin_top = -170.0
 margin_right = 456.0
@@ -171,6 +171,7 @@ margin_left = -400.0
 margin_top = -127.0
 margin_right = 459.0
 margin_bottom = -26.0
+mouse_filter = 2
 custom_fonts/normal_font = SubResource( 3 )
 bbcode_enabled = true
 bbcode_text = "[center]currents[/center]"
@@ -200,11 +201,12 @@ self_modulate = Color( 0.6, 0.584314, 0.584314, 1 )
 margin_left = -400.0
 margin_top = 57.0
 margin_right = 459.0
-margin_bottom = 112.0
+margin_bottom = 97.0
+mouse_filter = 2
 custom_fonts/normal_font = SubResource( 4 )
 bbcode_enabled = true
-bbcode_text = "[center]make currents by dragging edge-to-edge[/center]"
-text = "make currents by dragging edge-to-edge"
+bbcode_text = "[center]make currents/winds by dragging edge-to-edge[/center]"
+text = "make currents/winds by dragging edge-to-edge"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -227,14 +229,15 @@ step = 1.0
 
 [node name="RichTextLabel3" type="RichTextLabel" parent="gameIntro"]
 self_modulate = Color( 0.6, 0.584314, 0.584314, 1 )
-margin_left = -400.0
+margin_left = -409.0
 margin_top = 95.0
 margin_right = 459.0
-margin_bottom = 204.0
+margin_bottom = 139.0
+mouse_filter = 2
 custom_fonts/normal_font = SubResource( 4 )
 bbcode_enabled = true
-bbcode_text = "[center]make winds by dragging edge-to-edge with RMB[/center]"
-text = "make winds by dragging edge-to-edge with RMB"
+bbcode_text = "[center]toggle between currents and winds with the path toggle[/center]"
+text = "toggle between currents and winds with the path toggle"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -260,7 +263,8 @@ self_modulate = Color( 0.6, 0.584314, 0.584314, 1 )
 margin_left = -299.0
 margin_top = -22.0
 margin_right = 392.0
-margin_bottom = 53.0
+margin_bottom = 42.0
+mouse_filter = 2
 custom_constants/line_separation = -10
 custom_fonts/normal_font = SubResource( 4 )
 bbcode_enabled = true
@@ -307,6 +311,8 @@ margin_top = -16.0
 margin_right = 1008.0
 margin_bottom = 59.0
 rect_pivot_offset = Vector2( 0, -311 )
+focus_mode = 0
+enabled_focus_mode = 0
 texture_normal = ExtResource( 17 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -319,27 +325,35 @@ margin_top = -16.0
 margin_right = 124.0
 margin_bottom = 59.0
 rect_pivot_offset = Vector2( 0, -311 )
+focus_mode = 0
+enabled_focus_mode = 0
 texture_normal = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="EditStateBtn" type="TextureButton" parent="buttons"]
+visible = false
 margin_left = -16.0
 margin_top = 485.0
 margin_right = 100.0
 margin_bottom = 560.0
 rect_pivot_offset = Vector2( 0, -311 )
+focus_mode = 0
+enabled_focus_mode = 0
 texture_normal = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="PlayStateBtn" type="TextureButton" parent="buttons"]
+visible = false
 margin_left = -16.0
 margin_top = 485.0
 margin_right = 100.0
 margin_bottom = 560.0
+focus_mode = 0
+enabled_focus_mode = 0
 texture_normal = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -351,27 +365,35 @@ margin_left = 781.0
 margin_top = 485.0
 margin_right = 1006.0
 margin_bottom = 560.0
+focus_mode = 0
+enabled_focus_mode = 0
 texture_normal = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="PauseButton" type="TextureButton" parent="buttons"]
-margin_left = 914.0
-margin_top = -11.0
-margin_right = 996.0
-margin_bottom = 71.0
+margin_left = 908.0
+margin_top = -10.0
+margin_right = 990.0
+margin_bottom = 72.0
+focus_mode = 0
+shortcut_in_tooltip = false
+enabled_focus_mode = 0
 texture_normal = ExtResource( 34 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="PathToggle" type="TextureButton" parent="buttons"]
+visible = false
 margin_left = 122.0
 margin_top = 499.0
 margin_right = 289.0
 margin_bottom = 592.0
 rect_scale = Vector2( 0.6, 0.6 )
+focus_mode = 0
+enabled_focus_mode = 0
 texture_normal = ExtResource( 38 )
 script = ExtResource( 39 )
 __meta__ = {

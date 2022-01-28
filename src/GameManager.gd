@@ -59,7 +59,7 @@ onready var pauseScreen = get_node("/root/GameScene/pauseMenu");
 onready var pauseButton = get_node("/root/GameScene/buttons/PauseButton");
 
 var paused = false;
-var saveDataPath = "user://save.json";
+var saveDataPath = "user://savegame.save";
 
 onready var settingsMenu = get_node("/root/GameScene/pauseMenu/settings")
 onready var creditsMenu = get_node("/root/GameScene/pauseMenu/credits");
@@ -68,7 +68,6 @@ onready var pathToggle:PathToggle = get_node("/root/GameScene/buttons/PathToggle
 var activePath # can be currents or winds
 
 func _ready() -> void:
-	deleteSave();
 	levelCompleteMenu = get_node(levelCompleteMenuPath) as Node2D;
 	playBtn = get_node(playBtnPath) as TextureButton
 	editBtn = get_node(editBtnPath) as TextureButton
@@ -81,11 +80,14 @@ func _ready() -> void:
 	permWinds = get_node(permWindPath);
 	
 	onPathToggled();
+	activePath.disabled = true;
 
 func _process(delta: float) -> void:
 	if currents.finishedOnePath or winds.finishedOnePath:
 		pathTut.visible = false;
 		titleTxt.visible = true;
+	for island in islands:
+		island.get_node("Btn").visible = not activePath.isDrawing;
 
 	switchDelay -= delta;
 	if (Input.is_key_pressed(KEY_SPACE) and switchDelay < 0):
@@ -218,6 +220,7 @@ func startGame() -> void:
 	changeState();
 	pauseButton.visible = true;
 	playBtn.visible = true;
+	pathToggle.visible = true;
 	gameIntro.visible = false;
 	
 	
@@ -231,6 +234,7 @@ func saveGame() -> void:
 	file.open(saveDataPath, File.WRITE);
 	file.store_line(str(levelManager.levelIndex));
 	file.close();
+
 func loadGame() -> void:
 	var file = File.new()
 	var error = file.open(saveDataPath, File.READ);
