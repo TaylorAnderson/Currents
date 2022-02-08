@@ -35,6 +35,8 @@ export(Texture) var pathArrowTex:Texture
 
 onready var sndAcceptShip = get_node("AcceptShipSnd")
 onready var sndHighlight = get_node("HighlightSnd")
+
+signal onPathShown(island);
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	z_index = Math.getZIndex(global_position.y);
@@ -107,6 +109,7 @@ func _on_WinAnim_animation_finished() -> void:
 
 func onBtnDown() -> void:
 	hovered = true;
+	emit_signal("onPathShown", self);
 	update();
 
 

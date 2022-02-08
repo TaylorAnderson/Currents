@@ -6,86 +6,76 @@ class_name GameManager
 # var b: String = "text"
 enum States {
 	EDIT,
-	PLAY
+	PLAY,
+	INTRO,
 }
-export(NodePath) var playBtnPath;
-export(NodePath) var editBtnPath;
-export(NodePath) var nextLevelBtnPath;
 
-export(NodePath) var currentsPath
-export(NodePath) var windsPath
+export(NodePath) onready var currents = get_node(currents);
+export(NodePath) onready var winds = get_node(winds)
 
-export(NodePath) var permCurrentsPath;
-export(NodePath) var permWindPath;
+export(NodePath) onready var permCurrents = get_node(permCurrents);
+export(NodePath) onready var permWinds = get_node(permWinds)
 
-var currents
-var winds
+export(NodePath) onready var playBtn = get_node(playBtn) as TextureButton
+export(NodePath) onready var editBtn = get_node(editBtn) as TextureButton
+export(NodePath) onready var nextLevelBtn = get_node(nextLevelBtn) as TextureButton
+export(NodePath) onready var pauseBtn = get_node(pauseBtn) as TextureButton
+export(NodePath) onready var tutorialBtn = get_node(tutorialBtn) as TextureButton
 
-var permCurrents;
-var permWinds;
+export(NodePath) onready var defaultButtons = get_node(defaultButtons) as Node2D
+export(NodePath) onready var defaultUI = get_node(defaultUI) as Node2D
 
-var playBtn:TextureButton;
-var editBtn:TextureButton;
+export(NodePath) onready var pathToggle = get_node(pathToggle) as PathToggle;
+
+export(NodePath) onready var levelCompleteMenu = get_node(levelCompleteMenu)
+export(NodePath) onready var gameCompleteMenu = get_node(gameCompleteMenu);
+export(NodePath) onready var settingsMenu = get_node(settingsMenu);
+export(NodePath) onready var creditsMenu = get_node(creditsMenu);
+export(NodePath) onready var pauseMenu = get_node(pauseMenu);
+export(NodePath) onready var gameIntro = get_node(gameIntro);
+
+export(NodePath) onready var levelManager = get_node(levelManager);
+
+export(NodePath) onready var titleTxt = get_node(titleTxt) as RichTextLabel
+export(NodePath) onready var minPathsTxt = get_node(minPathsTxt) as RichTextLabel
+
+export(NodePath) onready var tutorialWindow = get_node(tutorialWindow)
+
+export(NodePath) onready var tutorialPrompt = get_node(tutorialPrompt) as RichTextLabel
+
+onready var sndButtonClick = get_node("ButtonClickSound") as AudioStreamPlayer
+
 var currentButton:TextureButton;
 
-var nextLevelBtn:TextureButton;
-var state = States.EDIT
+var state = States.INTRO
 var allPoints = [];
 var islands = [];
 var obstacles = [];
 var ships = [];
 var switchDelay = 0;
 var levelComplete = false;
-export(NodePath) var levelCompleteMenuPath;
-var levelCompleteMenu:Node2D
 
 var showMinPaths = false;
 
-onready var gameCompleteMenu = get_node("/root/GameScene/gameComplete");
-onready var levelManager = get_node("/root/GameScene/LevelManager");
-
-onready var titleTxt:RichTextLabel = get_node("/root/GameScene/CanvasLayer/Title") as RichTextLabel
-onready var minPathsTxt:RichTextLabel = get_node("/root/GameScene/CanvasLayer/MinPaths") as RichTextLabel
 var permanentPathRootPath:String = "res://PermanentPaths/"
-
-onready var gameIntro = get_node("/root/GameScene/gameIntro");
-
-onready var pathTut = get_node("/root/GameScene/PathTut");
-
-onready var sndButtonClick = get_node("ButtonClickSound") as AudioStreamPlayer
-
-onready var pauseScreen = get_node("/root/GameScene/pauseMenu");
-
-onready var pauseButton = get_node("/root/GameScene/buttons/PauseButton");
-
-var paused = false;
 var saveDataPath = "user://savegame.save";
 
-onready var settingsMenu = get_node("/root/GameScene/pauseMenu/settings")
-onready var creditsMenu = get_node("/root/GameScene/pauseMenu/credits");
-
-onready var pathToggle:PathToggle = get_node("/root/GameScene/buttons/PathToggle");
 var activePath # can be currents or winds
 
+var paused = false;
+# signals
+
+signal onStateChanged(new_state)
+
 func _ready() -> void:
-	levelCompleteMenu = get_node(levelCompleteMenuPath) as Node2D;
-	playBtn = get_node(playBtnPath) as TextureButton
-	editBtn = get_node(editBtnPath) as TextureButton
-	nextLevelBtn = get_node(nextLevelBtnPath) as TextureButton;
-	
-	currents = get_node(currentsPath);
-	winds = get_node(windsPath);
-	
-	permCurrents = get_node(permCurrentsPath);
-	permWinds = get_node(permWindPath);
-	
-	onPathToggled();
-	activePath.disabled = true;
+	deleteSave();
+	defaultButtons.visible = false;
+	defaultUI.visible = false;
+	gameIntro.visible = true;
+	onPathToggled(); # to set current path before we start
+	changeState(States.INTRO)
 
 func _process(delta: float) -> void:
-	if currents.finishedOnePath or winds.finishedOnePath:
-		pathTut.visible = false;
-		titleTxt.visible = true;
 	for island in islands:
 		island.get_node("Btn").visible = not activePath.isDrawing;
 
@@ -97,24 +87,18 @@ func _process(delta: float) -> void:
 	
 func onButtonPressed():
 	switchDelay = 0.7
-
 	sndButtonClick.play();
 	if (state == States.EDIT):
-		state = States.PLAY
-		# so now we're in play state, so we shld show edit btn
-		playBtn.visible = false;
-		editBtn.visible = true;
-		currentButton = editBtn;
+		changeState(States.PLAY);
 	else:
-		state = States.EDIT
-		# so now we're in edit state, so we shld show play btn
+		changeState(States.EDIT);
+
+func changeState(newState):
+	state = newState;
+	if state == States.PLAY:
 		editBtn.visible = false;
 		playBtn.visible = true;
 		currentButton = playBtn;
-	changeState();
-
-func changeState():
-	if state == States.PLAY:
 		allPoints = [];
 		allPoints.append_array(currents.getPoints());
 		allPoints.append_array(winds.getPoints());
@@ -126,6 +110,9 @@ func changeState():
 			isle.onPlayModeStart();
 	
 	if state == States.EDIT:
+		playBtn.visible = false;
+		editBtn.visible = true;
+		currentButton = editBtn;
 		gameCompleteMenu.visible = false;
 		levelCompleteMenu.visible = false;
 		activePath.disabled = false;
@@ -135,7 +122,9 @@ func changeState():
 		ships = [];
 		for isle in islands:
 			isle.onEditModeStart();
-
+	
+	if state == States.INTRO:
+		defaultButtons.visible = false;
 func checkLevelComplete():
 	var allIslandsComplete = true;
 	for isle in islands:
@@ -162,16 +151,23 @@ func goToNextLevel():
 	levelComplete = false;
 	levelManager.loadNextLevel();
 	saveGame();
-	var metadata = levelManager.currentLevel.get_node("Metadata")
+	processLevel();
+	if (state == States.PLAY):
+		onButtonPressed();
+func processLevel():
+	var metadata = levelManager.currentLevel.get_node("Metadata") as Metadata
 	titleTxt.bbcode_text = "[center]" + metadata.levelName + "[/center]"
 	minPathsTxt.bbcode_text = "[center]Minimum paths: " + str(metadata.minPathsToSolve) + "[/center]";
+	tutorialWindow.get_node("Description/Txt").bbcode_text="[center]" + str(metadata.tutorialHint) + "[/center]"
+	if (metadata.tutorialHint.length() == 0):
+		tutorialBtn.visible = false;
+	else:
+		tutorialBtn.visible = true;
 	islands = levelManager.currentLevel.get_node("Islands").get_children()
 	obstacles = levelManager.currentLevel.get_node("Obstacles").get_children();
 	var path = permanentPathRootPath + (levelManager.currentLevel.name) + ".json";
 	permCurrents.loadJson(path);
 	permWinds.loadJson(path);
-	if (state == States.PLAY):
-		onButtonPressed();
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:
@@ -214,21 +210,15 @@ func _on_exitBtn_pressed() -> void:
 	get_tree().quit();
 	
 func startGame() -> void:
-	pathTut.visible = true;
 	loadGame();
 	goToNextLevel();
-	changeState();
-	pauseButton.visible = true;
-	playBtn.visible = true;
-	pathToggle.visible = true;
+	setupUI();
+	changeState(States.EDIT);
 	gameIntro.visible = false;
 	
-	
-func quickStartGame():
-	pathTut.visible = false;
-	titleTxt.visible = true;
-	playBtn.visible = true;
-	pauseButton.visible = true;
+func setupUI():
+	defaultButtons.visible = true;
+	defaultUI.visible = true;
 func saveGame() -> void:
 	var file = File.new();
 	file.open(saveDataPath, File.WRITE);
@@ -239,7 +229,7 @@ func loadGame() -> void:
 	var file = File.new()
 	var error = file.open(saveDataPath, File.READ);
 	if not error:
-		quickStartGame();
+		setupUI();
 		levelManager.levelIndex = int(file.get_as_text()) - 1;
 		file.close()
 
@@ -250,22 +240,29 @@ func deleteSave() -> void:
 
 func onPausePressed() -> void:
 	togglePause();
+	sndButtonClick.play();
+	pauseMenu.visible = paused;
 	
 func onSettingsPressed() -> void:
+	sndButtonClick.play();
 	settingsMenu.visible = !settingsMenu.visible;
 
 func onCreditsPressed() -> void:
+	sndButtonClick.play();
 	creditsMenu.visible = !creditsMenu.visible;
 
-
 func onUnpausePressed() -> void:
+	sndButtonClick.play();
+	pauseMenu.visible = false;
 	togglePause();
 
-func togglePause():
-	paused = !paused;
-	pauseScreen.visible = paused;
-	currents.disabled = paused or state == States.PLAY
-	winds.disabled = paused or state == States.PLAY;
+func togglePause(forcePause = null):
+	paused = forcePause or !paused;
+	currents.disabled = paused or state != States.EDIT
+	winds.disabled = paused or state != States.EDIT
+	
+	defaultButtons.visible = not paused;
+	# defaultUI.visible = not paused;
 	
 	if paused:
 		settingsMenu.visible = false;
@@ -287,3 +284,16 @@ func onPathToggled() -> void:
 		activePath.disabled = false;
 	else:
 		activePath.disabled = true;
+
+func onTutorialBtnPressed() -> void:
+	sndButtonClick.play();
+	tutorialWindow.visible = true;
+	tutorialPrompt.visible = false;
+	togglePause(true);
+	pass # Replace with function body.
+
+
+func onTutWindowClose() -> void:
+	sndButtonClick.play();
+	togglePause(false);
+	tutorialWindow.visible = false;

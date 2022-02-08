@@ -38,3 +38,6 @@ texture = ExtResource( 5 )
 position = Vector2( 184, 161 )
 levelName = "A small obstacle"
 minPathsToSolve = 1
+tutorialHint = "There's another type of path you can use to get ships to their destinations.
+Wind is a gentler force than currents, and can be used for small adjustments/nudges.
+Use the path toggle next to the play/edit buttons to switch between the two."

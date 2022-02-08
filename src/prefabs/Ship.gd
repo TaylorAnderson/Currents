@@ -64,8 +64,9 @@ func _process(delta: float) -> void:
 
 		z_index = Math.getZIndex(global_position.y);
 		for ship in gm.ships:
-			if (global_position.distance_to(ship.global_position) < radius + ship.radius) and ship != self and not ship.dead:
-				explode();
+			if is_instance_valid(ship):
+				if (global_position.distance_to(ship.global_position) < radius + ship.radius) and ship != self and not ship.dead:
+					explode();
 				
 		for obstacle in gm.obstacles:
 			if obstacle is Obstacle:

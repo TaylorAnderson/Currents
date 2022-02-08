@@ -1,0 +1,125 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/SpaceMono-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/SpaceMono-Bold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/roundedRectWhite.png" type="Texture" id=3]
+[ext_resource path="res://assets/checkmark.png" type="Texture" id=4]
+[ext_resource path="res://assets/star.png" type="Texture" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 24
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+font_data = ExtResource( 1 )
+
+[node name="LevelRow" type="CenterContainer"]
+margin_right = 1024.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 1024, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BG" type="NinePatchRect" parent="."]
+modulate = Color( 0.00392157, 0.454902, 0.690196, 1 )
+margin_left = 37.0
+margin_right = 987.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 950, 80 )
+rect_pivot_offset = Vector2( 319, 75 )
+texture = ExtResource( 3 )
+patch_margin_left = 40
+patch_margin_top = 40
+patch_margin_right = 40
+patch_margin_bottom = 40
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ContentRow" type="HBoxContainer" parent="."]
+margin_left = 62.0
+margin_top = 15.0
+margin_right = 962.0
+margin_bottom = 65.0
+rect_min_size = Vector2( 900, 50 )
+
+[node name="Title" type="RichTextLabel" parent="ContentRow"]
+margin_right = 400.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 400, 50 )
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center]Title[/center]"
+text = "Title"
+
+[node name="MinPaths" type="RichTextLabel" parent="ContentRow"]
+margin_left = 404.0
+margin_right = 624.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 220, 0 )
+custom_fonts/normal_font = SubResource( 2 )
+bbcode_enabled = true
+bbcode_text = "[center]3[/center]"
+text = "3"
+
+[node name="Spacer1" type="CenterContainer" parent="ContentRow"]
+margin_left = 628.0
+margin_right = 708.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 80, 50 )
+
+[node name="CompleteIcon" type="CenterContainer" parent="ContentRow"]
+margin_left = 712.0
+margin_right = 752.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 40, 40 )
+
+[node name="BG" type="ColorRect" parent="ContentRow/CompleteIcon"]
+margin_top = 5.0
+margin_right = 40.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 40, 40 )
+color = Color( 0, 0.341176, 0.517647, 1 )
+
+[node name="Icon" type="TextureRect" parent="ContentRow/CompleteIcon"]
+visible = false
+margin_top = 5.0
+margin_right = 40.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 40, 40 )
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 1
+
+[node name="Spacer2" type="CenterContainer" parent="ContentRow"]
+margin_left = 756.0
+margin_right = 806.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="PathsCompleteIcon" type="CenterContainer" parent="ContentRow"]
+margin_left = 810.0
+margin_right = 860.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="BG" type="ColorRect" parent="ContentRow/PathsCompleteIcon"]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 45.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 40, 40 )
+color = Color( 0, 0.341176, 0.517647, 1 )
+
+[node name="TextureRect" type="TextureRect" parent="ContentRow/PathsCompleteIcon"]
+visible = false
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 45.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 40, 40 )
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 1

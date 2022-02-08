@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://src/LevelManager.gd" type="Script" id=1]
 [ext_resource path="res://assets/frame.png" type="Texture" id=2]
@@ -40,6 +40,12 @@
 [ext_resource path="res://assets/path-toggle1.png" type="Texture" id=38]
 [ext_resource path="res://src/PathToggle.gd" type="Script" id=39]
 [ext_resource path="res://assets/path-toggle2.png" type="Texture" id=40]
+[ext_resource path="res://assets/tut-btn.png" type="Texture" id=41]
+[ext_resource path="res://assets/SpaceMono-Bold.ttf" type="DynamicFontData" id=42]
+[ext_resource path="res://assets/x-btn.png" type="Texture" id=43]
+[ext_resource path="res://assets/SpaceMono-Regular.ttf" type="DynamicFontData" id=44]
+
+[sub_resource type="CanvasItemMaterial" id=9]
 
 [sub_resource type="DynamicFont" id=3]
 size = 64
@@ -66,6 +72,18 @@ font_data = ExtResource( 13 )
 size = 24
 font_data = ExtResource( 13 )
 
+[sub_resource type="DynamicFont" id=12]
+font_data = ExtResource( 42 )
+
+[sub_resource type="DynamicFont" id=10]
+size = 32
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 18
+outline_color = Color( 0.105882, 0.14902, 0.196078, 1 )
+font_data = ExtResource( 44 )
+
 [node name="GameScene" type="Node2D"]
 __meta__ = {
 "_edit_horizontal_guides_": [  ]
@@ -77,15 +95,31 @@ script = ExtResource( 1 )
 levels = [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 16 ), ExtResource( 18 ), ExtResource( 20 ), ExtResource( 14 ), ExtResource( 22 ), ExtResource( 27 ), ExtResource( 24 ), ExtResource( 30 ) ]
 
 [node name="GameManager" type="Node2D" parent="."]
+position = Vector2( 3, 0 )
 script = ExtResource( 8 )
-playBtnPath = NodePath("../buttons/PlayStateBtn")
-editBtnPath = NodePath("../buttons/EditStateBtn")
-nextLevelBtnPath = NodePath("../buttons/NextLevelBtn")
-currentsPath = NodePath("../Currents")
-windsPath = NodePath("../Winds")
-permCurrentsPath = NodePath("../PermanentCurrents")
-permWindPath = NodePath("../PermanentWind")
-levelCompleteMenuPath = NodePath("../levelComplete")
+currents = NodePath("../Currents")
+winds = NodePath("../Winds")
+permCurrents = NodePath("../PermanentCurrents")
+permWinds = NodePath("../PermanentWind")
+playBtn = NodePath("../buttons/DefaultButtons/PlayStateBtn")
+editBtn = NodePath("../buttons/DefaultButtons/EditStateBtn")
+nextLevelBtn = NodePath("../buttons/NextLevelBtn")
+pauseBtn = NodePath("../buttons/DefaultButtons/PauseButton")
+tutorialBtn = NodePath("../buttons/DefaultButtons/TutButton")
+defaultButtons = NodePath("../buttons/DefaultButtons")
+defaultUI = NodePath("../UILayer/DefaultUI")
+pathToggle = NodePath("../buttons/DefaultButtons/PathToggle")
+levelCompleteMenu = NodePath("../levelComplete")
+gameCompleteMenu = NodePath("../gameComplete")
+settingsMenu = NodePath("../pauseMenu/settings")
+creditsMenu = NodePath("../pauseMenu/credits")
+pauseMenu = NodePath("../pauseMenu")
+gameIntro = NodePath("../gameIntro")
+levelManager = NodePath("../LevelManager")
+titleTxt = NodePath("../UILayer/DefaultUI/Title")
+minPathsTxt = NodePath("../UILayer/DefaultUI/MinPaths")
+tutorialWindow = NodePath("../UILayer/TutorialWindow")
+tutorialPrompt = NodePath("../UILayer/DefaultUI/TutorialBtnPrompt")
 
 [node name="ButtonClickSound" type="AudioStreamPlayer" parent="GameManager"]
 stream = ExtResource( 28 )
@@ -136,6 +170,7 @@ arrowInterval = 10
 pathType = "wind"
 
 [node name="Frame" type="Sprite" parent="."]
+material = SubResource( 9 )
 position = Vector2( 512, 288 )
 z_index = 100
 texture = ExtResource( 2 )
@@ -306,9 +341,9 @@ z_index = 102
 
 [node name="SaveBtn" type="TextureButton" parent="buttons"]
 visible = false
-margin_left = 892.0
+margin_left = -11.0
 margin_top = -16.0
-margin_right = 1008.0
+margin_right = 105.0
 margin_bottom = 59.0
 rect_pivot_offset = Vector2( 0, -311 )
 focus_mode = 0
@@ -321,9 +356,9 @@ __meta__ = {
 [node name="DeleteBtn" type="TextureButton" parent="buttons"]
 visible = false
 margin_left = -16.0
-margin_top = -16.0
+margin_top = 58.0
 margin_right = 124.0
-margin_bottom = 59.0
+margin_bottom = 133.0
 rect_pivot_offset = Vector2( 0, -311 )
 focus_mode = 0
 enabled_focus_mode = 0
@@ -332,8 +367,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EditStateBtn" type="TextureButton" parent="buttons"]
-visible = false
+[node name="NextLevelBtn" type="TextureButton" parent="buttons"]
+margin_left = 781.0
+margin_top = 485.0
+margin_right = 1006.0
+margin_bottom = 560.0
+focus_mode = 0
+enabled_focus_mode = 0
+texture_normal = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DefaultButtons" type="Node2D" parent="buttons"]
+
+[node name="EditStateBtn" type="TextureButton" parent="buttons/DefaultButtons"]
 margin_left = -16.0
 margin_top = 485.0
 margin_right = 100.0
@@ -346,8 +394,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayStateBtn" type="TextureButton" parent="buttons"]
-visible = false
+[node name="PlayStateBtn" type="TextureButton" parent="buttons/DefaultButtons"]
 margin_left = -16.0
 margin_top = 485.0
 margin_right = 100.0
@@ -359,24 +406,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="NextLevelBtn" type="TextureButton" parent="buttons"]
-visible = false
-margin_left = 781.0
-margin_top = 485.0
-margin_right = 1006.0
-margin_bottom = 560.0
-focus_mode = 0
-enabled_focus_mode = 0
-texture_normal = ExtResource( 12 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PauseButton" type="TextureButton" parent="buttons"]
-margin_left = 908.0
+[node name="PauseButton" type="TextureButton" parent="buttons/DefaultButtons"]
+margin_left = 938.0
 margin_top = -10.0
-margin_right = 990.0
-margin_bottom = 72.0
+margin_right = 1002.0
+margin_bottom = 54.0
+rect_pivot_offset = Vector2( 41, 41 )
 focus_mode = 0
 shortcut_in_tooltip = false
 enabled_focus_mode = 0
@@ -385,12 +420,25 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PathToggle" type="TextureButton" parent="buttons"]
-visible = false
+[node name="TutButton" type="TextureButton" parent="buttons/DefaultButtons"]
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 54.0
+margin_bottom = 54.0
+rect_pivot_offset = Vector2( 41, 41 )
+focus_mode = 0
+shortcut_in_tooltip = false
+enabled_focus_mode = 0
+texture_normal = ExtResource( 41 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PathToggle" type="TextureButton" parent="buttons/DefaultButtons"]
 margin_left = 122.0
 margin_top = 499.0
-margin_right = 289.0
-margin_bottom = 592.0
+margin_right = 299.0
+margin_bottom = 602.0
 rect_scale = Vector2( 0.6, 0.6 )
 focus_mode = 0
 enabled_focus_mode = 0
@@ -930,10 +978,11 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="UILayer" type="CanvasLayer" parent="."]
 
-[node name="Title" type="RichTextLabel" parent="CanvasLayer"]
-visible = false
+[node name="DefaultUI" type="Node2D" parent="UILayer"]
+
+[node name="Title" type="RichTextLabel" parent="UILayer/DefaultUI"]
 margin_left = 1.0
 margin_top = 6.0
 margin_right = 1025.0
@@ -948,7 +997,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VScrollBar2" type="VScrollBar" parent="CanvasLayer/Title"]
+[node name="VScrollBar2" type="VScrollBar" parent="UILayer/DefaultUI/Title"]
 visible = false
 anchor_left = 1.0
 anchor_right = 1.0
@@ -958,14 +1007,13 @@ max_value = 61.0
 step = 1.0
 page = 76.0
 
-[node name="VScrollBar3" type="VScrollBar" parent="CanvasLayer/Title"]
+[node name="VScrollBar3" type="VScrollBar" parent="UILayer/DefaultUI/Title"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 step = 1.0
 
-[node name="MinPaths" type="RichTextLabel" parent="CanvasLayer"]
-visible = false
+[node name="MinPaths" type="RichTextLabel" parent="UILayer/DefaultUI"]
 margin_top = 514.0
 margin_right = 1022.0
 margin_bottom = 599.0
@@ -978,7 +1026,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VScrollBar2" type="VScrollBar" parent="CanvasLayer/MinPaths"]
+[node name="VScrollBar2" type="VScrollBar" parent="UILayer/DefaultUI/MinPaths"]
 visible = false
 anchor_left = 1.0
 anchor_right = 1.0
@@ -988,21 +1036,105 @@ max_value = 61.0
 step = 1.0
 page = 76.0
 
-[node name="VScrollBar3" type="VScrollBar" parent="CanvasLayer/MinPaths"]
+[node name="VScrollBar3" type="VScrollBar" parent="UILayer/DefaultUI/MinPaths"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 step = 1.0
 
+[node name="TutorialBtnPrompt" type="RichTextLabel" parent="UILayer/DefaultUI"]
+self_modulate = Color( 1, 1, 1, 0.690196 )
+margin_left = 80.0
+margin_top = 14.0
+margin_right = 193.0
+margin_bottom = 58.0
+custom_constants/line_separation = -5
+custom_fonts/normal_font = SubResource( 12 )
+text = "Learn how to play <"
+fit_content_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TutorialWindow" type="Node2D" parent="UILayer"]
+visible = false
+
+[node name="NinePatchRect" type="NinePatchRect" parent="UILayer/TutorialWindow"]
+margin_left = 228.0
+margin_top = 149.0
+margin_right = 795.0
+margin_bottom = 423.0
+texture = ExtResource( 15 )
+patch_margin_left = 100
+patch_margin_top = 100
+patch_margin_right = 100
+patch_margin_bottom = 100
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Header" type="VBoxContainer" parent="UILayer/TutorialWindow"]
+margin_left = 230.0
+margin_top = 150.0
+margin_right = 794.0
+margin_bottom = 199.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Txt" type="RichTextLabel" parent="UILayer/TutorialWindow/Header"]
+margin_right = 564.0
+margin_bottom = 49.0
+custom_fonts/normal_font = SubResource( 10 )
+bbcode_enabled = true
+bbcode_text = "[center]Tips[/center]"
+text = "Tips"
+fit_content_height = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Description" type="VBoxContainer" parent="UILayer/TutorialWindow"]
+margin_left = 280.0
+margin_top = 212.0
+margin_right = 744.0
+margin_bottom = 412.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Txt" type="RichTextLabel" parent="UILayer/TutorialWindow/Description"]
+modulate = Color( 0.105882, 0.14902, 0.196078, 1 )
+self_modulate = Color( 0, 0, 0, 1 )
+margin_top = 85.0
+margin_right = 464.0
+margin_bottom = 114.0
+custom_fonts/normal_font = SubResource( 13 )
+bbcode_enabled = true
+fit_content_height = true
+
+[node name="TextureButton" type="TextureButton" parent="UILayer/TutorialWindow"]
+margin_left = 734.0
+margin_top = 158.0
+margin_right = 774.0
+margin_bottom = 198.0
+texture_normal = ExtResource( 43 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="pressed" from="gameIntro/beginBtn" to="GameManager" method="startGame"]
 [connection signal="pressed" from="buttons/SaveBtn" to="GameManager" method="onSavePressed"]
 [connection signal="pressed" from="buttons/DeleteBtn" to="GameManager" method="_on_DeleteBtn_pressed"]
-[connection signal="pressed" from="buttons/EditStateBtn" to="GameManager" method="onButtonPressed"]
-[connection signal="pressed" from="buttons/PlayStateBtn" to="GameManager" method="onButtonPressed"]
 [connection signal="pressed" from="buttons/NextLevelBtn" to="GameManager" method="_on_NextLevelBtn_pressed"]
-[connection signal="pressed" from="buttons/PauseButton" to="GameManager" method="onPausePressed"]
-[connection signal="pathToggled" from="buttons/PathToggle" to="GameManager" method="onPathToggled"]
-[connection signal="pressed" from="buttons/PathToggle" to="buttons/PathToggle" method="onPressed"]
+[connection signal="pressed" from="buttons/DefaultButtons/EditStateBtn" to="GameManager" method="onButtonPressed"]
+[connection signal="pressed" from="buttons/DefaultButtons/PlayStateBtn" to="GameManager" method="onButtonPressed"]
+[connection signal="pressed" from="buttons/DefaultButtons/PauseButton" to="GameManager" method="onPausePressed"]
+[connection signal="pressed" from="buttons/DefaultButtons/TutButton" to="GameManager" method="onTutorialBtnPressed"]
+[connection signal="pathToggled" from="buttons/DefaultButtons/PathToggle" to="GameManager" method="onPathToggled"]
+[connection signal="pressed" from="buttons/DefaultButtons/PathToggle" to="buttons/DefaultButtons/PathToggle" method="onPressed"]
 [connection signal="pressed" from="levelComplete/nextLevelBtn" to="GameManager" method="_on_NextLevelBtn_pressed"]
 [connection signal="pressed" from="levelComplete/editBtn" to="GameManager" method="onButtonPressed"]
 [connection signal="pressed" from="pauseMenu/pausemenu/buttons/credits" to="GameManager" method="onCreditsPressed"]
@@ -1011,3 +1143,4 @@ step = 1.0
 [connection signal="value_changed" from="pauseMenu/settings/sound-slider" to="GameManager" method="onSoundSliderValueChange"]
 [connection signal="pressed" from="gameComplete/restartBtn" to="GameManager" method="_on_restartBtn_pressed"]
 [connection signal="pressed" from="gameComplete/exitBtn" to="GameManager" method="_on_exitBtn_pressed"]
+[connection signal="pressed" from="UILayer/TutorialWindow/TextureButton" to="GameManager" method="onTutWindowClose"]

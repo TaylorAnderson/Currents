@@ -53,3 +53,5 @@ texture = ExtResource( 5 )
 position = Vector2( 108, 114 )
 levelName = "A bigger obstacle"
 minPathsToSolve = 2
+tutorialHint = "Try using the currents and winds to nudge ships to their destinations, rather than set them as strict paths for ships to follow.  
+Ships will follow straightaways just fine, but often stray off when a path curves."
