@@ -58,7 +58,7 @@ var levelComplete = false;
 var showMinPaths = false;
 
 var permanentPathRootPath:String = "res://PermanentPaths/"
-var saveDataPath = "user://savegame.save";
+
 
 var activePath # can be currents or winds
 
@@ -68,7 +68,7 @@ var paused = false;
 signal onStateChanged(new_state)
 
 func _ready() -> void:
-	deleteSave();
+	Data.DeleteSave();
 	defaultButtons.visible = false;
 	defaultUI.visible = false;
 	gameIntro.visible = true;
@@ -132,16 +132,12 @@ func checkLevelComplete():
 			allIslandsComplete = false;
 	if allIslandsComplete:
 		levelComplete = true;
-		if levelManager.doneAllLevels():
-			showGameCompleteMenu();
-		else:
-			showLevelCompleteMenu();
-		
-func showGameCompleteMenu():
-	gameCompleteMenu.visible = true;
+		showLevelCompleteMenu();
 
 func showLevelCompleteMenu():
 	levelCompleteMenu.visible = true;
+	if (Data.CurrentLevelIsLast()):
+		levelCompleteMenu.get_node("nextLevelBtn").visible = false;
 
 func goToNextLevel():
 	currents.clear();
@@ -150,7 +146,7 @@ func goToNextLevel():
 	permWinds.clear();
 	levelComplete = false;
 	levelManager.loadNextLevel();
-	saveGame();
+	Data.SaveGame();
 	processLevel();
 	if (state == States.PLAY):
 		onButtonPressed();
@@ -210,7 +206,7 @@ func _on_exitBtn_pressed() -> void:
 	get_tree().quit();
 	
 func startGame() -> void:
-	loadGame();
+	Data.LoadGame();
 	goToNextLevel();
 	setupUI();
 	changeState(States.EDIT);
@@ -219,37 +215,11 @@ func startGame() -> void:
 func setupUI():
 	defaultButtons.visible = true;
 	defaultUI.visible = true;
-func saveGame() -> void:
-	var file = File.new();
-	file.open(saveDataPath, File.WRITE);
-	file.store_line(str(levelManager.levelIndex));
-	file.close();
-
-func loadGame() -> void:
-	var file = File.new()
-	var error = file.open(saveDataPath, File.READ);
-	if not error:
-		setupUI();
-		levelManager.levelIndex = int(file.get_as_text()) - 1;
-		file.close()
-
-func deleteSave() -> void:
-	var dir = Directory.new();
-	dir.remove(saveDataPath);
-
 
 func onPausePressed() -> void:
 	togglePause();
 	sndButtonClick.play();
 	pauseMenu.visible = paused;
-	
-func onSettingsPressed() -> void:
-	sndButtonClick.play();
-	settingsMenu.visible = !settingsMenu.visible;
-
-func onCreditsPressed() -> void:
-	sndButtonClick.play();
-	creditsMenu.visible = !creditsMenu.visible;
 
 func onUnpausePressed() -> void:
 	sndButtonClick.play();
@@ -268,8 +238,6 @@ func togglePause(forcePause = null):
 		settingsMenu.visible = false;
 		creditsMenu.visible = false;
 
-func onSoundSliderValueChange(value: float) -> void:
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Sound"), value)
 
 func onPathToggled() -> void:
 	if pathToggle.pathIsCurrent():

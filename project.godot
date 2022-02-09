@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/prefabs/Island.gd"
 }, {
+"base": "Resource",
+"class": "LevelOrder",
+"language": "GDScript",
+"path": "res://src/LevelOrder.gd"
+}, {
 "base": "Node",
 "class": "Math",
 "language": "GDScript",
@@ -63,6 +68,7 @@ _global_script_class_icons={
 "GameManager": "",
 "GitAPI": "",
 "Island": "",
+"LevelOrder": "",
 "Math": "",
 "Metadata": "",
 "Obstacle": "",
@@ -81,6 +87,7 @@ config/icon="res://assets/icon.png"
 [autoload]
 
 Global="*res://src/Global.gd"
+Data="*res://Data.gd"
 
 [display]
 

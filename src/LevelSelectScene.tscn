@@ -1,10 +1,13 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/roundedRectWhite.png" type="Texture" id=1]
 [ext_resource path="res://assets/SpaceMono-Bold.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://assets/SpaceMono-Regular.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://src/prefabs/LevelRow.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/LevelSelectScene.gd" type="Script" id=5]
+[ext_resource path="res://assets/pausebutton.png" type="Texture" id=6]
+[ext_resource path="res://src/prefabs/PauseMenu.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/PauseButton.gd" type="Script" id=14]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
@@ -53,28 +56,37 @@ __meta__ = {
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 margin_left = 63.0
-margin_top = 17.0
 margin_right = 963.0
-margin_bottom = 67.0
+margin_bottom = 90.0
 rect_min_size = Vector2( 900, 50 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title" type="RichTextLabel" parent="HBoxContainer"]
+[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
 margin_right = 400.0
-margin_bottom = 50.0
+margin_bottom = 90.0
+
+[node name="Title" type="RichTextLabel" parent="HBoxContainer/CenterContainer"]
+margin_top = 20.0
+margin_right = 400.0
+margin_bottom = 70.0
 rect_min_size = Vector2( 400, 50 )
 custom_fonts/normal_font = SubResource( 1 )
 bbcode_enabled = true
 bbcode_text = "[center]Title[/center]"
 text = "Title"
 
-[node name="MinPaths" type="RichTextLabel" parent="HBoxContainer"]
+[node name="CenterContainer2" type="CenterContainer" parent="HBoxContainer"]
 margin_left = 404.0
 margin_right = 604.0
-margin_bottom = 50.0
-rect_min_size = Vector2( 200, 20 )
+margin_bottom = 90.0
+
+[node name="MinPaths" type="RichTextLabel" parent="HBoxContainer/CenterContainer2"]
+margin_top = 20.0
+margin_right = 200.0
+margin_bottom = 70.0
+rect_min_size = Vector2( 200, 50 )
 custom_fonts/normal_font = SubResource( 2 )
 bbcode_enabled = true
 bbcode_text = "[center]Min Paths[/center]"
@@ -95,3 +107,20 @@ margin_right = 1024.0
 margin_bottom = 80.0
 rect_min_size = Vector2( 1024, 80 )
 alignment = 1
+
+[node name="PauseButton" type="TextureButton" parent="."]
+margin_left = 928.0
+margin_top = 12.0
+margin_right = 992.0
+margin_bottom = 76.0
+texture_normal = ExtResource( 6 )
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+pauseScreen = NodePath("../PauseMenu")
+
+[node name="PauseMenu" parent="." instance=ExtResource( 7 )]
+visible = false
+
+[connection signal="pressed" from="PauseButton" to="PauseButton" method="onPressed"]

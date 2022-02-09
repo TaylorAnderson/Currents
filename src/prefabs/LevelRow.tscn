@@ -113,7 +113,7 @@ margin_bottom = 45.0
 rect_min_size = Vector2( 40, 40 )
 color = Color( 0, 0.341176, 0.517647, 1 )
 
-[node name="TextureRect" type="TextureRect" parent="ContentRow/PathsCompleteIcon"]
+[node name="Icon" type="TextureRect" parent="ContentRow/PathsCompleteIcon"]
 visible = false
 margin_left = 5.0
 margin_top = 5.0
@@ -123,3 +123,15 @@ rect_min_size = Vector2( 40, 40 )
 texture = ExtResource( 5 )
 expand = true
 stretch_mode = 1
+
+[node name="Btn" type="TextureButton" parent="."]
+self_modulate = Color( 1, 1, 1, 0.00392157 )
+margin_left = 42.0
+margin_right = 982.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 940, 80 )
+texture_normal = ExtResource( 3 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
