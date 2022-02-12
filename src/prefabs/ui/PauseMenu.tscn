@@ -1,0 +1,233 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://src/prefabs/ui/Settings.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/SpaceMono-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/SpaceMono-Bold.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://src/prefabs/ui/PauseMenu.gd" type="Script" id=5]
+[ext_resource path="res://assets/roundedRectWhite.png" type="Texture" id=6]
+[ext_resource path="res://assets/settings-btn.png" type="Texture" id=7]
+[ext_resource path="res://assets/x-btn.png" type="Texture" id=8]
+[ext_resource path="res://assets/roundedRect.png" type="Texture" id=9]
+[ext_resource path="res://assets/credits-btn.png" type="Texture" id=10]
+[ext_resource path="res://assets/level-select.png" type="Texture" id=11]
+
+[sub_resource type="DynamicFont" id=7]
+size = 48
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=8]
+size = 40
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=9]
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=10]
+font_data = ExtResource( 3 )
+
+[node name="PauseMenu" type="Node2D"]
+scale = Vector2( 1.3, 1.3 )
+z_index = 120
+script = ExtResource( 5 )
+settingsMenu = NodePath("settings")
+credits = NodePath("credits")
+levelSelectBtn = NodePath("pausemenu/CenterContainer/VBoxContainer/HBoxContainer/lvlselectbtn")
+
+[node name="bigBG" type="NinePatchRect" parent="."]
+self_modulate = Color( 0, 0, 0, 0.65098 )
+margin_left = -998.0
+margin_top = -502.0
+margin_right = 1044.0
+margin_bottom = 627.0
+texture = ExtResource( 9 )
+region_rect = Rect2( 0, 0, 240, 240 )
+patch_margin_left = 80
+patch_margin_top = 80
+patch_margin_right = 80
+patch_margin_bottom = 80
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pausemenu" type="NinePatchRect" parent="."]
+self_modulate = Color( 0, 0, 0, 1 )
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -245.0
+margin_top = -153.0
+margin_right = 246.0
+margin_bottom = 191.0
+rect_pivot_offset = Vector2( 372, -113 )
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 240, 240 )
+patch_margin_left = 80
+patch_margin_top = 80
+patch_margin_right = 80
+patch_margin_bottom = 80
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="pausemenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="pausemenu/CenterContainer"]
+margin_left = 55.0
+margin_top = 61.0
+margin_right = 435.0
+margin_bottom = 283.0
+custom_constants/separation = 50
+
+[node name="paused" type="Label" parent="pausemenu/CenterContainer/VBoxContainer"]
+margin_right = 380.0
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 7 )
+text = "paused"
+align = 1
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="pausemenu/CenterContainer/VBoxContainer"]
+margin_top = 122.0
+margin_right = 380.0
+margin_bottom = 222.0
+custom_constants/separation = 40
+alignment = 1
+
+[node name="credits" type="TextureButton" parent="pausemenu/CenterContainer/VBoxContainer/HBoxContainer"]
+margin_right = 100.0
+margin_bottom = 100.0
+texture_normal = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="lvlselectbtn" type="TextureButton" parent="pausemenu/CenterContainer/VBoxContainer/HBoxContainer"]
+margin_left = 140.0
+margin_right = 240.0
+margin_bottom = 100.0
+texture_normal = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="settings" type="TextureButton" parent="pausemenu/CenterContainer/VBoxContainer/HBoxContainer"]
+margin_left = 280.0
+margin_right = 380.0
+margin_bottom = 100.0
+texture_normal = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="x-btn" type="TextureButton" parent="pausemenu"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -49.8461
+margin_top = -11.6154
+margin_right = 20.1539
+margin_bottom = 58.3846
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="settings" parent="." instance=ExtResource( 1 )]
+visible = false
+position = Vector2( 404.615, 61.5385 )
+
+[node name="credits" type="Node2D" parent="."]
+visible = false
+position = Vector2( -50, -66.9231 )
+
+[node name="BG" type="NinePatchRect" parent="credits"]
+self_modulate = Color( 0, 0, 0, 1 )
+margin_left = -425.0
+margin_top = -87.0
+margin_right = -196.0
+margin_bottom = 319.0
+rect_pivot_offset = Vector2( 372, -113 )
+texture = ExtResource( 6 )
+region_rect = Rect2( 0, 0, 240, 240 )
+patch_margin_left = 80
+patch_margin_top = 80
+patch_margin_right = 80
+patch_margin_bottom = 80
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="credits/BG"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="credits/BG/CenterContainer"]
+margin_left = 30.0
+margin_top = 52.0
+margin_right = 198.0
+margin_bottom = 353.0
+
+[node name="credits" type="Label" parent="credits/BG/CenterContainer/VBoxContainer"]
+margin_right = 168.0
+margin_bottom = 60.0
+custom_fonts/font = SubResource( 8 )
+text = "credits"
+valign = 1
+
+[node name="spacer2" type="CenterContainer" parent="credits/BG/CenterContainer/VBoxContainer"]
+margin_top = 64.0
+margin_right = 168.0
+margin_bottom = 74.0
+rect_min_size = Vector2( 0, 10 )
+
+[node name="role1" type="Label" parent="credits/BG/CenterContainer/VBoxContainer"]
+margin_top = 78.0
+margin_right = 168.0
+margin_bottom = 156.0
+custom_fonts/font = SubResource( 9 )
+text = "game design
+programming
+sound design"
+valign = 1
+
+[node name="ta" type="Label" parent="credits/BG/CenterContainer/VBoxContainer"]
+margin_top = 160.0
+margin_right = 168.0
+margin_bottom = 184.0
+custom_fonts/font = SubResource( 10 )
+text = "taylor anderson"
+valign = 1
+
+[node name="spacer" type="CenterContainer" parent="credits/BG/CenterContainer/VBoxContainer"]
+margin_top = 188.0
+margin_right = 168.0
+margin_bottom = 218.0
+rect_min_size = Vector2( 0, 30 )
+
+[node name="role2" type="Label" parent="credits/BG/CenterContainer/VBoxContainer"]
+margin_top = 222.0
+margin_right = 168.0
+margin_bottom = 273.0
+custom_fonts/font = SubResource( 9 )
+text = "game design
+music"
+valign = 1
+
+[node name="cz" type="Label" parent="credits/BG/CenterContainer/VBoxContainer"]
+margin_top = 277.0
+margin_right = 168.0
+margin_bottom = 301.0
+custom_fonts/font = SubResource( 10 )
+text = "colin zarzour"
+valign = 1
+
+[connection signal="pressed" from="pausemenu/CenterContainer/VBoxContainer/HBoxContainer/credits" to="." method="onCreditsPressed"]
+[connection signal="pressed" from="pausemenu/CenterContainer/VBoxContainer/HBoxContainer/lvlselectbtn" to="." method="onLvlSelectBtnPressed"]
+[connection signal="pressed" from="pausemenu/CenterContainer/VBoxContainer/HBoxContainer/settings" to="." method="onSettingsPressed"]
+[connection signal="pressed" from="pausemenu/x-btn" to="." method="onPlayBtnPressed"]

@@ -67,15 +67,18 @@ var paused = false;
 
 signal onStateChanged(new_state)
 
+var startedGame = false;
+
 func _ready() -> void:
-	Data.DeleteSave();
 	defaultButtons.visible = false;
 	defaultUI.visible = false;
 	gameIntro.visible = true;
 	onPathToggled(); # to set current path before we start
-	changeState(States.INTRO)
 
 func _process(delta: float) -> void:
+	if not startedGame: 
+		startedGame = true;
+		startGame();
 	for island in islands:
 		island.get_node("Btn").visible = not activePath.isDrawing;
 
@@ -136,6 +139,7 @@ func checkLevelComplete():
 
 func showLevelCompleteMenu():
 	levelCompleteMenu.visible = true;
+	Data.OnLevelComplete(currents.paths.size() + winds.paths.size())
 	if (Data.CurrentLevelIsLast()):
 		levelCompleteMenu.get_node("nextLevelBtn").visible = false;
 
@@ -206,25 +210,16 @@ func _on_exitBtn_pressed() -> void:
 	get_tree().quit();
 	
 func startGame() -> void:
-	Data.LoadGame();
 	goToNextLevel();
 	setupUI();
 	changeState(States.EDIT);
+	if (Data.currentLevel == 0):
+		tutorialPrompt.visible = true;
 	gameIntro.visible = false;
 	
 func setupUI():
 	defaultButtons.visible = true;
 	defaultUI.visible = true;
-
-func onPausePressed() -> void:
-	togglePause();
-	sndButtonClick.play();
-	pauseMenu.visible = paused;
-
-func onUnpausePressed() -> void:
-	sndButtonClick.play();
-	pauseMenu.visible = false;
-	togglePause();
 
 func togglePause(forcePause = null):
 	paused = forcePause or !paused;
@@ -265,3 +260,7 @@ func onTutWindowClose() -> void:
 	sndButtonClick.play();
 	togglePause(false);
 	tutorialWindow.visible = false;
+
+
+func onLevelSelectBtnPressed() -> void:
+	get_tree().change_scene("res://src/Scenes/LevelSelectScene.tscn")

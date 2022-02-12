@@ -1,21 +1,21 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://assets/roundedRectWhite.png" type="Texture" id=1]
-[ext_resource path="res://assets/SpaceMono-Bold.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://assets/SpaceMono-Regular.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://src/prefabs/LevelRow.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/SpaceMono-Bold.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/SpaceMono-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://src/prefabs/ui/LevelRow.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/prefabs/ui/PauseMenu.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/LevelSelectScene.gd" type="Script" id=5]
-[ext_resource path="res://assets/pausebutton.png" type="Texture" id=6]
-[ext_resource path="res://src/prefabs/PauseMenu.tscn" type="PackedScene" id=7]
-[ext_resource path="res://src/PauseButton.gd" type="Script" id=14]
+[ext_resource path="res://src/PauseButton.gd" type="Script" id=6]
+[ext_resource path="res://assets/pausebutton.png" type="Texture" id=7]
+[ext_resource path="res://assets/roundedRectWhite.png" type="Texture" id=8]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
-font_data = ExtResource( 2 )
+font_data = ExtResource( 1 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 32
-font_data = ExtResource( 3 )
+font_data = ExtResource( 2 )
 
 [sub_resource type="StyleBoxTexture" id=3]
 region_rect = Rect2( 498, 124, 4, 4 )
@@ -25,7 +25,7 @@ VScrollBar/styles/grabber = SubResource( 3 )
 
 [node name="LevelSelect" type="Node2D"]
 script = ExtResource( 5 )
-levelRow = ExtResource( 4 )
+levelRow = ExtResource( 3 )
 levelDirectory = "res://src/prefabs/Levels"
 levelContainer = NodePath("ScrollContainer/LevelList")
 
@@ -45,7 +45,7 @@ margin_top = -57.0
 margin_right = 1024.0
 margin_bottom = 92.0
 rect_pivot_offset = Vector2( 0, -90 )
-texture = ExtResource( 1 )
+texture = ExtResource( 8 )
 patch_margin_left = 60
 patch_margin_top = 60
 patch_margin_right = 60
@@ -113,14 +113,17 @@ margin_left = 928.0
 margin_top = 12.0
 margin_right = 992.0
 margin_bottom = 76.0
-texture_normal = ExtResource( 6 )
-script = ExtResource( 14 )
+texture_normal = ExtResource( 7 )
+script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 pauseScreen = NodePath("../PauseMenu")
 
-[node name="PauseMenu" parent="." instance=ExtResource( 7 )]
+[node name="PauseMenu" parent="." instance=ExtResource( 4 )]
 visible = false
+position = Vector2( 512, 288 )
+scale = Vector2( 0.9, 0.9 )
+includeLevelSelectBtn = false
 
 [connection signal="pressed" from="PauseButton" to="PauseButton" method="onPressed"]

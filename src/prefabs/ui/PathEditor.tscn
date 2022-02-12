@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://src/prefabs/PathEditor.gd" type="Script" id=1]
+[ext_resource path="res://src/prefabs/ui/PathEditor.gd" type="Script" id=1]
 [ext_resource path="res://assets/sounds/current-place.wav" type="AudioStream" id=2]
 [ext_resource path="res://assets/sounds/wind-place.wav" type="AudioStream" id=3]
 

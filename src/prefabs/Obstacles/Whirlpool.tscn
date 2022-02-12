@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://src/prefabs/Obstacles/Whirlpool.gd" type="Script" id=1]
+[ext_resource path="res://src/prefabs/obstacles/Whirlpool.gd" type="Script" id=1]
 [ext_resource path="res://assets/whirlpool.png" type="Texture" id=2]
 
 [node name="Whirlpool" type="Node2D"]

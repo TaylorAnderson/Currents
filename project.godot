@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "GameManager",
 "language": "GDScript",
-"path": "res://src/GameManager.gd"
+"path": "res://src/util/GameManager.gd"
 }, {
 "base": "",
 "class": "GitAPI",
@@ -32,7 +32,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Math",
 "language": "GDScript",
-"path": "res://src/Math.gd"
+"path": "res://src/util/Math.gd"
 }, {
 "base": "Node2D",
 "class": "Metadata",
@@ -47,12 +47,17 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "PathEditor",
 "language": "GDScript",
-"path": "res://src/prefabs/PathEditor.gd"
+"path": "res://src/prefabs/ui/PathEditor.gd"
 }, {
 "base": "TextureButton",
 "class": "PathToggle",
 "language": "GDScript",
 "path": "res://src/PathToggle.gd"
+}, {
+"base": "Node2D",
+"class": "PauseMenu",
+"language": "GDScript",
+"path": "res://src/prefabs/ui/PauseMenu.gd"
 }, {
 "base": "Node2D",
 "class": "Ship",
@@ -62,7 +67,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Whirlpool",
 "language": "GDScript",
-"path": "res://src/prefabs/Obstacles/Whirlpool.gd"
+"path": "res://src/prefabs/obstacles/Whirlpool.gd"
 } ]
 _global_script_class_icons={
 "GameManager": "",
@@ -74,6 +79,7 @@ _global_script_class_icons={
 "Obstacle": "",
 "PathEditor": "",
 "PathToggle": "",
+"PauseMenu": "",
 "Ship": "",
 "Whirlpool": ""
 }
@@ -81,13 +87,13 @@ _global_script_class_icons={
 [application]
 
 config/name="Currents"
-run/main_scene="res://src/GameScene.tscn"
+run/main_scene="res://src/scenes/IntroScene.tscn"
 config/icon="res://assets/icon.png"
 
 [autoload]
 
-Global="*res://src/Global.gd"
-Data="*res://Data.gd"
+Global="*res://src/util/Global.gd"
+Data="*res://src/util/Data.gd"
 
 [display]
 
@@ -107,4 +113,5 @@ common/enable_pause_aware_picking=true
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
+quality/filters/anisotropic_filter_level=8
 environment/default_environment="res://assets/default_env.tres"

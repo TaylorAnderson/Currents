@@ -1,66 +1,67 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=41 format=2]
 
-[ext_resource path="res://src/LevelManager.gd" type="Script" id=1]
-[ext_resource path="res://assets/frame.png" type="Texture" id=2]
-[ext_resource path="res://assets/bg.png" type="Texture" id=3]
-[ext_resource path="res://assets/playBtn.png" type="Texture" id=4]
-[ext_resource path="res://assets/editBtn.png" type="Texture" id=5]
-[ext_resource path="res://src/prefabs/PathEditor.tscn" type="PackedScene" id=6]
-[ext_resource path="res://assets/current-arrow.png" type="Texture" id=7]
-[ext_resource path="res://src/GameManager.gd" type="Script" id=8]
-[ext_resource path="res://assets/wind-arrow.png" type="Texture" id=9]
-[ext_resource path="res://assets/nextLevelBtn.png" type="Texture" id=12]
-[ext_resource path="res://assets/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=13]
-[ext_resource path="res://assets/roundedRect.png" type="Texture" id=15]
-[ext_resource path="res://assets/saveBtn.png" type="Texture" id=17]
-[ext_resource path="res://src/prefabs/PermanentPath.tscn" type="PackedScene" id=19]
-[ext_resource path="res://assets/perm-wind-arrow.png" type="Texture" id=21]
-[ext_resource path="res://assets/deleteBtn.png" type="Texture" id=23]
-[ext_resource path="res://assets/restartBtn.png" type="Texture" id=25]
-[ext_resource path="res://assets/exitBtn.png" type="Texture" id=26]
-[ext_resource path="res://assets/sounds/button-click.wav" type="AudioStream" id=28]
-[ext_resource path="res://assets/beginBtn.png" type="Texture" id=29]
-[ext_resource path="res://assets/path-start-end-prompt.png" type="Texture" id=31]
-[ext_resource path="res://src/prefabs/PauseMenu.tscn" type="PackedScene" id=32]
-[ext_resource path="res://src/PauseButton.gd" type="Script" id=33]
-[ext_resource path="res://assets/pausebutton.png" type="Texture" id=34]
-[ext_resource path="res://assets/path-toggle1.png" type="Texture" id=38]
-[ext_resource path="res://src/PathToggle.gd" type="Script" id=39]
-[ext_resource path="res://assets/path-toggle2.png" type="Texture" id=40]
-[ext_resource path="res://assets/tut-btn.png" type="Texture" id=41]
-[ext_resource path="res://assets/SpaceMono-Bold.ttf" type="DynamicFontData" id=42]
-[ext_resource path="res://assets/x-btn.png" type="Texture" id=43]
-[ext_resource path="res://assets/SpaceMono-Regular.ttf" type="DynamicFontData" id=44]
+[ext_resource path="res://src/PathToggle.gd" type="Script" id=1]
+[ext_resource path="res://assets/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/SpaceMono-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/SpaceMono-Bold.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://src/util/LevelManager.gd" type="Script" id=5]
+[ext_resource path="res://src/util/GameManager.gd" type="Script" id=6]
+[ext_resource path="res://src/PauseButton.gd" type="Script" id=7]
+[ext_resource path="res://assets/bg.png" type="Texture" id=8]
+[ext_resource path="res://assets/x-btn.png" type="Texture" id=9]
+[ext_resource path="res://assets/roundedRect.png" type="Texture" id=10]
+[ext_resource path="res://assets/playBtn.png" type="Texture" id=11]
+[ext_resource path="res://assets/current-arrow.png" type="Texture" id=12]
+[ext_resource path="res://assets/deleteBtn.png" type="Texture" id=13]
+[ext_resource path="res://assets/restartBtn.png" type="Texture" id=14]
+[ext_resource path="res://assets/sounds/button-click.wav" type="AudioStream" id=15]
+[ext_resource path="res://assets/pausebutton.png" type="Texture" id=16]
+[ext_resource path="res://assets/tut-btn.png" type="Texture" id=17]
+[ext_resource path="res://assets/editBtn.png" type="Texture" id=18]
+[ext_resource path="res://assets/wind-arrow.png" type="Texture" id=19]
+[ext_resource path="res://assets/frame.png" type="Texture" id=20]
+[ext_resource path="res://assets/path-toggle2.png" type="Texture" id=21]
+[ext_resource path="res://assets/saveBtn.png" type="Texture" id=22]
+[ext_resource path="res://assets/perm-wind-arrow.png" type="Texture" id=23]
+[ext_resource path="res://assets/path-start-end-prompt.png" type="Texture" id=24]
+[ext_resource path="res://assets/path-toggle1.png" type="Texture" id=25]
+[ext_resource path="res://assets/beginBtn.png" type="Texture" id=26]
+[ext_resource path="res://assets/levelSelect.png" type="Texture" id=27]
+[ext_resource path="res://assets/nextLevelBtn.png" type="Texture" id=28]
+[ext_resource path="res://assets/exitBtn.png" type="Texture" id=29]
+[ext_resource path="res://src/prefabs/ui/PauseMenu.tscn" type="PackedScene" id=30]
+[ext_resource path="res://src/prefabs/PermanentPath.tscn" type="PackedScene" id=31]
+[ext_resource path="res://src/prefabs/ui/PathEditor.tscn" type="PackedScene" id=32]
 
 [sub_resource type="CanvasItemMaterial" id=9]
 
 [sub_resource type="DynamicFont" id=3]
 size = 64
-font_data = ExtResource( 13 )
+font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 24
-font_data = ExtResource( 13 )
+font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
-font_data = ExtResource( 13 )
+font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 24
-font_data = ExtResource( 13 )
+font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=12]
-font_data = ExtResource( 42 )
+font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=10]
 size = 32
-font_data = ExtResource( 13 )
+font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=13]
 size = 18
 outline_color = Color( 0.105882, 0.14902, 0.196078, 1 )
-font_data = ExtResource( 44 )
+font_data = ExtResource( 3 )
 
 [node name="GameScene" type="Node2D"]
 __meta__ = {
@@ -69,7 +70,7 @@ __meta__ = {
 
 [node name="GameManager" type="Node2D" parent="."]
 position = Vector2( 3, 0 )
-script = ExtResource( 8 )
+script = ExtResource( 6 )
 currents = NodePath("../Currents")
 winds = NodePath("../Winds")
 permCurrents = NodePath("../PermanentCurrents")
@@ -95,53 +96,54 @@ tutorialWindow = NodePath("../UILayer/TutorialWindow")
 tutorialPrompt = NodePath("../UILayer/DefaultUI/TutorialBtnPrompt")
 
 [node name="ButtonClickSound" type="AudioStreamPlayer" parent="GameManager"]
-stream = ExtResource( 28 )
+stream = ExtResource( 15 )
 volume_db = 7.0
 bus = "Sound"
 
 [node name="LevelManager" type="Node2D" parent="."]
-script = ExtResource( 1 )
+script = ExtResource( 5 )
+levelParent = NodePath("../Level")
 
 [node name="Bg" type="Sprite" parent="."]
 position = Vector2( 482, 270 )
 z_index = -100
-texture = ExtResource( 3 )
+texture = ExtResource( 8 )
 
-[node name="PermanentCurrents" parent="." instance=ExtResource( 19 )]
+[node name="PermanentCurrents" parent="." instance=ExtResource( 31 )]
 z_index = -51
 z_as_relative = false
 radius = 32
 color = Color( 0.113725, 0.423529, 0.639216, 1 )
-arrowTex = ExtResource( 7 )
+arrowTex = ExtResource( 12 )
 pathType = "current"
 
-[node name="Currents" parent="." instance=ExtResource( 6 )]
+[node name="Currents" parent="." instance=ExtResource( 32 )]
 z_index = -50
 z_as_relative = false
 type = "current"
 radius = 32
 color = Color( 0.168627, 0.560784, 0.839216, 1 )
-arrowTex = ExtResource( 7 )
+arrowTex = ExtResource( 12 )
 
 [node name="Level" type="Node2D" parent="."]
 position = Vector2( 40, 30 )
 
-[node name="Winds" parent="." instance=ExtResource( 6 )]
+[node name="Winds" parent="." instance=ExtResource( 32 )]
 z_index = 98
 z_as_relative = false
 type = "wind"
 radius = 24
 color = Color( 0.168627, 0.560784, 0.839216, 0 )
-arrowTex = ExtResource( 9 )
+arrowTex = ExtResource( 19 )
 arrowInterval = 8
 strength = 0.75
 
-[node name="PermanentWind" parent="." instance=ExtResource( 19 )]
+[node name="PermanentWind" parent="." instance=ExtResource( 31 )]
 z_index = 99
 z_as_relative = false
 radius = 24
 color = Color( 1, 0, 0, 0 )
-arrowTex = ExtResource( 21 )
+arrowTex = ExtResource( 23 )
 arrowInterval = 10
 pathType = "wind"
 
@@ -149,15 +151,16 @@ pathType = "wind"
 material = SubResource( 9 )
 position = Vector2( 512, 288 )
 z_index = 100
-texture = ExtResource( 2 )
+texture = ExtResource( 20 )
 
 [node name="PathTut" type="Sprite" parent="."]
 visible = false
 position = Vector2( 512, 288 )
 z_index = 101
-texture = ExtResource( 31 )
+texture = ExtResource( 24 )
 
 [node name="gameIntro" type="Node2D" parent="."]
+visible = false
 position = Vector2( 490, 232 )
 z_index = 101
 
@@ -167,7 +170,7 @@ margin_left = -412.0
 margin_top = -170.0
 margin_right = 456.0
 margin_bottom = 282.0
-texture = ExtResource( 15 )
+texture = ExtResource( 10 )
 region_rect = Rect2( 0, 0, 240, 240 )
 patch_margin_left = 80
 patch_margin_top = 80
@@ -306,7 +309,7 @@ margin_left = -33.0
 margin_top = 171.0
 margin_right = 108.0
 margin_bottom = 246.0
-texture_normal = ExtResource( 29 )
+texture_normal = ExtResource( 26 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -324,7 +327,7 @@ margin_bottom = 59.0
 rect_pivot_offset = Vector2( 0, -311 )
 focus_mode = 0
 enabled_focus_mode = 0
-texture_normal = ExtResource( 17 )
+texture_normal = ExtResource( 22 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -338,7 +341,7 @@ margin_bottom = 133.0
 rect_pivot_offset = Vector2( 0, -311 )
 focus_mode = 0
 enabled_focus_mode = 0
-texture_normal = ExtResource( 23 )
+texture_normal = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -350,7 +353,7 @@ margin_right = 1006.0
 margin_bottom = 560.0
 focus_mode = 0
 enabled_focus_mode = 0
-texture_normal = ExtResource( 12 )
+texture_normal = ExtResource( 28 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -365,7 +368,7 @@ margin_bottom = 560.0
 rect_pivot_offset = Vector2( 0, -311 )
 focus_mode = 0
 enabled_focus_mode = 0
-texture_normal = ExtResource( 5 )
+texture_normal = ExtResource( 18 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -377,7 +380,7 @@ margin_right = 100.0
 margin_bottom = 560.0
 focus_mode = 0
 enabled_focus_mode = 0
-texture_normal = ExtResource( 4 )
+texture_normal = ExtResource( 11 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -389,8 +392,8 @@ rect_pivot_offset = Vector2( 41, 41 )
 focus_mode = 0
 shortcut_in_tooltip = false
 enabled_focus_mode = 0
-texture_normal = ExtResource( 34 )
-script = ExtResource( 33 )
+texture_normal = ExtResource( 16 )
+script = ExtResource( 7 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -405,7 +408,7 @@ rect_pivot_offset = Vector2( 41, 41 )
 focus_mode = 0
 shortcut_in_tooltip = false
 enabled_focus_mode = 0
-texture_normal = ExtResource( 41 )
+texture_normal = ExtResource( 17 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -418,13 +421,13 @@ margin_bottom = 602.0
 rect_scale = Vector2( 0.6, 0.6 )
 focus_mode = 0
 enabled_focus_mode = 0
-texture_normal = ExtResource( 38 )
-script = ExtResource( 39 )
+texture_normal = ExtResource( 25 )
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-currentTexture = ExtResource( 38 )
-windTexture = ExtResource( 40 )
+currentTexture = ExtResource( 25 )
+windTexture = ExtResource( 21 )
 
 [node name="levelComplete" type="Node2D" parent="."]
 visible = false
@@ -432,12 +435,12 @@ position = Vector2( 512, 230 )
 z_index = 101
 
 [node name="bg" type="NinePatchRect" parent="levelComplete"]
-self_modulate = Color( 0, 0, 0, 0.756863 )
-margin_left = -200.0
-margin_top = -87.0
-margin_right = 215.0
-margin_bottom = 196.0
-texture = ExtResource( 15 )
+self_modulate = Color( 0, 0, 0, 1 )
+margin_left = -199.0
+margin_top = -126.0
+margin_right = 216.0
+margin_bottom = 247.0
+texture = ExtResource( 10 )
 region_rect = Rect2( 0, 0, 240, 240 )
 patch_margin_left = 80
 patch_margin_top = 80
@@ -449,9 +452,9 @@ __meta__ = {
 
 [node name="RichTextLabel" type="RichTextLabel" parent="levelComplete"]
 margin_left = -143.0
-margin_top = -66.0
+margin_top = -94.0
 margin_right = 172.0
-margin_bottom = -17.0
+margin_bottom = -45.0
 custom_fonts/normal_font = SubResource( 1 )
 text = "level complete!"
 __meta__ = {
@@ -475,27 +478,39 @@ anchor_bottom = 1.0
 step = 1.0
 
 [node name="nextLevelBtn" type="TextureButton" parent="levelComplete"]
-margin_left = -115.0
-margin_top = 11.0
-margin_right = 110.0
-margin_bottom = 86.0
-texture_normal = ExtResource( 12 )
+margin_left = -110.0
+margin_top = -35.0
+margin_right = 115.0
+margin_bottom = 40.0
+texture_normal = ExtResource( 28 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="editBtn" type="TextureButton" parent="levelComplete"]
-margin_left = -54.0
-margin_top = 96.0
-margin_right = 62.0
-margin_bottom = 171.0
-texture_normal = ExtResource( 5 )
+margin_left = -49.0
+margin_top = 50.0
+margin_right = 67.0
+margin_bottom = 125.0
+texture_normal = ExtResource( 18 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="pauseMenu" parent="." instance=ExtResource( 32 )]
+[node name="TextureButton" type="TextureButton" parent="levelComplete"]
+margin_left = -125.0
+margin_top = 135.0
+margin_right = 150.0
+margin_bottom = 210.0
+texture_normal = ExtResource( 27 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pauseMenu" parent="." instance=ExtResource( 30 )]
 visible = false
+position = Vector2( 517, 270 )
+scale = Vector2( 1, 1 )
 
 [node name="gameComplete" type="Node2D" parent="."]
 visible = false
@@ -508,7 +523,7 @@ margin_left = -200.0
 margin_top = -147.0
 margin_right = 215.0
 margin_bottom = 243.0
-texture = ExtResource( 15 )
+texture = ExtResource( 10 )
 region_rect = Rect2( 0, 0, 240, 240 )
 patch_margin_left = 80
 patch_margin_top = 80
@@ -580,7 +595,7 @@ margin_left = -77.0
 margin_top = 49.0
 margin_right = 148.0
 margin_bottom = 124.0
-texture_normal = ExtResource( 25 )
+texture_normal = ExtResource( 14 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -590,12 +605,13 @@ margin_left = -54.0
 margin_top = 134.0
 margin_right = 62.0
 margin_bottom = 209.0
-texture_normal = ExtResource( 26 )
+texture_normal = ExtResource( 29 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="UILayer" type="CanvasLayer" parent="."]
+layer = 0
 
 [node name="DefaultUI" type="Node2D" parent="UILayer"]
 
@@ -660,6 +676,7 @@ anchor_bottom = 1.0
 step = 1.0
 
 [node name="TutorialBtnPrompt" type="RichTextLabel" parent="UILayer/DefaultUI"]
+visible = false
 self_modulate = Color( 1, 1, 1, 0.690196 )
 margin_left = 80.0
 margin_top = 14.0
@@ -681,7 +698,7 @@ margin_left = 228.0
 margin_top = 149.0
 margin_right = 795.0
 margin_bottom = 423.0
-texture = ExtResource( 15 )
+texture = ExtResource( 10 )
 patch_margin_left = 100
 patch_margin_top = 100
 patch_margin_right = 100
@@ -737,7 +754,7 @@ margin_left = 734.0
 margin_top = 158.0
 margin_right = 774.0
 margin_bottom = 198.0
-texture_normal = ExtResource( 43 )
+texture_normal = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -754,6 +771,7 @@ __meta__ = {
 [connection signal="pressed" from="buttons/DefaultButtons/PathToggle" to="buttons/DefaultButtons/PathToggle" method="onPressed"]
 [connection signal="pressed" from="levelComplete/nextLevelBtn" to="GameManager" method="_on_NextLevelBtn_pressed"]
 [connection signal="pressed" from="levelComplete/editBtn" to="GameManager" method="onButtonPressed"]
+[connection signal="pressed" from="levelComplete/TextureButton" to="GameManager" method="onLevelSelectBtnPressed"]
 [connection signal="pressed" from="gameComplete/restartBtn" to="GameManager" method="_on_restartBtn_pressed"]
 [connection signal="pressed" from="gameComplete/exitBtn" to="GameManager" method="_on_exitBtn_pressed"]
 [connection signal="pressed" from="UILayer/TutorialWindow/TextureButton" to="GameManager" method="onTutWindowClose"]

@@ -77,14 +77,14 @@ margin_bottom = 50.0
 rect_min_size = Vector2( 40, 40 )
 
 [node name="BG" type="ColorRect" parent="ContentRow/CompleteIcon"]
-margin_top = 5.0
-margin_right = 40.0
-margin_bottom = 45.0
-rect_min_size = Vector2( 40, 40 )
+margin_left = 5.0
+margin_top = 10.0
+margin_right = 35.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 30, 30 )
 color = Color( 0, 0.341176, 0.517647, 1 )
 
 [node name="Icon" type="TextureRect" parent="ContentRow/CompleteIcon"]
-visible = false
 margin_top = 5.0
 margin_right = 40.0
 margin_bottom = 45.0
@@ -106,11 +106,11 @@ margin_bottom = 50.0
 rect_min_size = Vector2( 50, 50 )
 
 [node name="BG" type="ColorRect" parent="ContentRow/PathsCompleteIcon"]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 45.0
-margin_bottom = 45.0
-rect_min_size = Vector2( 40, 40 )
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 30, 30 )
 color = Color( 0, 0.341176, 0.517647, 1 )
 
 [node name="Icon" type="TextureRect" parent="ContentRow/PathsCompleteIcon"]

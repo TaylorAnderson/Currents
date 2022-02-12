@@ -5,8 +5,9 @@ var data:Dictionary;
 var currentLevel:int
 var levelOrderResPath = "res://src/LevelOrder.tres";
 var levelOrderResource:LevelOrder;
-func _buildData():
+func _ready() -> void:
 	levelOrderResource = ResourceLoader.load(levelOrderResPath) as LevelOrder;
+func _buildData():
 	self.data.levelArr = [];
 	for levelScene in levelOrderResource.levels:
 		var levelInst = levelScene.instance();
@@ -15,7 +16,7 @@ func _buildData():
 			levelName = levelData.levelName,
 			levelPaths = levelData.minPathsToSolve,
 			complete = false,
-			completeUnderPar = false
+			completeOnPar = false
 		}
 		self.data.levelArr.append(object);
 
@@ -40,9 +41,10 @@ func DeleteSave() -> void:
 func SetCurrentLevel(index):
 	currentLevel = index;
 
-func OnLevelComplete(underPar:bool):
+func OnLevelComplete(numPaths):
+	var metPar = numPaths <= data.levelArr[currentLevel].levelPaths;
 	data.levelArr[currentLevel].complete = true;
-	data.levelArr[currentLevel].completeUnderPar = underPar;
+	data.levelArr[currentLevel].completeOnPar = metPar or data.levelArr[currentLevel].completeOnPar;
 
 func GetCurrentLevelScene():
 	return levelOrderResource.levels[currentLevel]
