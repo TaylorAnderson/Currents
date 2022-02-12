@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://PirateShipIndicatorFrames.tres" type="SpriteFrames" id=1]
+
+[node name="PirateShipIndicator" type="Node2D"]
+
+[node name="BG" type="AnimatedSprite" parent="."]
+position = Vector2( 0, 3 )
+z_index = 100
+frames = ExtResource( 1 )
+offset = Vector2( 0, -3 )
+
+[node name="Skull" type="AnimatedSprite" parent="."]
+position = Vector2( 0, 2 )
+z_index = 101
+frames = ExtResource( 1 )
+frame = 1

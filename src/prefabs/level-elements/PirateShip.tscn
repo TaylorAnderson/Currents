@@ -1,0 +1,144 @@
+[gd_scene load_steps=23 format=2]
+
+[ext_resource path="res://assets/pirate-ship.png" type="Texture" id=1]
+[ext_resource path="res://src/prefabs/level-elements/PirateShip.gd" type="Script" id=2]
+[ext_resource path="res://assets/ship-destroy-anim.png" type="Texture" id=3]
+[ext_resource path="res://assets/pirate-ship-wreck.png" type="Texture" id=4]
+[ext_resource path="res://assets/water-particle.png" type="Texture" id=5]
+[ext_resource path="res://assets/sounds/explosion.wav" type="AudioStream" id=6]
+
+[sub_resource type="AtlasTexture" id=31]
+flags = 4
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 48, 48 )
+
+[sub_resource type="SpriteFrames" id=32]
+animations = [ {
+"frames": [ SubResource( 31 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=29]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 48, 48 )
+
+[sub_resource type="SpriteFrames" id=30]
+animations = [ {
+"frames": [ SubResource( 29 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 360, 0, 180, 180 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 540, 0, 180, 180 )
+
+[sub_resource type="AtlasTexture" id=11]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 0, 180, 180, 180 )
+
+[sub_resource type="AtlasTexture" id=12]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 180, 180, 180, 180 )
+
+[sub_resource type="AtlasTexture" id=13]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 360, 180, 180, 180 )
+
+[sub_resource type="AtlasTexture" id=14]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 540, 180, 180, 180 )
+
+[sub_resource type="AtlasTexture" id=15]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 0, 360, 180, 180 )
+
+[sub_resource type="AtlasTexture" id=16]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 180, 360, 180, 180 )
+
+[sub_resource type="SpriteFrames" id=19]
+animations = [ {
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Curve" id=26]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.213523, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=27]
+offsets = PoolRealArray( 0, 0.457364, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 0.931504, 0.978328, 1, 1, 0.192157, 0.635294, 0.94902, 1 )
+
+[sub_resource type="Curve" id=28]
+_data = [ Vector2( 0.00711744, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.75089, 0 ), 0.0, 0.0, 0, 0 ]
+
+[node name="PirateShip" type="Node2D"]
+z_as_relative = false
+script = ExtResource( 2 )
+
+[node name="DeadSprite" type="AnimatedSprite" parent="."]
+visible = false
+frames = SubResource( 32 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 30 )
+
+[node name="Explosion" type="AnimatedSprite" parent="."]
+visible = false
+frames = SubResource( 19 )
+speed_scale = 3.0
+
+[node name="Particles2D" type="CPUParticles2D" parent="."]
+position = Vector2( 0, 18 )
+amount = 5
+texture = ExtResource( 5 )
+direction = Vector2( -1, 0 )
+spread = 8.27
+gravity = Vector2( 0, 0 )
+initial_velocity = 50.0
+scale_amount = 0.3
+scale_amount_curve = SubResource( 26 )
+color_ramp = SubResource( 27 )
+
+[node name="ExplosionSnd" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = -16.59
+bus = "Sound"
+
+[node name="GotToDestSnd" type="AudioStreamPlayer" parent="."]
+bus = "Sound"
+
+[node name="OnAccept" type="CPUParticles2D" parent="."]
+visible = false
+amount = 60
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+texture = ExtResource( 5 )
+direction = Vector2( 20, 0 )
+spread = 180.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 163.21
+scale_amount = 0.8
+scale_amount_curve = SubResource( 28 )
+
+[connection signal="animation_finished" from="Explosion" to="." method="_on_Explosion_animation_finished"]

@@ -52,6 +52,7 @@ var allPoints = [];
 var islands = [];
 var obstacles = [];
 var ships = [];
+var pirateSpawners = [];
 var switchDelay = 0;
 var levelComplete = false;
 
@@ -111,7 +112,8 @@ func changeState(newState):
 
 		for isle in islands:
 			isle.onPlayModeStart();
-	
+		for spawner in pirateSpawners:
+			spawner.spawn();
 	if state == States.EDIT:
 		playBtn.visible = false;
 		editBtn.visible = true;
@@ -123,11 +125,18 @@ func changeState(newState):
 			if is_instance_valid(ship):
 				ship.queue_free();
 		ships = [];
+		
+		for obst in obstacles:
+			if obst is Treasure:
+				obst.respawn();
+
 		for isle in islands:
 			isle.onEditModeStart();
-	
+		for spawner in pirateSpawners:
+			spawner.enterEditMode();
 	if state == States.INTRO:
 		defaultButtons.visible = false;
+
 func checkLevelComplete():
 	var allIslandsComplete = true;
 	for isle in islands:
@@ -165,6 +174,9 @@ func processLevel():
 		tutorialBtn.visible = true;
 	islands = levelManager.currentLevel.get_node("Islands").get_children()
 	obstacles = levelManager.currentLevel.get_node("Obstacles").get_children();
+	for ob in obstacles:
+		if ob is PirateSpawner:
+			pirateSpawners.append(ob);
 	var path = permanentPathRootPath + (levelManager.currentLevel.name) + ".json";
 	permCurrents.loadJson(path);
 	permWinds.loadJson(path);

@@ -10,11 +10,12 @@ var accel:Vector2 = Vector2(0,0);
 var currentPoint:Vector2;
 var radius = 20
 var drag = 0.99
-var accelMax = 0.11 # 0.15;
+var accelMax = 0.06 # 0.15;
 var velMax = 3 # 2;
 var island
 var setFrame = false;
 var toBeKilled = false;
+var collectedTreasure = false;
 onready var spr = get_node("Sprite") as AnimatedSprite;
 onready var deadSpr = get_node("DeadSprite") as AnimatedSprite;
 onready var explosion = get_node("Explosion") as AnimatedSprite;
@@ -67,6 +68,7 @@ func _process(delta: float) -> void:
 			if is_instance_valid(ship):
 				if (global_position.distance_to(ship.global_position) < radius + ship.radius) and ship != self and not ship.dead:
 					explode();
+					ship.explode();
 				
 		for obstacle in gm.obstacles:
 			if obstacle is Obstacle:
@@ -77,10 +79,13 @@ func _process(delta: float) -> void:
 					var whirlpoolCenter = obstacle.global_position + Vector2.DOWN * obstacle.offsetY
 					var velToCenter = (whirlpoolCenter - global_position).normalized();
 					vel += velToCenter * 0.1;
-		
+			if obstacle is Treasure and not obstacle.collected:
+				if global_position.distance_to(obstacle.global_position) < radius + obstacle.radius:
+					obstacle.collect();
+					collectedTreasure = true;
 		if island:
 			if global_position.distance_to(island.dest.global_position) < radius + island.dest.radius:
-				island.dest.acceptShip();
+				island.dest.acceptShip(self);
 				queue_free();
 				dead = true;
 		

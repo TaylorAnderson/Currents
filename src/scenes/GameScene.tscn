@@ -1,6 +1,6 @@
 [gd_scene load_steps=41 format=2]
 
-[ext_resource path="res://src/PathToggle.gd" type="Script" id=1]
+[ext_resource path="res://src/prefabs/ui/PathToggle.gd" type="Script" id=1]
 [ext_resource path="res://assets/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://assets/SpaceMono-Regular.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://assets/SpaceMono-Bold.ttf" type="DynamicFontData" id=4]
@@ -30,7 +30,7 @@
 [ext_resource path="res://assets/nextLevelBtn.png" type="Texture" id=28]
 [ext_resource path="res://assets/exitBtn.png" type="Texture" id=29]
 [ext_resource path="res://src/prefabs/ui/PauseMenu.tscn" type="PackedScene" id=30]
-[ext_resource path="res://src/prefabs/PermanentPath.tscn" type="PackedScene" id=31]
+[ext_resource path="res://src/prefabs/level-elements/PermanentPath.tscn" type="PackedScene" id=31]
 [ext_resource path="res://src/prefabs/ui/PathEditor.tscn" type="PackedScene" id=32]
 
 [sub_resource type="CanvasItemMaterial" id=9]
@@ -767,7 +767,6 @@ __meta__ = {
 [connection signal="pressed" from="buttons/DefaultButtons/PlayStateBtn" to="GameManager" method="onButtonPressed"]
 [connection signal="pressed" from="buttons/DefaultButtons/PauseButton" to="buttons/DefaultButtons/PauseButton" method="onPressed"]
 [connection signal="pressed" from="buttons/DefaultButtons/TutButton" to="GameManager" method="onTutorialBtnPressed"]
-[connection signal="pathToggled" from="buttons/DefaultButtons/PathToggle" to="GameManager" method="onPathToggled"]
 [connection signal="pressed" from="buttons/DefaultButtons/PathToggle" to="buttons/DefaultButtons/PathToggle" method="onPressed"]
 [connection signal="pressed" from="levelComplete/nextLevelBtn" to="GameManager" method="_on_NextLevelBtn_pressed"]
 [connection signal="pressed" from="levelComplete/editBtn" to="GameManager" method="onButtonPressed"]

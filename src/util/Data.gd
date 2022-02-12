@@ -52,9 +52,10 @@ func GetCurrentLevelScene():
 # This advances to the next level
 func GetNextLevelScene():
 		currentLevel+=1;
+		print(currentLevel);
 		if CurrentLevelIsLast():
 			return false;
 		return levelOrderResource.levels[currentLevel]
 
 func CurrentLevelIsLast():
-	return currentLevel >= levelOrderResource.levels.size()-1
+	return currentLevel >= levelOrderResource.levels.size()

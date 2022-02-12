@@ -24,6 +24,7 @@ var dest:Node2D
 onready var img = get_node("AnimatedSprite") as AnimatedSprite;
 onready var gm:GameManager = get_node("/root/GameScene/GameManager") as GameManager
 onready var winAnim:AnimatedSprite = get_node("WinAnim") as AnimatedSprite;
+onready var treasureIndicator = get_node("TreasureIndicator") as AnimatedSprite
 var initialShipVel = 0.5;
 var hovered = false;
 var arrowInterval = 20;
@@ -31,6 +32,8 @@ var currentMouse;
 var shipsExpecting = 0;
 var shipsReceived = 0;
 var completed = false;
+export var wantsTreasure = false;
+var collectedTreasure = false;
 export(Texture) var pathArrowTex:Texture
 
 onready var sndAcceptShip = get_node("AcceptShipSnd")
@@ -46,10 +49,13 @@ func _ready() -> void:
 		dest.shipsExpecting+=1;
 	
 func _process(_delta: float) -> void:
-	pass;
+	treasureIndicator.visible = wantsTreasure;
+	if collectedTreasure: treasureIndicator.frame = 0;
+	else: treasureIndicator.frame = 1;
 	# if dest.dest:
 		# if (dest.dest == self): arrowInterval = 30;
 func _draw() -> void:
+
 	if hovered and dest:
 		var currentPos = Vector2.DOWN * 10;
 		var pixelsTravelled = 0;
@@ -67,18 +73,20 @@ func _draw() -> void:
 
 func spawnShip():
 	var destVec = (dest.global_position - global_position).normalized();
-	var ship = shipPrefab.instance() as Ship
+	var ship = shipPrefab.instance()
 	get_parent().add_child(ship);
 	gm.ships.append(ship);
 	ship.island = self;
 	ship.global_position = global_position + destVec * radius;
 	ship.vel = destVec * initialShipVel;
 		
-func acceptShip():
+func acceptShip(ship):
 	sndAcceptShip.play();
 	winAnim.play("ship_add");
-	shipsReceived +=1;
-	if shipsReceived == shipsExpecting:
+	shipsReceived += 1;
+	if (ship.collectedTreasure):
+		collectedTreasure = true;
+	if shipsReceived == shipsExpecting and (not wantsTreasure or collectedTreasure):
 		playVictory();
 		yield(get_tree().create_timer(0.4), "timeout")
 		sndHighlight.play();
@@ -88,9 +96,14 @@ func playVictory():
 	winAnim.play("all_ships_added");
 
 func onEditModeStart():
+	
 	completed = false;
 	winAnim.frame = 0;
 	winAnim.visible = false;
+	
+	collectedTreasure = false;
+			
+			
 
 func onPlayModeStart():
 	if shipsExpecting == 0:

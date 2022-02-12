@@ -2,7 +2,6 @@ extends Node2D
 
 func _ready() -> void:
 	Data.LoadGame();
-	print(Data.data);
 
 
 func onPlayBtnPressed() -> void:
