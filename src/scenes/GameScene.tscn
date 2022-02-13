@@ -767,6 +767,7 @@ __meta__ = {
 [connection signal="pressed" from="buttons/DefaultButtons/PlayStateBtn" to="GameManager" method="onButtonPressed"]
 [connection signal="pressed" from="buttons/DefaultButtons/PauseButton" to="buttons/DefaultButtons/PauseButton" method="onPressed"]
 [connection signal="pressed" from="buttons/DefaultButtons/TutButton" to="GameManager" method="onTutorialBtnPressed"]
+[connection signal="pathToggled" from="buttons/DefaultButtons/PathToggle" to="GameManager" method="onPathToggled"]
 [connection signal="pressed" from="buttons/DefaultButtons/PathToggle" to="buttons/DefaultButtons/PathToggle" method="onPressed"]
 [connection signal="pressed" from="levelComplete/nextLevelBtn" to="GameManager" method="_on_NextLevelBtn_pressed"]
 [connection signal="pressed" from="levelComplete/editBtn" to="GameManager" method="onButtonPressed"]
