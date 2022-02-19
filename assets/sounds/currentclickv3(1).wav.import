@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/currentclickv3(1).wav-8602ee9114e0e93ca72665dc34ab2d5b.sample"
+
+[deps]
+
+source_file="res://assets/sounds/currentclickv3(1).wav"
+dest_files=[ "res://.import/currentclickv3(1).wav-8602ee9114e0e93ca72665dc34ab2d5b.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=false
+edit/loop=false
+compress/mode=0

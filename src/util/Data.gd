@@ -8,7 +8,9 @@ var levelOrderResource:LevelOrder;
 func _ready() -> void:
 	levelOrderResource = ResourceLoader.load(levelOrderResPath) as LevelOrder;
 func _buildData():
+	print("building data");
 	self.data.levelArr = [];
+	self.data.shownComplete = false;
 	for levelScene in levelOrderResource.levels:
 		var levelInst = levelScene.instance();
 		var levelData = levelInst.get_node("Metadata") as Metadata;
@@ -27,12 +29,20 @@ func SaveGame() -> void:
 	file.close();
 
 func LoadGame() -> void:
+	print("loading game");
 	var file = File.new()
 	var error = file.open(saveDataPath, File.READ);
-	if not error:
-		data = JSON.parse(file.get_as_text()).result
-	else:
+	if error != OK:
 		_buildData();
+		return;
+	var fileTxt = file.get_as_text();
+	var jsonError = validate_json(fileTxt);
+	assert(jsonError.empty(), str("Invalid JSON ", jsonError))
+	var jsonResult = parse_json(fileTxt);
+	if typeof(jsonResult) != TYPE_DICTIONARY:
+		_buildData();
+		return;
+	data = jsonResult;
 
 func DeleteSave() -> void:
 	var dir = Directory.new();
@@ -59,3 +69,7 @@ func GetNextLevelScene():
 
 func CurrentLevelIsLast():
 	return currentLevel >= levelOrderResource.levels.size()
+
+func SetShownCompleteScreen():
+	self.data.shownComplete = true;
+	SaveGame();

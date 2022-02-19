@@ -10,6 +10,16 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node2D",
+"class": "AmbienceTrack",
+"language": "GDScript",
+"path": "res://src/prefabs/AmbienceTrack.gd"
+}, {
+"base": "TextureButton",
+"class": "CustomButton",
+"language": "GDScript",
+"path": "res://src/prefabs/ui/CustomButton.gd"
+}, {
+"base": "Node2D",
 "class": "GameManager",
 "language": "GDScript",
 "path": "res://src/util/GameManager.gd"
@@ -22,7 +32,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Island",
 "language": "GDScript",
-"path": "res://src/prefabs/level-elements/Island.gd"
+"path": "res://src/prefabs/game-elements/Island.gd"
 }, {
 "base": "Resource",
 "class": "LevelOrder",
@@ -37,7 +47,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Metadata",
 "language": "GDScript",
-"path": "res://src/prefabs/level-elements/Metadata.gd"
+"path": "res://src/prefabs/game-elements/Metadata.gd"
 }, {
 "base": "Node2D",
 "class": "Obstacle",
@@ -62,24 +72,26 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "PirateSpawner",
 "language": "GDScript",
-"path": "res://src/prefabs/level-elements/PirateSpawner.gd"
+"path": "res://src/prefabs/level-entities/PirateSpawner.gd"
 }, {
 "base": "Node2D",
 "class": "Ship",
 "language": "GDScript",
-"path": "res://src/prefabs/level-elements/Ship.gd"
+"path": "res://src/prefabs/game-elements/Ship.gd"
 }, {
 "base": "Node2D",
 "class": "Treasure",
 "language": "GDScript",
-"path": "res://src/prefabs/level-elements/Treasure.gd"
+"path": "res://src/prefabs/level-entities/Treasure.gd"
 }, {
 "base": "Node2D",
 "class": "Whirlpool",
 "language": "GDScript",
-"path": "res://src/prefabs/obstacles/Whirlpool.gd"
+"path": "res://src/prefabs/level-entities/Whirlpool.gd"
 } ]
 _global_script_class_icons={
+"AmbienceTrack": "",
+"CustomButton": "",
 "GameManager": "",
 "GitAPI": "",
 "Island": "",
@@ -100,7 +112,7 @@ _global_script_class_icons={
 
 config/name="Currents"
 run/main_scene="res://src/scenes/IntroScene.tscn"
-config/icon="res://assets/icon.png"
+config/icon="res://assets/sprites/icon.png"
 
 [autoload]
 
@@ -126,4 +138,4 @@ quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
 quality/filters/anisotropic_filter_level=8
-environment/default_environment="res://assets/default_env.tres"
+environment/default_environment="res://assets/sprites/default_env.tres"

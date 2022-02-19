@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/levelcompletefanfarev5.wav-8a65c20b07bec4febd1f7d45ab79e74d.sample"
+
+[deps]
+
+source_file="res://assets/sounds/levelcompletefanfarev5.wav"
+dest_files=[ "res://.import/levelcompletefanfarev5.wav-8a65c20b07bec4febd1f7d45ab79e74d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

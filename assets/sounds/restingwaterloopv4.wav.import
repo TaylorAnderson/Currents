@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/restingwaterloopv4.wav-e73286d9adf6b2448a35770bd8c16055.sample"
+
+[deps]
+
+source_file="res://assets/sounds/restingwaterloopv4.wav"
+dest_files=[ "res://.import/restingwaterloopv4.wav-e73286d9adf6b2448a35770bd8c16055.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/boatengineputterbitcrushv3.wav-0cd8d64040280de0687678acfafcd53e.sample"
+
+[deps]
+
+source_file="res://assets/sounds/boatengineputterbitcrushv3.wav"
+dest_files=[ "res://.import/boatengineputterbitcrushv3.wav-0cd8d64040280de0687678acfafcd53e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=false
+edit/loop=true
+compress/mode=0

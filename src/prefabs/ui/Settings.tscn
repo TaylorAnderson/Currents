@@ -1,11 +1,12 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://assets/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://assets/roundedRectWhite.png" type="Texture" id=2]
-[ext_resource path="res://assets/music-dial.png" type="Texture" id=3]
-[ext_resource path="res://assets/sound-dial.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/sprites/roundedRectWhite.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/music-dial.png" type="Texture" id=3]
+[ext_resource path="res://assets/sprites/sound-dial.png" type="Texture" id=4]
 [ext_resource path="res://src/prefabs/ui/Settings.gd" type="Script" id=5]
 [ext_resource path="res://src/prefabs/ui/SliderLine.tres" type="StyleBox" id=6]
+[ext_resource path="res://assets/sounds/currentclickv3(1).wav" type="AudioStream" id=7]
 
 [sub_resource type="DynamicFont" id=8]
 size = 48
@@ -100,5 +101,13 @@ max_value = 0.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="SoundSliderSnd" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -10.0
+
+[node name="MusicSliderSnd" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -10.0
 
 [connection signal="value_changed" from="BG/sound-slider" to="." method="onSoundSliderValueChanged"]

@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://src/prefabs/level-elements/Metadata.gd" type="Script" id=2]
-[ext_resource path="res://assets/frame.png" type="Texture" id=5]
-[ext_resource path="res://assets/bg.png" type="Texture" id=6]
+[ext_resource path="res://src/prefabs/game-elements/Metadata.gd" type="Script" id=2]
+[ext_resource path="res://assets/sprites/frame.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/bg.png" type="Texture" id=6]
 
 [node name="TemplateLevel" type="Node2D"]
 

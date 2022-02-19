@@ -3,6 +3,7 @@ class_name PauseMenu
 export(NodePath) onready var settingsMenu = get_node(settingsMenu) as Node2D
 export(NodePath) onready var credits = get_node(credits) as Node2D
 export(NodePath) onready var levelSelectBtn = get_node(levelSelectBtn);
+export(NodePath) onready var sceneTransition = get_node(sceneTransition);
 export(bool) var includeLevelSelectBtn = true
 signal on_show
 signal on_hide
@@ -19,14 +20,18 @@ func hide() -> void:
 	emit_signal("on_hide");
 
 func onSettingsPressed() -> void:
+	$BtnSound.play()
 	settingsMenu.visible = !settingsMenu.visible;
 
 func onCreditsPressed() -> void:
+	$BtnSound.play();
 	credits.visible = !credits.visible;
 
 func onPlayBtnPressed() -> void:
+	$BtnSound.play();
 	hide();
 
 
 func onLvlSelectBtnPressed() -> void:
-	get_tree().change_scene("res://src/Scenes/LevelSelectScene.tscn")
+	$BtnSound.play();
+	sceneTransition.transition("res://src/scenes/LevelSelectScene.tscn")

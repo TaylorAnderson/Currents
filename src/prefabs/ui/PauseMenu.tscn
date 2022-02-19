@@ -1,16 +1,18 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://src/prefabs/ui/Settings.tscn" type="PackedScene" id=1]
-[ext_resource path="res://assets/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://assets/SpaceMono-Regular.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://assets/SpaceMono-Bold.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://assets/sprites/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/sprites/SpaceMono-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/sprites/SpaceMono-Bold.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://src/prefabs/ui/PauseMenu.gd" type="Script" id=5]
-[ext_resource path="res://assets/roundedRectWhite.png" type="Texture" id=6]
-[ext_resource path="res://assets/settings-btn.png" type="Texture" id=7]
-[ext_resource path="res://assets/x-btn.png" type="Texture" id=8]
-[ext_resource path="res://assets/roundedRect.png" type="Texture" id=9]
-[ext_resource path="res://assets/credits-btn.png" type="Texture" id=10]
-[ext_resource path="res://assets/level-select.png" type="Texture" id=11]
+[ext_resource path="res://assets/sprites/roundedRectWhite.png" type="Texture" id=6]
+[ext_resource path="res://assets/sprites/settings-btn.png" type="Texture" id=7]
+[ext_resource path="res://assets/sprites/x-btn.png" type="Texture" id=8]
+[ext_resource path="res://assets/sprites/roundedRect.png" type="Texture" id=9]
+[ext_resource path="res://assets/sprites/credits-btn.png" type="Texture" id=10]
+[ext_resource path="res://assets/sprites/level-select.png" type="Texture" id=11]
+[ext_resource path="res://src/prefabs/BtnSound.tscn" type="PackedScene" id=12]
+[ext_resource path="res://src/prefabs/ui/BouncyBtn.gd" type="Script" id=13]
 
 [sub_resource type="DynamicFont" id=7]
 size = 48
@@ -40,6 +42,7 @@ margin_left = -998.0
 margin_top = -502.0
 margin_right = 1044.0
 margin_bottom = 627.0
+mouse_filter = 0
 texture = ExtResource( 9 )
 region_rect = Rect2( 0, 0, 240, 240 )
 patch_margin_left = 80
@@ -104,6 +107,7 @@ alignment = 1
 margin_right = 100.0
 margin_bottom = 100.0
 texture_normal = ExtResource( 10 )
+script = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -113,6 +117,7 @@ margin_left = 140.0
 margin_right = 240.0
 margin_bottom = 100.0
 texture_normal = ExtResource( 11 )
+script = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -122,6 +127,7 @@ margin_left = 280.0
 margin_right = 380.0
 margin_bottom = 100.0
 texture_normal = ExtResource( 7 )
+script = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -134,6 +140,7 @@ margin_top = -11.6154
 margin_right = 20.1539
 margin_bottom = 58.3846
 texture_normal = ExtResource( 8 )
+script = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -226,6 +233,8 @@ margin_bottom = 301.0
 custom_fonts/font = SubResource( 10 )
 text = "colin zarzour"
 valign = 1
+
+[node name="BtnSound" parent="." instance=ExtResource( 12 )]
 
 [connection signal="pressed" from="pausemenu/CenterContainer/VBoxContainer/HBoxContainer/credits" to="." method="onCreditsPressed"]
 [connection signal="pressed" from="pausemenu/CenterContainer/VBoxContainer/HBoxContainer/lvlselectbtn" to="." method="onLvlSelectBtnPressed"]

@@ -1,0 +1,16 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/prefabs/game-elements/PirateShipIndicator.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/prefabs/level-entities/PirateSpawner.gd" type="Script" id=2]
+[ext_resource path="res://src/prefabs/game-elements/PirateShip.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/sounds/piraterevealv2.wav" type="AudioStream" id=4]
+
+[node name="PirateSpawner" type="Node2D"]
+script = ExtResource( 2 )
+pirateShip = ExtResource( 3 )
+
+[node name="PirateShipIndicator" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, -3 )
+
+[node name="PirateRevealSnd" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )

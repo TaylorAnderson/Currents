@@ -10,6 +10,7 @@ var currentPath = PathType.CURRENT;
 
 signal pathToggled;
 func onPressed() -> void:
+	
 	if (currentPath == PathType.CURRENT):
 		currentPath = PathType.WIND
 		texture_normal = windTexture

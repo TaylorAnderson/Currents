@@ -27,12 +27,23 @@ var padRadius = 0;
 
 export(float) var strength = 1;
 
+export(float) var ambienceVolume = -10
+export(float) var ambienceFadeInDuration = 0.1
+export(float) var ambienceFadeOutDuration = 0.3
+export(AudioStream) var ambienceTrack;
+
 onready var currentSnd = get_node("CurrentPlaceSnd")
 onready var windSnd = get_node("WindPlaceSnd");
+onready var ambienceSnd = get_node("PathAmbience")
 var soundInterval = 7;
 var soundCounter = 0;
 var finishedOnePath = false;
 var isActive # whether we're the active pat
+
+signal start_drawing
+signal end_drawing
+
+var set_track = false;
 func _ready() -> void:
 	padRadius = radius/4
 
@@ -40,13 +51,13 @@ func _process(_delta: float) -> void:
 	if (Input.is_key_pressed(KEY_R) and not disabled):
 		paths = [];
 		update();
+
 func clear():
 	paths = [];
 	currentPath = [];
 	update();
 
 func _draw() -> void:
-	
 	for path in paths:
 		for point in path:
 			draw_circle(point.pos, radius, color);
@@ -67,17 +78,20 @@ func _unhandled_input(event: InputEvent) -> void:
 		if mEvent.pressed:
 			if isOnBoundary(mEvent.position):
 				isDrawing = true;
+				startDrawing();
 				currentPath = [];
 				paths.append(currentPath);
 				currentPoint = mEvent.position;
 				addPoint()
 		else:
+			stopDrawing();
 			if isDrawing:
-				if not isOnBoundary(mEvent.position):
+				if not isOnBoundary(mEvent.position) or currentPath.size() < 10:
 					paths.pop_back()
 					currentPath = [];
 					pass
 				else:
+					
 					finishedOnePath = true;
 			else:
 				deletePathOverMouse(mEvent.position);
@@ -153,3 +167,19 @@ func getJson():
 			})
 		objPoints.append(pathPointArr);
 	return objPoints;
+
+func startDrawing():
+	if not set_track:
+		set_track = true;
+		print(ambienceSnd);
+		var player = ambienceSnd.get_node("Track") as AudioStreamPlayer;
+		player.stream = ambienceTrack;
+		player.play();
+	emit_signal("start_drawing")
+	ambienceSnd.fadeIn(ambienceVolume, ambienceFadeInDuration)
+func stopDrawing():
+	emit_signal("end_drawing")
+	print(ambienceSnd);
+	ambienceSnd.fadeOut(ambienceFadeOutDuration)
+	
+	

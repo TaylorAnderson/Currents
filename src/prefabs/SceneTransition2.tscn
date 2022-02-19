@@ -1,0 +1,48 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/sprites/water-transition.png" type="Texture" id=1]
+[ext_resource path="res://src/prefabs/SceneTransition2.gd" type="Script" id=2]
+[ext_resource path="res://assets/sounds/wavetransitionv5.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/sprites/roundedRectWhite.png" type="Texture" id=4]
+
+[node name="SceneTransition2" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Underwave Shadow" type="Sprite" parent="."]
+self_modulate = Color( 0, 0, 0, 0.372549 )
+position = Vector2( 612.213, 372.213 )
+rotation = -0.785398
+z_index = 199
+texture = ExtResource( 1 )
+
+[node name="Underwave" type="Sprite" parent="."]
+self_modulate = Color( 0.192157, 0.635294, 0.94902, 1 )
+position = Vector2( 512.213, 472.213 )
+rotation = -0.785398
+z_index = 199
+texture = ExtResource( 1 )
+
+[node name="Overwave" type="Sprite" parent="."]
+self_modulate = Color( 0, 0.341176, 0.517647, 1 )
+position = Vector2( 512.213, 472.213 )
+rotation = -0.785398
+z_index = 200
+texture = ExtResource( 1 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="MouseBlock" type="TextureRect" parent="."]
+self_modulate = Color( 1, 1, 1, 0.00392157 )
+margin_right = 1025.0
+margin_bottom = 577.0
+mouse_filter = 0
+texture = ExtResource( 4 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="tween_all_completed" from="Tween" to="." method="onAnimationFinished"]

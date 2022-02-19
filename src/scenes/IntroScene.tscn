@@ -1,12 +1,16 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://src/prefabs/ui/Settings.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/scenes/IntroScene.gd" type="Script" id=2]
-[ext_resource path="res://assets/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://assets/bg.png" type="Texture" id=4]
-[ext_resource path="res://assets/settings-btn.png" type="Texture" id=5]
-[ext_resource path="res://assets/playBtnIntro.png" type="Texture" id=6]
-[ext_resource path="res://assets/x-btn.png" type="Texture" id=7]
+[ext_resource path="res://assets/sprites/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/sprites/bg.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/settings-btn.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/playBtnIntro.png" type="Texture" id=6]
+[ext_resource path="res://assets/sprites/x-btn.png" type="Texture" id=7]
+[ext_resource path="res://src/prefabs/SceneTransition2.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/prefabs/BtnSound.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/prefabs/ui/BouncyBtn.gd" type="Script" id=10]
+[ext_resource path="res://src/scenes/LogoWave.gd" type="Script" id=11]
 
 [sub_resource type="DynamicFont" id=1]
 size = 100
@@ -17,6 +21,7 @@ size = 32
 font_data = ExtResource( 3 )
 
 [node name="Intro" type="Node2D"]
+position = Vector2( -1, 0 )
 script = ExtResource( 2 )
 
 [node name="Bg" type="Sprite" parent="."]
@@ -30,17 +35,145 @@ position = Vector2( 512, 285.5 )
 scale = Vector2( 1.14792, 1.15741 )
 texture = ExtResource( 4 )
 
-[node name="Label" type="Label" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 4.0
-margin_top = -7.0
-margin_right = 1028.0
-margin_bottom = 259.0
+[node name="Currents Labels" type="Node2D" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Currents Labels"]
+margin_top = 55.0
+margin_right = 1025.0
+margin_bottom = 255.0
+rect_min_size = Vector2( 0, 200 )
+alignment = 1
+script = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+frequency = 3.0
+amplitude = 5.0
+timeMultiplier = 2.5
+letterTimeIncrement = 50.0
+
+[node name="C" type="Label" parent="Currents Labels/HBoxContainer"]
+margin_left = 254.0
+margin_top = 25.0
+margin_right = 315.0
+margin_bottom = 174.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.196078 )
+custom_constants/shadow_offset_x = 5
+custom_constants/shadow_offset_y = 5
 custom_fonts/font = SubResource( 1 )
-text = "currents"
+text = "c"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="U" type="Label" parent="Currents Labels/HBoxContainer"]
+margin_left = 319.0
+margin_top = 25.0
+margin_right = 380.0
+margin_bottom = 174.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.196078 )
+custom_constants/shadow_offset_x = 5
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 1 )
+text = "u"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="R" type="Label" parent="Currents Labels/HBoxContainer"]
+margin_left = 384.0
+margin_top = 25.0
+margin_right = 445.0
+margin_bottom = 174.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.196078 )
+custom_constants/shadow_offset_x = 5
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 1 )
+text = "r"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="R2" type="Label" parent="Currents Labels/HBoxContainer"]
+margin_left = 449.0
+margin_top = 25.0
+margin_right = 510.0
+margin_bottom = 174.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.196078 )
+custom_constants/shadow_offset_x = 5
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 1 )
+text = "r"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="E" type="Label" parent="Currents Labels/HBoxContainer"]
+margin_left = 514.0
+margin_top = 25.0
+margin_right = 575.0
+margin_bottom = 174.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.196078 )
+custom_constants/shadow_offset_x = 5
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 1 )
+text = "e"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="N" type="Label" parent="Currents Labels/HBoxContainer"]
+margin_left = 579.0
+margin_top = 25.0
+margin_right = 640.0
+margin_bottom = 174.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.196078 )
+custom_constants/shadow_offset_x = 5
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 1 )
+text = "n"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="T" type="Label" parent="Currents Labels/HBoxContainer"]
+margin_left = 644.0
+margin_top = 25.0
+margin_right = 705.0
+margin_bottom = 174.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.196078 )
+custom_constants/shadow_offset_x = 5
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 1 )
+text = "t"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="S" type="Label" parent="Currents Labels/HBoxContainer"]
+margin_left = 709.0
+margin_top = 25.0
+margin_right = 770.0
+margin_bottom = 174.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 0.196078 )
+custom_constants/shadow_offset_x = 5
+custom_constants/shadow_offset_y = 5
+custom_fonts/font = SubResource( 1 )
+text = "s"
 align = 1
 valign = 1
 __meta__ = {
@@ -53,10 +186,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 4.0
-margin_top = 171.0
-margin_right = 1028.0
-margin_bottom = 267.0
+margin_left = 1.0
+margin_top = 180.0
+margin_right = 1025.0
+margin_bottom = 276.0
 custom_fonts/font = SubResource( 2 )
 text = "a game by taylor anderson and colin zarzour"
 align = 1
@@ -66,23 +199,28 @@ __meta__ = {
 }
 
 [node name="PlayBtn" type="TextureButton" parent="."]
-margin_left = 398.0
+margin_left = 412.0
 margin_top = 348.0
-margin_right = 572.0
+margin_right = 586.0
 margin_bottom = 460.0
-rect_pivot_offset = Vector2( 0.5, 0.5 )
+rect_pivot_offset = Vector2( 88, 57 )
 texture_normal = ExtResource( 6 )
+script = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="SettingsBtn" type="TextureButton" parent="."]
-margin_left = 576.0
+margin_left = 590.0
 margin_top = 348.0
-margin_right = 676.0
+margin_right = 690.0
 margin_bottom = 460.0
 rect_scale = Vector2( 0.5, 0.5 )
 texture_normal = ExtResource( 5 )
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="SettingsMenu" type="Node2D" parent="."]
 visible = false
@@ -110,9 +248,16 @@ margin_right = 181.429
 margin_bottom = -152.321
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 7 )
+script = ExtResource( 10 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="SceneTransition" parent="." instance=ExtResource( 8 )]
+visible = false
+
+[node name="BtnSound" parent="." instance=ExtResource( 9 )]
+volume_db = 0.0
 
 [connection signal="pressed" from="PlayBtn" to="." method="onPlayBtnPressed"]
 [connection signal="pressed" from="SettingsBtn" to="." method="onSettingsBtnPressed"]

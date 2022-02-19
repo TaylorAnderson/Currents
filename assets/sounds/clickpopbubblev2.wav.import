@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/clickpopbubblev2.wav-825f1c62a3306562bb2d122adc44aa89.sample"
+
+[deps]
+
+source_file="res://assets/sounds/clickpopbubblev2.wav"
+dest_files=[ "res://.import/clickpopbubblev2.wav-825f1c62a3306562bb2d122adc44aa89.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

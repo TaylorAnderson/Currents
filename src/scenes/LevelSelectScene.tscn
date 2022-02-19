@@ -1,19 +1,24 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=19 format=2]
 
-[ext_resource path="res://assets/SpaceMono-Bold.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://assets/SpaceMono-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/sprites/SpaceMono-Bold.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/sprites/SpaceMono-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://src/prefabs/ui/LevelRow.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/prefabs/ui/PauseMenu.tscn" type="PackedScene" id=4]
-[ext_resource path="res://src/LevelSelectScene.gd" type="Script" id=5]
-[ext_resource path="res://src/PauseButton.gd" type="Script" id=6]
-[ext_resource path="res://assets/pausebutton.png" type="Texture" id=7]
-[ext_resource path="res://assets/roundedRectWhite.png" type="Texture" id=8]
+[ext_resource path="res://src/scenes/LevelSelectScene.gd" type="Script" id=5]
+[ext_resource path="res://src/prefabs/ui/BouncyBtn.gd" type="Script" id=6]
+[ext_resource path="res://assets/sprites/pausebutton.png" type="Texture" id=7]
+[ext_resource path="res://assets/sprites/roundedRectWhite.png" type="Texture" id=8]
+[ext_resource path="res://src/prefabs/SceneTransition2.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/sprites/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://assets/sprites/star.png" type="Texture" id=11]
+[ext_resource path="res://assets/sprites/checkmark.png" type="Texture" id=12]
+[ext_resource path="res://src/prefabs/BtnSound.tscn" type="PackedScene" id=13]
 
 [sub_resource type="DynamicFont" id=1]
 size = 32
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=5]
 size = 32
 font_data = ExtResource( 2 )
 
@@ -23,11 +28,17 @@ region_rect = Rect2( 498, 124, 4, 4 )
 [sub_resource type="Theme" id=4]
 VScrollBar/styles/grabber = SubResource( 3 )
 
+[sub_resource type="DynamicFont" id=6]
+size = 32
+font_data = ExtResource( 10 )
+
 [node name="LevelSelect" type="Node2D"]
 script = ExtResource( 5 )
 levelRow = ExtResource( 3 )
 levelDirectory = "res://src/prefabs/Levels"
 levelContainer = NodePath("ScrollContainer/LevelList")
+parAmtTxt = NodePath("SideBar/ParAmt")
+completeAmtTxt = NodePath("SideBar/CompleteAmt")
 
 [node name="BG" type="ColorRect" parent="."]
 margin_left = -29.0
@@ -54,59 +65,46 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_left = 63.0
-margin_right = 963.0
-margin_bottom = 90.0
-rect_min_size = Vector2( 900, 50 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
-margin_right = 400.0
-margin_bottom = 90.0
-
-[node name="Title" type="RichTextLabel" parent="HBoxContainer/CenterContainer"]
+[node name="Title" type="RichTextLabel" parent="."]
+margin_left = 168.0
 margin_top = 20.0
-margin_right = 400.0
+margin_right = 316.0
 margin_bottom = 70.0
-rect_min_size = Vector2( 400, 50 )
+rect_min_size = Vector2( 0, 50 )
 custom_fonts/normal_font = SubResource( 1 )
 bbcode_enabled = true
 bbcode_text = "[center]Title[/center]"
 text = "Title"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="CenterContainer2" type="CenterContainer" parent="HBoxContainer"]
-margin_left = 404.0
-margin_right = 604.0
-margin_bottom = 90.0
-
-[node name="MinPaths" type="RichTextLabel" parent="HBoxContainer/CenterContainer2"]
+[node name="MinPaths" type="Label" parent="."]
+margin_left = 360.0
 margin_top = 20.0
-margin_right = 200.0
+margin_right = 560.0
 margin_bottom = 70.0
 rect_min_size = Vector2( 200, 50 )
-custom_fonts/normal_font = SubResource( 2 )
-bbcode_enabled = true
-bbcode_text = "[center]Min Paths[/center]"
-text = "Min Paths"
+custom_fonts/font = SubResource( 5 )
+text = "Par"
+align = 1
+valign = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 margin_top = 101.0
-margin_right = 1024.0
+margin_right = 820.0
 margin_bottom = 576.0
-rect_min_size = Vector2( 900, 0 )
+rect_min_size = Vector2( 820, 0 )
+rect_clip_content = false
 theme = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="LevelList" type="VBoxContainer" parent="ScrollContainer"]
-margin_right = 1024.0
+margin_right = 700.0
 margin_bottom = 80.0
-rect_min_size = Vector2( 1024, 80 )
-alignment = 1
+rect_min_size = Vector2( 700, 80 )
 
 [node name="PauseButton" type="TextureButton" parent="."]
 margin_left = 928.0
@@ -118,12 +116,64 @@ script = ExtResource( 6 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-pauseScreen = NodePath("../PauseMenu")
 
 [node name="PauseMenu" parent="." instance=ExtResource( 4 )]
 visible = false
 position = Vector2( 512, 288 )
 scale = Vector2( 0.9, 0.9 )
+sceneTransition = NodePath("../SceneTransition")
 includeLevelSelectBtn = false
 
-[connection signal="pressed" from="PauseButton" to="PauseButton" method="onPressed"]
+[node name="SceneTransition" parent="." instance=ExtResource( 9 )]
+visible = false
+
+[node name="SideBar" type="Node2D" parent="."]
+position = Vector2( -2, 64 )
+
+[node name="Checkmark" type="TextureRect" parent="SideBar"]
+margin_left = 839.0
+margin_top = 225.0
+margin_right = 1027.0
+margin_bottom = 413.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CompleteAmt" type="Label" parent="SideBar"]
+margin_left = 910.0
+margin_top = 222.0
+margin_right = 1010.0
+margin_bottom = 270.0
+custom_fonts/font = SubResource( 6 )
+text = "10/10"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Star" type="TextureRect" parent="SideBar"]
+margin_left = 837.0
+margin_top = 288.0
+margin_right = 1435.0
+margin_bottom = 886.0
+rect_scale = Vector2( 0.08, 0.08 )
+texture = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ParAmt" type="Label" parent="SideBar"]
+margin_left = 910.0
+margin_top = 291.0
+margin_right = 1010.0
+margin_bottom = 339.0
+custom_fonts/font = SubResource( 6 )
+text = "10/10"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BtnSound" parent="." instance=ExtResource( 13 )]
+
+[connection signal="pressed" from="PauseButton" to="." method="togglePause"]

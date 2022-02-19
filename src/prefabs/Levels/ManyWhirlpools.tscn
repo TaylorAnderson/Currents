@@ -1,10 +1,10 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://src/prefabs/obstacles/Whirlpool.tscn" type="PackedScene" id=1]
-[ext_resource path="res://src/prefabs/level-elements/Metadata.gd" type="Script" id=2]
-[ext_resource path="res://src/prefabs/level-elements/Island.tscn" type="PackedScene" id=3]
-[ext_resource path="res://assets/frame.png" type="Texture" id=5]
-[ext_resource path="res://assets/bg.png" type="Texture" id=6]
+[ext_resource path="res://src/prefabs/level-entities/Whirlpool.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/prefabs/game-elements/Metadata.gd" type="Script" id=2]
+[ext_resource path="res://src/prefabs/game-elements/Island.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/sprites/frame.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/bg.png" type="Texture" id=6]
 
 [node name="TemplateLevel" type="Node2D"]
 

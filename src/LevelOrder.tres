@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=13 format=2]
+[gd_resource type="Resource" load_steps=14 format=2]
 
 [ext_resource path="res://src/LevelOrder.gd" type="Script" id=1]
 [ext_resource path="res://src/prefabs/levels/PermaCurrentIntro.tscn" type="PackedScene" id=2]
@@ -12,7 +12,8 @@
 [ext_resource path="res://src/prefabs/levels/ManyWhirlpools.tscn" type="PackedScene" id=10]
 [ext_resource path="res://src/prefabs/levels/HardAllObstacles.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/prefabs/levels/PirateIntro.tscn" type="PackedScene" id=12]
+[ext_resource path="res://src/prefabs/levels/Testing.tscn" type="PackedScene" id=13]
 
 [resource]
 script = ExtResource( 1 )
-levels = [ ExtResource( 9 ), ExtResource( 8 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 7 ), ExtResource( 3 ), ExtResource( 10 ), ExtResource( 4 ), ExtResource( 11 ), ExtResource( 6 ), ExtResource( 12 ) ]
+levels = [ ExtResource( 9 ), ExtResource( 8 ), ExtResource( 5 ), ExtResource( 2 ), ExtResource( 7 ), ExtResource( 3 ), ExtResource( 10 ), ExtResource( 4 ), ExtResource( 11 ), ExtResource( 6 ), ExtResource( 12 ), ExtResource( 13 ) ]

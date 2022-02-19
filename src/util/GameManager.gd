@@ -43,8 +43,9 @@ export(NodePath) onready var tutorialWindow = get_node(tutorialWindow)
 
 export(NodePath) onready var tutorialPrompt = get_node(tutorialPrompt) as RichTextLabel
 
-onready var sndButtonClick = get_node("ButtonClickSound") as AudioStreamPlayer
-
+onready var sndButtonClick = get_node("BtnSound") as AudioStreamPlayer
+onready var sndPlayButtonBlip = get_node("PlayModeBlip") as AudioStreamPlayer
+export(NodePath) onready var bgAmbience = get_node(bgAmbience)
 var currentButton:TextureButton;
 
 var state = States.INTRO
@@ -60,7 +61,6 @@ var showMinPaths = false;
 
 var permanentPathRootPath:String = "res://PermanentPaths/"
 
-
 var activePath # can be currents or winds
 
 var paused = false;
@@ -70,7 +70,9 @@ signal onStateChanged(new_state)
 
 var startedGame = false;
 
+var shownLevelComplete = false;
 func _ready() -> void:
+	bgAmbience.fadeIn(-5, 0.3);
 	defaultButtons.visible = false;
 	defaultUI.visible = false;
 	gameIntro.visible = true;
@@ -89,17 +91,27 @@ func _process(delta: float) -> void:
 	nextLevelBtn.visible = levelComplete && state == States.EDIT;
 
 	
-func onButtonPressed():
+func onButtonPressed(playSound = true):
 	switchDelay = 0.7
-	sndButtonClick.play();
+	if playSound:
+		sndButtonClick.play();
 	if (state == States.EDIT):
+		if (playSound):
+			$Tween.interpolate_property(playBtn, "rect_scale", Vector2.ONE, Vector2.ONE * 1.2, 0.1, Tween.TRANS_SINE, Tween.EASE_OUT)
+			$Tween.interpolate_property(playBtn, "rect_scale", Vector2.ONE * 1.2, Vector2.ONE, 0.1, Tween.TRANS_SINE, Tween.EASE_OUT, 0.1)
+			$Tween.start();
 		changeState(States.PLAY);
 	else:
+		if (playSound):
+			$Tween.interpolate_property(editBtn, "rect_scale", Vector2.ONE, Vector2.ONE * 1.2, 0.1, Tween.TRANS_SINE, Tween.EASE_OUT)
+			$Tween.interpolate_property(editBtn, "rect_scale", Vector2.ONE * 1.2, Vector2.ONE, 0.1, Tween.TRANS_SINE, Tween.EASE_OUT, 0.1)
+			$Tween.start();
 		changeState(States.EDIT);
 
 func changeState(newState):
 	state = newState;
 	if state == States.PLAY:
+		sndPlayButtonBlip.play();
 		editBtn.visible = false;
 		playBtn.visible = true;
 		currentButton = playBtn;
@@ -113,13 +125,13 @@ func changeState(newState):
 		for isle in islands:
 			isle.onPlayModeStart();
 		for spawner in pirateSpawners:
-			spawner.spawn();
+			spawner.spawn(pirateSpawners.find(spawner) == 0);
 	if state == States.EDIT:
 		playBtn.visible = false;
 		editBtn.visible = true;
 		currentButton = editBtn;
 		gameCompleteMenu.visible = false;
-		levelCompleteMenu.visible = false;
+		levelCompleteMenu.hide();
 		activePath.disabled = false;
 		for ship in ships:
 			if is_instance_valid(ship):
@@ -143,12 +155,23 @@ func checkLevelComplete():
 		if not isle.completed:
 			allIslandsComplete = false;
 	if allIslandsComplete:
-		levelComplete = true;
-		showLevelCompleteMenu();
+		var allLevelsComplete = true;
+		for level in Data.data.levelArr:
+			if (not level.complete):
+				allLevelsComplete = false;
+		if allLevelsComplete and not Data.data.shownComplete:
+			Data.SetShownCompleteScreen();
+			get_node("/root/GameScene/UILayer/SceneTransition").transition("res://src/scenes/GameCompleteScene.tscn")
+		else:
+			levelComplete = true;
+			showLevelCompleteMenu();
 
 func showLevelCompleteMenu():
-	levelCompleteMenu.visible = true;
+	if (shownLevelComplete): return;
+	shownLevelComplete = true;
+	levelCompleteMenu.show();
 	Data.OnLevelComplete(currents.paths.size() + winds.paths.size())
+	$LevelCompleteSnd.play();
 	if (Data.CurrentLevelIsLast()):
 		levelCompleteMenu.get_node("nextLevelBtn").visible = false;
 
@@ -158,11 +181,13 @@ func goToNextLevel():
 	permCurrents.clear();
 	permWinds.clear();
 	levelComplete = false;
+	shownLevelComplete = false;
 	levelManager.loadNextLevel();
 	Data.SaveGame();
 	processLevel();
 	if (state == States.PLAY):
-		onButtonPressed();
+		onButtonPressed(false);
+
 func processLevel():
 	var metadata = levelManager.currentLevel.get_node("Metadata") as Metadata
 	titleTxt.bbcode_text = "[center]" + metadata.levelName + "[/center]"
@@ -181,13 +206,9 @@ func processLevel():
 	permCurrents.loadJson(path);
 	permWinds.loadJson(path);
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
 func _on_NextLevelBtn_pressed() -> void:
-	sndButtonClick.play();
 	goToNextLevel();
-	levelCompleteMenu.visible = false;
+	levelCompleteMenu.hide();
 
 
 func onSavePressed() -> void:
@@ -234,11 +255,10 @@ func setupUI():
 	defaultUI.visible = true;
 
 func togglePause(forcePause = null):
+	$BtnSound.play();
 	paused = forcePause or !paused;
 	currents.disabled = paused or state != States.EDIT
 	winds.disabled = paused or state != States.EDIT
-	
-	defaultButtons.visible = not paused;
 	# defaultUI.visible = not paused;
 	
 	if paused:
@@ -246,7 +266,9 @@ func togglePause(forcePause = null):
 		creditsMenu.visible = false;
 
 
-func onPathToggled() -> void:
+func onPathToggled(toggledByHand = false) -> void:
+	if toggledByHand:
+		$BtnSound.play()
 	if pathToggle.pathIsCurrent():
 		activePath = currents;
 		currents.isActive = true;
@@ -261,7 +283,6 @@ func onPathToggled() -> void:
 		activePath.disabled = true;
 
 func onTutorialBtnPressed() -> void:
-	sndButtonClick.play();
 	tutorialWindow.visible = true;
 	tutorialPrompt.visible = false;
 	togglePause(true);
@@ -273,6 +294,11 @@ func onTutWindowClose() -> void:
 	togglePause(false);
 	tutorialWindow.visible = false;
 
-
 func onLevelSelectBtnPressed() -> void:
-	get_tree().change_scene("res://src/Scenes/LevelSelectScene.tscn")
+	get_node("/root/GameScene/UILayer/SceneTransition").transition("res://src/scenes/LevelSelectScene.tscn")
+
+
+func pauseButtonPressed() -> void:
+	$BtnSound.play();
+	pauseMenu.visible = true;
+	togglePause(true);

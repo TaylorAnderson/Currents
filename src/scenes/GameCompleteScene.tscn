@@ -1,0 +1,136 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://src/prefabs/ui/ShipVisual.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/highres-ship.png" type="Texture" id=2]
+[ext_resource path="res://assets/sprites/water-particle.png" type="Texture" id=3]
+[ext_resource path="res://src/scenes/GameCompleteScene.gd" type="Script" id=4]
+[ext_resource path="res://assets/sprites/congrats-screen.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://assets/sprites/star.png" type="Texture" id=7]
+[ext_resource path="res://assets/sprites/levelSelect-noborder.png" type="Texture" id=8]
+[ext_resource path="res://assets/sprites/exitBtn-gamecomplete.png" type="Texture" id=9]
+[ext_resource path="res://src/prefabs/SceneTransition2.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/prefabs/BtnSound.tscn" type="PackedScene" id=11]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.0876623, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Gradient" id=2]
+offsets = PoolRealArray( 0, 0.457364, 1 )
+colors = PoolColorArray( 1, 1, 1, 1, 0.931504, 0.978328, 1, 1, 0.192157, 0.635294, 0.94902, 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 64
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 32
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 32
+font_data = ExtResource( 6 )
+
+[node name="GameCompleteScene" type="Node2D"]
+script = ExtResource( 4 )
+starTxt = NodePath("StarDisplay/Txt")
+
+[node name="BG" type="Sprite" parent="."]
+position = Vector2( 509, 288 )
+texture = ExtResource( 5 )
+
+[node name="TrailParticles" type="CPUParticles2D" parent="."]
+position = Vector2( 556, 438 )
+amount = 15
+texture = ExtResource( 3 )
+direction = Vector2( -1, 0 )
+spread = 0.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 300.0
+scale_amount = 0.7
+scale_amount_curve = SubResource( 1 )
+color_ramp = SubResource( 2 )
+
+[node name="Ship" type="Sprite" parent="."]
+position = Vector2( 506, 395 )
+texture = ExtResource( 2 )
+script = ExtResource( 1 )
+amplitude = 0.2
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_top = 31.0
+margin_right = 1024.0
+margin_bottom = 127.0
+custom_fonts/font = SubResource( 3 )
+text = "congratulations!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+self_modulate = Color( 1, 1, 1, 0.670588 )
+anchor_left = 0.5
+anchor_right = 0.5
+margin_top = 89.0
+margin_right = 1024.0
+margin_bottom = 185.0
+custom_fonts/font = SubResource( 4 )
+text = "you finished every level!"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StarDisplay" type="Node2D" parent="."]
+position = Vector2( 0, -26 )
+
+[node name="Sprite" type="Sprite" parent="StarDisplay"]
+position = Vector2( 454, 209.792 )
+scale = Vector2( 0.0668894, 0.0715345 )
+texture = ExtResource( 7 )
+
+[node name="Txt" type="Label" parent="StarDisplay"]
+margin_left = 486.0
+margin_top = 185.0
+margin_right = 566.0
+margin_bottom = 233.0
+custom_fonts/font = SubResource( 5 )
+text = "1/28"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelSelectBtn" type="TextureButton" parent="."]
+margin_left = 235.0
+margin_top = 245.0
+margin_right = 510.0
+margin_bottom = 320.0
+rect_scale = Vector2( 0.7, 0.7 )
+texture_normal = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExitBtn" type="TextureButton" parent="."]
+margin_left = 595.0
+margin_top = 249.0
+margin_right = 775.0
+margin_bottom = 310.0
+rect_scale = Vector2( 0.7, 0.7 )
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SceneTransition" parent="." instance=ExtResource( 10 )]
+visible = false
+
+[node name="BtnSound" parent="." instance=ExtResource( 11 )]
+
+[connection signal="pressed" from="LevelSelectBtn" to="." method="onLevelSelectPressed"]
+[connection signal="pressed" from="ExitBtn" to="." method="onExitBtnPressed"]
