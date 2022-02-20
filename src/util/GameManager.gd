@@ -302,3 +302,15 @@ func pauseButtonPressed() -> void:
 	$BtnSound.play();
 	pauseMenu.visible = true;
 	togglePause(true);
+	
+func _input(event: InputEvent) -> void:
+	if event.is_action_released("Grab Thumbnails"):
+		getLevelThumbnail();
+func getLevelThumbnail():
+	defaultButtons.hide();
+	defaultUI.hide();
+	yield(VisualServer, "frame_post_draw")
+	defaultButtons.show();
+	defaultUI.show();
+	Data.SaveLevelThumbnail(levelManager.currentLevel);
+	pass;

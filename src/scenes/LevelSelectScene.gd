@@ -17,19 +17,17 @@ func _ready() -> void:
 	parAmtTxt.text = str(allPars) + "/" + str(allLevels);
 	completeAmtTxt.text = str(allComplete) + "/" + str(allLevels);
 	for i in range(Data.data.levelArr.size()):
-		var levelData = Data.data.levelArr[i];
+		var levelData = Data.data.levelArr[i]
 		var row = levelRow.instance();
-	
-		var thumbnail = Data.levelOrderResource.levels[i].instance() as Node2D
-		add_child(thumbnail);
-		yield(VisualServer, "frame_post_draw");
-		var thumbnail_image = get_tree().get_root().get_texture().get_data()
-		var thumbnail_image_texture = ImageTexture.new();
-		thumbnail_image_texture.create_from_image(thumbnail_image);
-		remove_child(thumbnail);
-		var rowThumbnail = row.get_node("Content/ContentRow/Thumbnail") as TextureRect
-		rowThumbnail.texture = thumbnail_image_texture
-		rowThumbnail.update();
+
+		var thumbnailImage = Image.new();
+		var err = thumbnailImage.load(Data.thumbnailPath + levelData.levelName + ".png");
+		if err == OK:
+			var texture = ImageTexture.new()
+			texture.create_from_image(thumbnailImage, 0)
+			var rowThumbnail = row.get_node("Content/ContentRow/Thumbnail") as TextureRect
+			rowThumbnail.texture = texture;
+
 		
 		var rowBG = row.get_node("Content/BG") as NinePatchRect
 		if (i % 2 == 0):
@@ -38,10 +36,10 @@ func _ready() -> void:
 			rowBG.self_modulate = Color("#0275b0")
 		var rowBtn = row.get_node("Content/Btn") as TextureButton
 		rowBtn.connect("pressed", self, "onLevelRowPressed", [levelData]);
-		var rowTitle = row.get_node("Content/ContentRow/Title") as Label
+		var rowTitle = row.get_node("Content/ContentRow/V/Title") as Label
 		rowTitle.text = levelData.levelName
 		
-		var rowMinPaths = row.get_node("Content/ContentRow/MinPaths") as Label;
+		var rowMinPaths = row.get_node("Content/ContentRow/V/MinPaths") as Label;
 		rowMinPaths.text = str(levelData.levelPaths)
 		levelContainer.add_child(row);
 		

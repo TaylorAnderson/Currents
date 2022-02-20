@@ -5,6 +5,7 @@ var data:Dictionary;
 var currentLevel:int
 var levelOrderResPath = "res://src/LevelOrder.tres";
 var levelOrderResource:LevelOrder;
+var thumbnailPath = "res://assets/thumbnails/"
 func _ready() -> void:
 	levelOrderResource = ResourceLoader.load(levelOrderResPath) as LevelOrder;
 func _buildData():
@@ -73,3 +74,25 @@ func CurrentLevelIsLast():
 func SetShownCompleteScreen():
 	self.data.shownComplete = true;
 	SaveGame();
+
+func SaveThumbnails(parent):
+	print("saving thumbnails");
+	for i in range(Data.levelOrderResource.levels.size()):
+		var thumbnail = Data.levelOrderResource.levels[i].instance() as Node2D
+		thumbnail.position.x = 33;
+		thumbnail.position.y = 18;
+		parent.add_child(thumbnail);
+		thumbnail.z_index = 250;
+		yield(VisualServer, "frame_post_draw");
+		SaveLevelThumbnail(thumbnail);
+		parent.remove_child(thumbnail);	
+	
+		
+func SaveLevelThumbnail(levelInstance):
+	print("saving level thumbnail")
+	var thumbnail_image = get_tree().get_root().get_texture().get_data() as Image;
+	thumbnail_image.flip_y();
+	thumbnail_image.save_png(thumbnailPath + (levelInstance.get_node("Metadata") as Metadata).levelName + ".png")
+	
+	
+	

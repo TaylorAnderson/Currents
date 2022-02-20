@@ -4,6 +4,7 @@ onready var tween = get_node("Tween");
 onready var underWave = get_node("Underwave")
 onready var overWave = get_node("Overwave")
 onready var shadowWave = get_node("Underwave Shadow")
+signal finish_transition;
 var initialPos = Vector2(-660, 1520);
 var shadowOffset = Vector2(100, -100)
 var delta = Vector2(1100, -1100);
@@ -30,6 +31,8 @@ func _ready() -> void:
 		initialPos + delta, initialPos, speed + introSpeedOffset,
 		Tween.TRANS_EXPO, Tween.EASE_IN)
 	tween.start();
+	yield(tween, "tween_all_completed");
+	emit_signal("finish_transition")
 	
 
 func transition(scenePath):

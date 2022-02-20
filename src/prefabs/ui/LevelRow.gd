@@ -1,6 +1,5 @@
 extends Control
 
-
 onready var tween = get_node("Tween")
 func onBtnPressed() -> void:
 	print("hello");

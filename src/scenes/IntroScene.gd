@@ -19,3 +19,8 @@ func onSettingsXPressed() -> void:
 	$BtnSound.play()
 	var settings = get_node("SettingsMenu")
 	settings.visible = false; 
+	
+func _input(event: InputEvent) -> void:
+	# dev only
+	if (event.is_action_released("Grab Thumbnails")):
+		Data.SaveThumbnails(self);
