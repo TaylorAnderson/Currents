@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
+[ext_resource path="res://src/prefabs/game-elements/Island.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/prefabs/game-elements/Metadata.gd" type="Script" id=2]
 [ext_resource path="res://assets/sprites/frame.png" type="Texture" id=5]
 [ext_resource path="res://assets/sprites/bg.png" type="Texture" id=6]
@@ -17,6 +18,14 @@ __meta__ = {
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="Island" parent="Islands" instance=ExtResource( 1 )]
+position = Vector2( 370, 269 )
+destPath = NodePath("../Island2")
+
+[node name="Island2" parent="Islands" instance=ExtResource( 1 )]
+position = Vector2( 606, 263 )
+islandColor = 3
 
 [node name="Obstacles" type="Node2D" parent="."]
 __meta__ = {
@@ -36,5 +45,9 @@ __meta__ = {
 "_edit_lock_": true,
 "_editor_description_": ""
 }
-levelName = "Testing"
-tutorialHint = "Testing"
+levelName = "No paths"
+tutorialHint = "Welcome to Currents!
+
+Currents is a game about guiding ships on the open seas using currents and winds.  
+
+Click and hold on an island to see where it wants to send its ship -- then click play to send it out."

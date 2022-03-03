@@ -84,6 +84,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://src/prefabs/level-entities/Treasure.gd"
 }, {
+"base": "VisualShaderNodeCustom",
+"class": "VisualShaderNodeRGBAblurCustom",
+"language": "GDScript",
+"path": "res://src/addons/blur_custom.gd"
+}, {
 "base": "Node2D",
 "class": "Whirlpool",
 "language": "GDScript",
@@ -105,13 +110,14 @@ _global_script_class_icons={
 "PirateSpawner": "",
 "Ship": "",
 "Treasure": "",
+"VisualShaderNodeRGBAblurCustom": "",
 "Whirlpool": ""
 }
 
 [application]
 
 config/name="Currents"
-run/main_scene="res://src/scenes/IntroScene.tscn"
+run/main_scene="res://src/scenes/LevelSelectSceneV2.tscn"
 config/icon="res://assets/sprites/icon.png"
 
 [autoload]

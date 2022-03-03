@@ -1,0 +1,175 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://assets/thumbnails/Beginnings.png" type="Texture" id=1]
+[ext_resource path="res://src/TextureRectMask.tres" type="Material" id=2]
+[ext_resource path="res://assets/sprites/SpaceMono-Bold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/sprites/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://assets/sprites/checkmark.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/star.png" type="Texture" id=6]
+[ext_resource path="res://assets/sprites/level-postcard-mask.png" type="Texture" id=7]
+[ext_resource path="res://src/prefabs/ui/LevelPostcard.gd" type="Script" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+size = 44
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+outline_color = Color( 0.105882, 0.14902, 0.196078, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.105882, 0.14902, 0.196078, 1 )
+border_color = Color( 0.105882, 0.14902, 0.196078, 1 )
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_offset = Vector2( 5, 5 )
+
+[node name="Node2D" type="Control"]
+margin_right = 614.0
+margin_bottom = 345.0
+rect_min_size = Vector2( 768, 432 )
+rect_pivot_offset = Vector2( 307.2, 172.8 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tex" type="TextureRect" parent="."]
+material = ExtResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 768, 432 )
+rect_pivot_offset = Vector2( 307, 172.8 )
+texture = ExtResource( 1 )
+expand = true
+__meta__ = {
+"_edit_ik_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Inner" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tex" type="TextureRect" parent="Inner"]
+self_modulate = Color( 0, 0, 0, 0.54902 )
+material = ExtResource( 2 )
+margin_right = 768.0
+margin_bottom = 432.0
+rect_min_size = Vector2( 768, 432 )
+rect_pivot_offset = Vector2( 307, 172.8 )
+texture = ExtResource( 1 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Content" type="VBoxContainer" parent="Inner"]
+margin_top = 123.0
+margin_right = 768.0
+margin_bottom = 309.0
+rect_min_size = Vector2( 768, 0 )
+rect_pivot_offset = Vector2( -755, -272 )
+custom_constants/separation = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="Inner/Content"]
+margin_right = 768.0
+margin_bottom = 66.0
+rect_min_size = Vector2( 350, 50 )
+custom_colors/font_outline_modulate = Color( 0.105882, 0.14902, 0.196078, 1 )
+custom_constants/shadow_as_outline = 0
+custom_fonts/font = SubResource( 1 )
+text = "There's something below..."
+align = 1
+valign = 1
+autowrap = true
+
+[node name="MinPaths" type="Label" parent="Inner/Content"]
+margin_top = 76.0
+margin_right = 768.0
+margin_bottom = 126.0
+rect_min_size = Vector2( 100, 50 )
+custom_fonts/font = SubResource( 2 )
+text = "Par: 3"
+align = 1
+valign = 1
+
+[node name="Icons" type="HBoxContainer" parent="Inner/Content"]
+margin_top = 136.0
+margin_right = 768.0
+margin_bottom = 186.0
+rect_pivot_offset = Vector2( -676, -368 )
+alignment = 1
+
+[node name="CompleteIcon" type="CenterContainer" parent="Inner/Content/Icons"]
+margin_left = 332.0
+margin_right = 382.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="BG" type="Panel" parent="Inner/Content/Icons/CompleteIcon"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 42.0
+margin_bottom = 42.0
+rect_min_size = Vector2( 35, 35 )
+custom_styles/panel = SubResource( 3 )
+
+[node name="Icon" type="TextureRect" parent="Inner/Content/Icons/CompleteIcon"]
+visible = false
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 45.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 40, 40 )
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 1
+
+[node name="PathsCompleteIcon" type="CenterContainer" parent="Inner/Content/Icons"]
+margin_left = 386.0
+margin_right = 436.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="BG" type="Panel" parent="Inner/Content/Icons/PathsCompleteIcon"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 42.0
+margin_bottom = 42.0
+rect_min_size = Vector2( 35, 35 )
+custom_styles/panel = SubResource( 3 )
+
+[node name="Icon" type="TextureRect" parent="Inner/Content/Icons/PathsCompleteIcon"]
+visible = false
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 45.0
+margin_bottom = 45.0
+rect_min_size = Vector2( 40, 40 )
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 1
+
+[node name="Btn" type="TextureButton" parent="."]
+self_modulate = Color( 1, 1, 1, 0.00392157 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture_normal = ExtResource( 7 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="pressed" from="Btn" to="." method="onBtnPressed"]

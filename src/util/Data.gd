@@ -7,11 +7,14 @@ var levelOrderResPath = "res://src/LevelOrder.tres";
 var levelOrderResource:LevelOrder;
 var thumbnailPath = "res://assets/thumbnails/"
 func _ready() -> void:
-	levelOrderResource = ResourceLoader.load(levelOrderResPath) as LevelOrder;
+	print("happening");
+	levelOrderResource = load(levelOrderResPath);
+	print(levelOrderResource);
 func _buildData():
 	print("building data");
 	self.data.levelArr = [];
 	self.data.shownComplete = false;
+	print(levelOrderResource);
 	for levelScene in levelOrderResource.levels:
 		var levelInst = levelScene.instance();
 		var levelData = levelInst.get_node("Metadata") as Metadata;
@@ -43,7 +46,7 @@ func LoadGame() -> void:
 	if typeof(jsonResult) != TYPE_DICTIONARY:
 		_buildData();
 		return;
-	data = jsonResult;
+	self.data = jsonResult;
 
 func DeleteSave() -> void:
 	var dir = Directory.new();
@@ -63,13 +66,10 @@ func GetCurrentLevelScene():
 # This advances to the next level
 func GetNextLevelScene():
 		currentLevel+=1;
-		print(currentLevel);
-		if CurrentLevelIsLast():
-			return false;
 		return levelOrderResource.levels[currentLevel]
 
 func CurrentLevelIsLast():
-	return currentLevel >= levelOrderResource.levels.size()
+	return currentLevel >= levelOrderResource.levels.size() - 1
 
 func SetShownCompleteScreen():
 	self.data.shownComplete = true;

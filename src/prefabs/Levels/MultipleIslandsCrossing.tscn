@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
+[ext_resource path="res://src/prefabs/game-elements/Island.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/prefabs/game-elements/Metadata.gd" type="Script" id=2]
 [ext_resource path="res://assets/sprites/frame.png" type="Texture" id=5]
 [ext_resource path="res://assets/sprites/bg.png" type="Texture" id=6]
@@ -17,6 +18,24 @@ __meta__ = {
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="Island" parent="Islands" instance=ExtResource( 1 )]
+position = Vector2( 130, 414 )
+islandColor = 0
+destPath = NodePath("../Island2")
+
+[node name="Island2" parent="Islands" instance=ExtResource( 1 )]
+position = Vector2( 843, 107 )
+islandColor = 2
+
+[node name="Island3" parent="Islands" instance=ExtResource( 1 )]
+position = Vector2( 137, 112 )
+islandColor = 3
+destPath = NodePath("../Island4")
+
+[node name="Island4" parent="Islands" instance=ExtResource( 1 )]
+position = Vector2( 839, 419 )
+islandColor = 4
 
 [node name="Obstacles" type="Node2D" parent="."]
 __meta__ = {
@@ -36,5 +55,5 @@ __meta__ = {
 "_edit_lock_": true,
 "_editor_description_": ""
 }
-levelName = "Testing"
+levelName = "Crossed Wires"
 tutorialHint = "Testing"

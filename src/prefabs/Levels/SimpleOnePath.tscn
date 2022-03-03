@@ -30,7 +30,6 @@ texture = ExtResource( 3 )
 [node name="Metadata" parent="." instance=ExtResource( 1 )]
 levelName = "Beginnings"
 minPathsToSolve = 1
-tutorialHint = "There are two modes: Edit and Play mode.
-In Play mode, islands will send out ships.
-Ships want to go to islands with the same color as them.
-In Edit mode, draw paths from edge to edge (the dark blue border) to guide ships to their destination."
+tutorialHint = "In this level, the ship needs some help to reach its destination.  
+
+Draw from border to border to create a CURRENT to push the ship to the other island."

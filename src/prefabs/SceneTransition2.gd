@@ -14,8 +14,12 @@ var speed = 0.9;
 var delay = 0.15;
 var introSpeedOffset = -0.3;
 var baseDelay = 0.3;
+var onDryRun = false;
 onready var waveSnd = get_node("AudioStreamPlayer") as AudioStreamPlayer
 func _ready() -> void:
+	endTransition();
+
+func endTransition():
 	visible = true;
 	$MouseBlock.visible = true;
 	waveSnd.play(1.2);
@@ -33,9 +37,10 @@ func _ready() -> void:
 	tween.start();
 	yield(tween, "tween_all_completed");
 	emit_signal("finish_transition")
-	
 
-func transition(scenePath):
+
+func transition(scenePath, onDryRun = false):
+	self.onDryRun = onDryRun;
 	visible = true;
 	$MouseBlock.visible = true;
 	
@@ -58,6 +63,13 @@ func transition(scenePath):
 func onAnimationFinished():
 	$MouseBlock.visible = false;
 	print("hello");
+	print(transitioning);
 	if transitioning:
-		get_tree().change_scene(currentPath);
+		if not onDryRun:
+			get_tree().change_scene(currentPath);
+		else:
+			print("hewwo");
+			endTransition();
+	transitioning = false;
+	onDryRun = false;
 	

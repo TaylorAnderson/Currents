@@ -25,7 +25,7 @@ onready var img = get_node("AnimatedSprite") as AnimatedSprite;
 onready var gm:GameManager = get_node("/root/GameScene/GameManager") as GameManager
 onready var winAnim:AnimatedSprite = get_node("WinAnim") as AnimatedSprite;
 onready var treasureIndicator = get_node("TreasureIndicator") as AnimatedSprite
-var initialShipVel = 0.5;
+var initialShipVel = 1.5;
 var hovered = false;
 var arrowInterval = 20;
 var currentMouse;

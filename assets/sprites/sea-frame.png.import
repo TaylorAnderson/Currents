@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Swiss Cheese Ocean.png-13a5ee6079d4e071ac05562642b0685d.stex"
+path="res://.import/sea-frame.png-e0b4f7ccbb48bce48180a89e91fcde2b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/thumbnails/Swiss Cheese Ocean.png"
-dest_files=[ "res://.import/Swiss Cheese Ocean.png-13a5ee6079d4e071ac05562642b0685d.stex" ]
+source_file="res://assets/sprites/sea-frame.png"
+dest_files=[ "res://.import/sea-frame.png-e0b4f7ccbb48bce48180a89e91fcde2b.stex" ]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
 flags/filter=true
-flags/mipmaps=true
+flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
 process/fix_alpha_border=true

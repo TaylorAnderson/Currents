@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/testing.png-66b4403a2f6802b58a003eff85dad960.stex"
+path="res://.import/level-postcard-mask.png-67181b45073237cce1d139dd4c87cbd0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://testing.png"
-dest_files=[ "res://.import/testing.png-66b4403a2f6802b58a003eff85dad960.stex" ]
+source_file="res://assets/sprites/level-postcard-mask.png"
+dest_files=[ "res://.import/level-postcard-mask.png-67181b45073237cce1d139dd4c87cbd0.stex" ]
 
 [params]
 

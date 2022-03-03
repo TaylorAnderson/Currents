@@ -46,6 +46,7 @@ export(NodePath) onready var tutorialPrompt = get_node(tutorialPrompt) as RichTe
 onready var sndButtonClick = get_node("BtnSound") as AudioStreamPlayer
 onready var sndPlayButtonBlip = get_node("PlayModeBlip") as AudioStreamPlayer
 export(NodePath) onready var bgAmbience = get_node(bgAmbience)
+export(Texture) var screenshotFrameTexture
 var currentButton:TextureButton;
 
 var state = States.INTRO
@@ -71,6 +72,10 @@ signal onStateChanged(new_state)
 var startedGame = false;
 
 var shownLevelComplete = false;
+
+onready var transition = get_node("/root/GameScene/UILayer/SceneTransition")
+
+
 func _ready() -> void:
 	bgAmbience.fadeIn(-5, 0.3);
 	defaultButtons.visible = false;
@@ -112,8 +117,8 @@ func changeState(newState):
 	state = newState;
 	if state == States.PLAY:
 		sndPlayButtonBlip.play();
-		editBtn.visible = false;
-		playBtn.visible = true;
+		editBtn.visible = true;
+		playBtn.visible = false;
 		currentButton = playBtn;
 		allPoints = [];
 		allPoints.append_array(currents.getPoints());
@@ -127,8 +132,8 @@ func changeState(newState):
 		for spawner in pirateSpawners:
 			spawner.spawn(pirateSpawners.find(spawner) == 0);
 	if state == States.EDIT:
-		playBtn.visible = false;
-		editBtn.visible = true;
+		playBtn.visible = true;
+		editBtn.visible = false;
 		currentButton = editBtn;
 		gameCompleteMenu.visible = false;
 		levelCompleteMenu.hide();
@@ -161,19 +166,23 @@ func checkLevelComplete():
 				allLevelsComplete = false;
 		if allLevelsComplete and not Data.data.shownComplete:
 			Data.SetShownCompleteScreen();
-			get_node("/root/GameScene/UILayer/SceneTransition").transition("res://src/scenes/GameCompleteScene.tscn")
+			transition.transition("res://src/scenes/GameCompleteScene.tscn")
 		else:
 			levelComplete = true;
 			showLevelCompleteMenu();
+			Data.OnLevelComplete(currents.paths.size() + winds.paths.size())
+			Data.SaveGame();
 
 func showLevelCompleteMenu():
 	if (shownLevelComplete): return;
 	shownLevelComplete = true;
 	levelCompleteMenu.show();
-	Data.OnLevelComplete(currents.paths.size() + winds.paths.size())
+	
 	$LevelCompleteSnd.play();
 	if (Data.CurrentLevelIsLast()):
-		levelCompleteMenu.get_node("nextLevelBtn").visible = false;
+		levelCompleteMenu.nextLevelBtn.visible = false;
+	yield(get_tree().create_timer(5), "timeout")
+	shownLevelComplete = false;
 
 func goToNextLevel():
 	currents.clear();
@@ -183,7 +192,6 @@ func goToNextLevel():
 	levelComplete = false;
 	shownLevelComplete = false;
 	levelManager.loadNextLevel();
-	Data.SaveGame();
 	processLevel();
 	if (state == States.PLAY):
 		onButtonPressed(false);
@@ -206,7 +214,10 @@ func processLevel():
 	permCurrents.loadJson(path);
 	permWinds.loadJson(path);
 
-func _on_NextLevelBtn_pressed() -> void:
+func _on_NextLevelBtn_pressed(playSound) -> void:
+	if (playSound): $BtnSound.play();
+	transition.transition("", true);
+	yield(get_tree().create_timer(0.5), "timeout");
 	goToNextLevel();
 	levelCompleteMenu.hide();
 
@@ -295,7 +306,7 @@ func onTutWindowClose() -> void:
 	tutorialWindow.visible = false;
 
 func onLevelSelectBtnPressed() -> void:
-	get_node("/root/GameScene/UILayer/SceneTransition").transition("res://src/scenes/LevelSelectScene.tscn")
+	transition.transition("res://src/scenes/LevelSelectSceneV2.tscn")
 
 
 func pauseButtonPressed() -> void:
@@ -307,10 +318,17 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_released("Grab Thumbnails"):
 		getLevelThumbnail();
 func getLevelThumbnail():
+	var frame = get_node("/root/GameScene/Frame") as Sprite
+	var curFrameTex = frame.texture;
+	frame.texture = screenshotFrameTexture;
 	defaultButtons.hide();
+	tutorialPrompt.hide();
 	defaultUI.hide();
 	yield(VisualServer, "frame_post_draw")
+	frame.texture = curFrameTex;
 	defaultButtons.show();
 	defaultUI.show();
+	tutorialPrompt.show();
+	.show();
 	Data.SaveLevelThumbnail(levelManager.currentLevel);
 	pass;

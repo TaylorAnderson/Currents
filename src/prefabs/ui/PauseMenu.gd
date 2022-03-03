@@ -34,4 +34,4 @@ func onPlayBtnPressed() -> void:
 
 func onLvlSelectBtnPressed() -> void:
 	$BtnSound.play();
-	sceneTransition.transition("res://src/scenes/LevelSelectScene.tscn")
+	sceneTransition.transition("res://src/scenes/LevelSelectSceneV2.tscn")

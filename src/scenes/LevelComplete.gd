@@ -2,6 +2,7 @@ extends Node2D
 
 onready var tween = get_node("Tween")
 onready var text = get_node("Text")
+export(NodePath) onready var nextLevelBtn = get_node(nextLevelBtn) as TextureButton;
 onready var text_reflection = get_node("Text-Reflection")
 onready var initialPos = text.position;
 onready var initialPos_reflection = text_reflection.position;

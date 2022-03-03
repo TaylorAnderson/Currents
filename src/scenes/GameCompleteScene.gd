@@ -12,7 +12,7 @@ func _ready() -> void:
 
 func onLevelSelectPressed() -> void:
 	$BtnSound.play();
-	get_node("SceneTransition").transition("res://src/scenes/LevelSelectScene.tscn")
+	get_node("SceneTransition").transition("res://src/scenes/LevelSelectSceneV2.tscn")
 
 
 func onExitBtnPressed() -> void:

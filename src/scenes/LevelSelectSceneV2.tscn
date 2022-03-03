@@ -1,0 +1,216 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://src/scenes/LevelSelectSceneV2.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/levelselect-arrow.png" type="Texture" id=2]
+[ext_resource path="res://src/prefabs/ui/LevelPostcard.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/sprites/levelselect-arrow-down.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/roundedRectWhite.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=6]
+[ext_resource path="res://assets/sprites/checkmark.png" type="Texture" id=7]
+[ext_resource path="res://assets/sprites/star.png" type="Texture" id=8]
+[ext_resource path="res://src/prefabs/ui/BouncyBtn.gd" type="Script" id=9]
+[ext_resource path="res://assets/sprites/pausebutton.png" type="Texture" id=10]
+[ext_resource path="res://src/prefabs/BtnSound.tscn" type="PackedScene" id=11]
+[ext_resource path="res://src/prefabs/ui/PauseMenu.tscn" type="PackedScene" id=12]
+[ext_resource path="res://src/prefabs/SceneTransition2.tscn" type="PackedScene" id=13]
+
+[sub_resource type="DynamicFont" id=1]
+size = 60
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+font_data = ExtResource( 6 )
+
+[node name="LevelSelectV2" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 200, 200 )
+rect_pivot_offset = Vector2( 404, 111 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+levelThumbnail = ExtResource( 3 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_right = 1024.0
+margin_bottom = 576.0
+color = Color( 0.0705882, 0.0705882, 0.0705882, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Header" type="NinePatchRect" parent="."]
+self_modulate = Color( 0.878431, 0.435294, 0.545098, 1 )
+margin_left = -150.0
+margin_top = -1.0
+margin_right = 1224.0
+margin_bottom = 86.0
+rect_pivot_offset = Vector2( 629, 86 )
+texture = ExtResource( 5 )
+patch_margin_bottom = 60
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Header"]
+margin_left = 150.0
+margin_top = -6.0
+margin_right = 1174.0
+margin_bottom = 84.0
+custom_fonts/font = SubResource( 1 )
+text = "course select"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Checkmark" type="TextureRect" parent="Header"]
+visible = false
+margin_left = 748.0
+margin_top = 27.0
+margin_right = 936.0
+margin_bottom = 215.0
+rect_scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CompleteAmt" type="Label" parent="Header"]
+visible = false
+margin_left = 819.0
+margin_top = 24.0
+margin_right = 919.0
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 2 )
+text = "10/10"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Star" type="TextureRect" parent="Header"]
+visible = false
+margin_left = 964.0
+margin_top = 27.0
+margin_right = 1562.0
+margin_bottom = 625.0
+rect_scale = Vector2( 0.08, 0.08 )
+texture = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ParAmt" type="Label" parent="Header"]
+visible = false
+margin_left = 1037.0
+margin_top = 24.0
+margin_right = 1137.0
+margin_bottom = 72.0
+custom_fonts/font = SubResource( 2 )
+text = "10/10"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PauseButton" type="TextureButton" parent="Header"]
+margin_left = 1066.0
+margin_top = 12.0
+margin_right = 1130.0
+margin_bottom = 76.0
+texture_normal = ExtResource( 10 )
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LevelContainer" type="HBoxContainer" parent="."]
+margin_top = 85.0
+margin_right = 1024.0
+margin_bottom = 576.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_constants/separation = 20
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LeftArrow" type="CenterContainer" parent="."]
+margin_top = 86.0
+margin_right = 150.0
+margin_bottom = 576.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="LeftArrow"]
+margin_top = 245.0
+margin_right = 150.0
+margin_bottom = 245.0
+rect_min_size = Vector2( 150, 0 )
+
+[node name="LeftArrow" type="TextureButton" parent="LeftArrow"]
+margin_left = 25.0
+margin_top = 195.0
+margin_right = 125.0
+margin_bottom = 295.0
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 4 )
+flip_h = true
+
+[node name="RightArrow" type="CenterContainer" parent="."]
+margin_left = 874.0
+margin_top = 85.0
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_pivot_offset = Vector2( -317, 190 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="RightArrow"]
+margin_left = 75.0
+margin_top = 245.0
+margin_right = 75.0
+margin_bottom = 245.0
+
+[node name="RightArrow" type="TextureButton" parent="RightArrow"]
+margin_left = 25.0
+margin_top = 195.0
+margin_right = 125.0
+margin_bottom = 295.0
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 460.0
+
+[node name="TextureButton" type="TextureButton" parent="CenterContainer"]
+margin_left = 512.0
+margin_top = 58.0
+margin_right = 512.0
+margin_bottom = 58.0
+
+[node name="PauseMenu" parent="." instance=ExtResource( 12 )]
+visible = false
+position = Vector2( 512, 288 )
+scale = Vector2( 0.9, 0.9 )
+sceneTransition = NodePath("../SceneTransition")
+includeLevelSelectBtn = false
+
+[node name="BtnSound" parent="." instance=ExtResource( 11 )]
+
+[node name="SceneTransition" parent="." instance=ExtResource( 13 )]
+visible = false
+
+[connection signal="pressed" from="Header/PauseButton" to="." method="togglePaused"]
+[connection signal="pressed" from="LeftArrow/LeftArrow" to="." method="_on_LeftArrow_pressed"]
+[connection signal="pressed" from="RightArrow/RightArrow" to="." method="_on_RightArrow_pressed"]
