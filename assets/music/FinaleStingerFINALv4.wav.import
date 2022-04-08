@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/FinaleStingerFINALv4.wav-beca181f5d950a4dc72d24af88ff4b9c.sample"
+
+[deps]
+
+source_file="res://assets/music/FinaleStingerFINALv4.wav"
+dest_files=[ "res://.import/FinaleStingerFINALv4.wav-beca181f5d950a4dc72d24af88ff4b9c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

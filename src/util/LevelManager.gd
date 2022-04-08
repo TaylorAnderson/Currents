@@ -20,7 +20,7 @@ func loadCurrentLevel():
 func loadLevel(levelInstance):
 	if not levelInstance: return false;
 	if (levelParent.get_child_count() > 0):
-		levelParent.get_child(0).queue_free();
+		levelParent.remove_child(levelParent.get_child(0))
 	currentLevel = levelInstance
 	levelParent.add_child(levelInstance)
 	levelInstance.get_node("Frame").queue_free();

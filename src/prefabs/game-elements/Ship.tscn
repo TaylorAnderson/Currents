@@ -192,5 +192,6 @@ scale_amount_curve = SubResource( 28 )
 stream = ExtResource( 8 )
 volume_db = 5.0
 autoplay = true
+bus = "Sound"
 
 [connection signal="animation_finished" from="Explosion" to="." method="_on_Explosion_animation_finished"]

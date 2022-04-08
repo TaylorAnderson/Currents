@@ -4,7 +4,11 @@ class_name Ship
 # Declare member variables here. Examples:
 # var a: int = 2
 # var b: String = "text"
-
+enum ShipType {
+	Normal,
+	Pirate
+}
+var type = ShipType.Normal;
 var vel:Vector2 = Vector2(0,0);
 var accel:Vector2 = Vector2(0,0);
 var currentPoint:Vector2;
@@ -28,7 +32,7 @@ var waterTrail = [];
 var waterInitRadius = 10;
 var waterTrailInterval = 5;
 var waterTrailCounter = 0;
-
+var currentStrengthMultiplier = 1;
 onready var sndExplosion = get_node("ExplosionSnd");
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -48,7 +52,7 @@ func _process(delta: float) -> void:
 	if not dead:
 		for point in gm.allPoints:
 			if (global_position.distance_to(point.pos) < radius + point.radius):
-				accel += point.vec * point.strength
+				accel += (point.vec * point.strength) * currentStrengthMultiplier;
 		
 		if accel.length() > accelMax:
 			accel = accel.normalized() * accelMax
@@ -62,14 +66,13 @@ func _process(delta: float) -> void:
 		particles.direction = Vector2.RIGHT * vel * -1;
 		particles.initial_velocity = vel.length() * 20
 		particles.update();
-
-
 		z_index = Math.getZIndex(global_position.y);
 		for ship in gm.ships:
 			if is_instance_valid(ship):
-				if (global_position.distance_to(ship.global_position) < radius + ship.radius) and ship != self and not ship.dead:
+				if (global_position.distance_to(ship.global_position) < radius + ship.radius - 2) and ship != self and not ship.dead:
 					explode();
-					ship.explode();
+					if ship.type == ShipType.Normal:
+						ship.explode();
 				
 		for obstacle in gm.obstacles:
 			if obstacle is Obstacle:

@@ -10,7 +10,7 @@ script = ExtResource( 2 )
 pirateShip = ExtResource( 3 )
 
 [node name="PirateShipIndicator" parent="." instance=ExtResource( 1 )]
-position = Vector2( 0, -3 )
+rotation = 0.0326021
 
 [node name="PirateRevealSnd" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )

@@ -1,7 +1,9 @@
 extends Node2D
 
 func _ready() -> void:
-	Data.LoadGame();
+	#Data.LoadGame();
+	yield(get_tree().create_timer(0.5), "timeout")
+	get_node("Stinger").play();
 
 func onPlayBtnPressed() -> void:
 	$BtnSound.play()

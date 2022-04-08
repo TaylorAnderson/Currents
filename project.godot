@@ -32,7 +32,7 @@ _global_script_classes=[ {
 "base": "Node2D",
 "class": "Island",
 "language": "GDScript",
-"path": "res://src/prefabs/game-elements/Island.gd"
+"path": "res://src/prefabs/level-entities/Island.gd"
 }, {
 "base": "Resource",
 "class": "LevelOrder",
@@ -68,6 +68,11 @@ _global_script_classes=[ {
 "class": "PauseMenu",
 "language": "GDScript",
 "path": "res://src/prefabs/ui/PauseMenu.gd"
+}, {
+"base": "Ship",
+"class": "PirateShip",
+"language": "GDScript",
+"path": "res://src/prefabs/game-elements/PirateShip.gd"
 }, {
 "base": "Node2D",
 "class": "PirateSpawner",
@@ -107,6 +112,7 @@ _global_script_class_icons={
 "PathEditor": "",
 "PathToggle": "",
 "PauseMenu": "",
+"PirateShip": "",
 "PirateSpawner": "",
 "Ship": "",
 "Treasure": "",
@@ -117,13 +123,14 @@ _global_script_class_icons={
 [application]
 
 config/name="Currents"
-run/main_scene="res://src/scenes/LevelSelectSceneV2.tscn"
+run/main_scene="res://src/scenes/IntroScene.tscn"
 config/icon="res://assets/sprites/icon.png"
 
 [autoload]
 
 Global="*res://src/util/Global.gd"
 Data="*res://src/util/Data.gd"
+MusicFader="*res://src/util/MusicFader.gd"
 
 [display]
 
@@ -148,7 +155,6 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
-quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
 quality/filters/anisotropic_filter_level=8

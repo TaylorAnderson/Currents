@@ -5,30 +5,30 @@
 [ext_resource path="res://assets/sprites/ship-destroy-anim.png" type="Texture" id=3]
 [ext_resource path="res://assets/sprites/pirate-ship-wreck.png" type="Texture" id=4]
 [ext_resource path="res://assets/sprites/water-particle.png" type="Texture" id=5]
-[ext_resource path="res://assets/sounds/explosion.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/sounds/explosionwhistledownv4.wav" type="AudioStream" id=6]
 [ext_resource path="res://assets/sounds/boatengineputterbitcrushv3.wav" type="AudioStream" id=7]
 
-[sub_resource type="AtlasTexture" id=31]
+[sub_resource type="AtlasTexture" id=34]
 flags = 4
 atlas = ExtResource( 4 )
-region = Rect2( 0, 0, 48, 48 )
+region = Rect2( 0, 0, 96, 96 )
 
 [sub_resource type="SpriteFrames" id=32]
 animations = [ {
-"frames": [ SubResource( 31 ) ],
+"frames": [ SubResource( 34 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
 
-[sub_resource type="AtlasTexture" id=29]
+[sub_resource type="AtlasTexture" id=33]
 flags = 4
 atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 48, 48 )
+region = Rect2( 0, 0, 96, 96 )
 
 [sub_resource type="SpriteFrames" id=30]
 animations = [ {
-"frames": [ SubResource( 29 ) ],
+"frames": [ SubResource( 33 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
@@ -109,7 +109,8 @@ frames = SubResource( 19 )
 speed_scale = 3.0
 
 [node name="Particles2D" type="CPUParticles2D" parent="."]
-position = Vector2( 0, 18 )
+position = Vector2( -15, 34 )
+scale = Vector2( 2, 2 )
 amount = 5
 texture = ExtResource( 5 )
 direction = Vector2( -1, 0 )
@@ -122,7 +123,6 @@ color_ramp = SubResource( 27 )
 
 [node name="ExplosionSnd" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
-volume_db = -16.59
 bus = "Sound"
 
 [node name="OnAccept" type="CPUParticles2D" parent="."]
@@ -143,5 +143,6 @@ scale_amount_curve = SubResource( 28 )
 stream = ExtResource( 7 )
 volume_db = 5.0
 autoplay = true
+bus = "Sound"
 
 [connection signal="animation_finished" from="Explosion" to="." method="_on_Explosion_animation_finished"]

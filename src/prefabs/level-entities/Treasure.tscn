@@ -76,14 +76,17 @@ script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 5 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="Explosion" type="AnimatedSprite" parent="."]
+visible = false
 frames = SubResource( 11 )
 frame = 5
 speed_scale = 3.0
-playing = true
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="CollectSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )

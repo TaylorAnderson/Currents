@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://src/scenes/LevelSelectSceneV2.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/levelselect-arrow.png" type="Texture" id=2]
@@ -13,6 +13,8 @@
 [ext_resource path="res://src/prefabs/BtnSound.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/prefabs/ui/PauseMenu.tscn" type="PackedScene" id=12]
 [ext_resource path="res://src/prefabs/SceneTransition2.tscn" type="PackedScene" id=13]
+[ext_resource path="res://assets/music/windswaveslevelselectloopFINALv4.wav" type="AudioStream" id=14]
+[ext_resource path="res://assets/sprites/intro-bg.png" type="Texture" id=15]
 
 [sub_resource type="DynamicFont" id=1]
 size = 60
@@ -43,21 +45,24 @@ __meta__ = {
 
 [node name="Header" type="NinePatchRect" parent="."]
 self_modulate = Color( 0.878431, 0.435294, 0.545098, 1 )
-margin_left = -150.0
+margin_left = -17.0
 margin_top = -1.0
-margin_right = 1224.0
+margin_right = 1031.0
 margin_bottom = 86.0
 rect_pivot_offset = Vector2( 629, 86 )
 texture = ExtResource( 5 )
-patch_margin_bottom = 60
+patch_margin_left = 30
+patch_margin_top = 30
+patch_margin_right = 30
+patch_margin_bottom = 30
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Label" type="Label" parent="Header"]
-margin_left = 150.0
+margin_left = 17.0
 margin_top = -6.0
-margin_right = 1174.0
+margin_right = 1041.0
 margin_bottom = 84.0
 custom_fonts/font = SubResource( 1 )
 text = "course select"
@@ -116,9 +121,9 @@ __meta__ = {
 }
 
 [node name="PauseButton" type="TextureButton" parent="Header"]
-margin_left = 1066.0
+margin_left = 957.0
 margin_top = 12.0
-margin_right = 1130.0
+margin_right = 1021.0
 margin_bottom = 76.0
 texture_normal = ExtResource( 10 )
 script = ExtResource( 9 )
@@ -210,6 +215,19 @@ includeLevelSelectBtn = false
 
 [node name="SceneTransition" parent="." instance=ExtResource( 13 )]
 visible = false
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 14 )
+volume_db = -10.0
+autoplay = true
+bus = "Music"
+
+[node name="Bg2" type="Sprite" parent="."]
+visible = false
+position = Vector2( 512, 288 )
+scale = Vector2( 1.14792, 1.15741 )
+z_index = -1
+texture = ExtResource( 15 )
 
 [connection signal="pressed" from="Header/PauseButton" to="." method="togglePaused"]
 [connection signal="pressed" from="LeftArrow/LeftArrow" to="." method="_on_LeftArrow_pressed"]

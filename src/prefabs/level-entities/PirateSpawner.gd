@@ -6,14 +6,16 @@ onready var gm = get_node("/root/GameScene/GameManager")
 onready var sndPirateSpawned = get_node("PirateRevealSnd")
 var treasureDir;
 func enterEditMode():
+	print(self.get_path())
 	var treasure;
 	for o in gm.obstacles:
 		if o is Treasure:
 			treasure = o;
-	pirateIndicator.visible = true;
-	var indicatorBG = pirateIndicator.get_node("BG") as AnimatedSprite
-	treasureDir = (treasure.global_position - global_position).normalized() as Vector2
-	indicatorBG.rotation = treasureDir.angle() - PI/2
+	if treasure:
+		pirateIndicator.visible = true;
+		var indicatorBG = pirateIndicator.get_node("BG") as AnimatedSprite
+		treasureDir = (treasure.global_position - global_position).normalized() as Vector2
+		indicatorBG.rotation = treasureDir.angle() - PI/2
 func spawn(playSound):
 	if playSound:
 		sndPirateSpawned.play();

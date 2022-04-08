@@ -41,7 +41,7 @@ export(NodePath) onready var minPathsTxt = get_node(minPathsTxt) as RichTextLabe
 
 export(NodePath) onready var tutorialWindow = get_node(tutorialWindow)
 
-export(NodePath) onready var tutorialPrompt = get_node(tutorialPrompt) as RichTextLabel
+export(NodePath) onready var tutorialPrompt = get_node(tutorialPrompt) as Label
 
 onready var sndButtonClick = get_node("BtnSound") as AudioStreamPlayer
 onready var sndPlayButtonBlip = get_node("PlayModeBlip") as AudioStreamPlayer
@@ -89,7 +89,6 @@ func _process(delta: float) -> void:
 		startGame();
 	for island in islands:
 		island.get_node("Btn").visible = not activePath.isDrawing;
-
 	switchDelay -= delta;
 	if (Input.is_key_pressed(KEY_SPACE) and switchDelay < 0):
 		onButtonPressed();
@@ -131,7 +130,13 @@ func changeState(newState):
 			isle.onPlayModeStart();
 		for spawner in pirateSpawners:
 			spawner.spawn(pirateSpawners.find(spawner) == 0);
+		for obst in obstacles:
+			if obst is Treasure:
+				obst.respawn(true);
 	if state == States.EDIT:
+		for obst in obstacles:
+			if obst is Treasure:
+				obst.respawn(false);
 		playBtn.visible = true;
 		editBtn.visible = false;
 		currentButton = editBtn;
@@ -142,17 +147,13 @@ func changeState(newState):
 			if is_instance_valid(ship):
 				ship.queue_free();
 		ships = [];
-		
-		for obst in obstacles:
-			if obst is Treasure:
-				obst.respawn();
-
 		for isle in islands:
 			isle.onEditModeStart();
 		for spawner in pirateSpawners:
 			spawner.enterEditMode();
 	if state == States.INTRO:
 		defaultButtons.visible = false;
+
 
 func checkLevelComplete():
 	var allIslandsComplete = true;
@@ -195,7 +196,6 @@ func goToNextLevel():
 	processLevel();
 	if (state == States.PLAY):
 		onButtonPressed(false);
-
 func processLevel():
 	var metadata = levelManager.currentLevel.get_node("Metadata") as Metadata
 	titleTxt.bbcode_text = "[center]" + metadata.levelName + "[/center]"
@@ -328,7 +328,7 @@ func getLevelThumbnail():
 	frame.texture = curFrameTex;
 	defaultButtons.show();
 	defaultUI.show();
-	tutorialPrompt.show();
+	# tutorialPrompt.show();
 	.show();
 	Data.SaveLevelThumbnail(levelManager.currentLevel);
 	pass;

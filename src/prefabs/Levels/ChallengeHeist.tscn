@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://src/prefabs/game-elements/Metadata.gd" type="Script" id=1]
+[ext_resource path="res://src/prefabs/level-entities/Island.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/prefabs/level-entities/Treasure.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/sprites/bg.png" type="Texture" id=4]
+[ext_resource path="res://assets/sprites/frame-level.png" type="Texture" id=5]
+
+[node name="TemplateLevel" type="Node2D"]
+
+[node name="Bg" type="Sprite" parent="."]
+position = Vector2( 480, 270 )
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Islands" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Island" parent="Islands" instance=ExtResource( 2 )]
+position = Vector2( 126, 99 )
+islandColor = 0
+destPath = NodePath("../Island3")
+
+[node name="Island3" parent="Islands" instance=ExtResource( 2 )]
+position = Vector2( 139, 398 )
+islandColor = 3
+wantsTreasure = true
+
+[node name="Island2" parent="Islands" instance=ExtResource( 2 )]
+position = Vector2( 798, 387 )
+islandColor = 0
+destPath = NodePath("../Island4")
+
+[node name="Island4" parent="Islands" instance=ExtResource( 2 )]
+position = Vector2( 817, 97 )
+islandColor = 3
+wantsTreasure = true
+
+[node name="Obstacles" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Treasure" parent="Obstacles" instance=ExtResource( 3 )]
+position = Vector2( 473, 206 )
+
+[node name="Treasure2" parent="Obstacles" instance=ExtResource( 3 )]
+position = Vector2( 471, 300 )
+
+[node name="Frame" type="Sprite" parent="."]
+position = Vector2( 470, 256 )
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Metadata" type="Node2D" parent="."]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_editor_description_": ""
+}
+levelName = "Testing"

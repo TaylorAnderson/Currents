@@ -14,29 +14,29 @@
 [ext_resource path="res://src/prefabs/ui/BouncyBtn.gd" type="Script" id=12]
 [ext_resource path="res://assets/sounds/clickpopbubblev2.wav" type="AudioStream" id=13]
 
-[sub_resource type="AtlasTexture" id=1]
+[sub_resource type="AtlasTexture" id=9]
 flags = 4
 atlas = ExtResource( 4 )
 region = Rect2( 0, 0, 120, 48 )
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=10]
 flags = 4
 atlas = ExtResource( 4 )
 region = Rect2( 120, 0, 120, 48 )
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=11]
 flags = 4
 atlas = ExtResource( 4 )
 region = Rect2( 240, 0, 120, 48 )
 
-[sub_resource type="AtlasTexture" id=4]
+[sub_resource type="AtlasTexture" id=12]
 flags = 4
 atlas = ExtResource( 4 )
 region = Rect2( 360, 0, 120, 48 )
 
 [sub_resource type="SpriteFrames" id=5]
 animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
 "loop": true,
 "name": "default",
 "speed": 10.0
@@ -70,7 +70,7 @@ position = Vector2( 298.162, 169.457 )
 rotation = -0.232157
 z_index = 203
 frames = SubResource( 5 )
-frame = 2
+frame = 3
 playing = true
 offset = Vector2( -38.6782, -24 )
 
@@ -79,7 +79,7 @@ position = Vector2( 835, 204 )
 rotation = 0.163987
 z_index = 203
 frames = SubResource( 5 )
-frame = 2
+frame = 3
 playing = true
 offset = Vector2( -38.6782, -24 )
 
@@ -88,7 +88,7 @@ position = Vector2( 675, 152 )
 rotation = 0.0889185
 z_index = 203
 frames = SubResource( 5 )
-frame = 1
+frame = 2
 playing = true
 offset = Vector2( -38.6782, -24 )
 
@@ -143,6 +143,7 @@ __meta__ = {
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
 volume_db = -10.0
+bus = "Sound"
 
 [node name="Buttons" type="Node2D" parent="."]
 z_index = 202
@@ -181,6 +182,7 @@ script = ExtResource( 12 )
 
 [node name="BtnSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 13 )
+bus = "Sound"
 
 [connection signal="press_anim_complete" from="Buttons/HBoxContainer/nextlevel_btn" to="." method="_on_nextlevel_btn_pressed"]
 [connection signal="pressed" from="Buttons/HBoxContainer/nextlevel_btn" to="." method="onBtnPressed"]

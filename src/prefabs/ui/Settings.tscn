@@ -67,11 +67,21 @@ margin_right = 232.0
 margin_bottom = 356.0
 rect_min_size = Vector2( 0, 280 )
 
-[node name="sound-slider" type="HSlider" parent="BG"]
-margin_left = 40.0
-margin_top = 193.0
-margin_right = 340.0
-margin_bottom = 289.0
+[node name="SoundSliderSnd" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -10.0
+bus = "Sound"
+
+[node name="MusicSliderSnd" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = -10.0
+bus = "Sound"
+
+[node name="sound-slider" type="HSlider" parent="."]
+margin_left = -112.0
+margin_top = -23.0
+margin_right = 188.0
+margin_bottom = 73.0
 rect_scale = Vector2( 0.75, 0.75 )
 custom_icons/grabber_disabled = ExtResource( 4 )
 custom_icons/grabber_highlight = ExtResource( 4 )
@@ -79,35 +89,28 @@ custom_icons/grabber = ExtResource( 4 )
 custom_styles/slider = ExtResource( 6 )
 custom_styles/grabber_area_highlight = ExtResource( 6 )
 custom_styles/grabber_area = ExtResource( 6 )
-min_value = -24.0
-max_value = 10.0
+max_value = 1.0
+step = 0.05
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="music-slider" type="HSlider" parent="BG"]
-margin_left = 40.0
-margin_top = 293.0
-margin_right = 340.0
-margin_bottom = 389.0
+[node name="music-slider" type="HSlider" parent="."]
+margin_left = -112.0
+margin_top = 77.0
+margin_right = 188.0
+margin_bottom = 173.0
 rect_scale = Vector2( 0.75, 0.75 )
 custom_icons/grabber_highlight = ExtResource( 3 )
 custom_icons/grabber = ExtResource( 3 )
 custom_styles/slider = ExtResource( 6 )
 custom_styles/grabber_area_highlight = ExtResource( 6 )
 custom_styles/grabber_area = ExtResource( 6 )
-min_value = -24.0
-max_value = 0.0
+max_value = 1.0
+step = 0.05
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SoundSliderSnd" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 7 )
-volume_db = -10.0
-
-[node name="MusicSliderSnd" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 7 )
-volume_db = -10.0
-
-[connection signal="value_changed" from="BG/sound-slider" to="." method="onSoundSliderValueChanged"]
+[connection signal="value_changed" from="sound-slider" to="." method="onSoundSliderValueChanged"]
+[connection signal="value_changed" from="music-slider" to="." method="onMusicSliderValueChanged"]

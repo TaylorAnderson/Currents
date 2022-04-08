@@ -13,8 +13,7 @@ var currentLevel = 0;
 var paused = false;
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Data.DeleteSave();
-	Data.LoadGame();
+	#MusicFader.fade_in(get_node("Music"), -10)
 	var postcardWidth = 0;
 	for i in range(Data.data.levelArr.size()):
 		var levelData = Data.data.levelArr[i]
@@ -56,7 +55,6 @@ func _process(delta):
 	levelContainer.rect_position.x = lerp(levelContainer.rect_position.x, scrollAmt, 0.1)
 
 func _on_LeftArrow_pressed():
-	if (currentLevel <= 0): return;
 	$BtnSound.play();
 	scrollAmt += incrementVal;
 	currentLevel -= 1;

@@ -7,14 +7,16 @@ var levelOrderResPath = "res://src/LevelOrder.tres";
 var levelOrderResource:LevelOrder;
 var thumbnailPath = "res://assets/thumbnails/"
 func _ready() -> void:
-	print("happening");
 	levelOrderResource = load(levelOrderResPath);
-	print(levelOrderResource);
+	DeleteSave();
+	LoadGame();
 func _buildData():
-	print("building data");
+	self.data.musicVol = 0.5;
+	self.data.soundVol = 0.5;
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear2db(data.musicVol));
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Sound"), linear2db(data.soundVol));
 	self.data.levelArr = [];
 	self.data.shownComplete = false;
-	print(levelOrderResource);
 	for levelScene in levelOrderResource.levels:
 		var levelInst = levelScene.instance();
 		var levelData = levelInst.get_node("Metadata") as Metadata;
@@ -33,20 +35,28 @@ func SaveGame() -> void:
 	file.close();
 
 func LoadGame() -> void:
-	print("loading game");
+
 	var file = File.new()
 	var error = file.open(saveDataPath, File.READ);
 	if error != OK:
 		_buildData();
 		return;
 	var fileTxt = file.get_as_text();
+	print(fileTxt);
 	var jsonError = validate_json(fileTxt);
 	assert(jsonError.empty(), str("Invalid JSON ", jsonError))
 	var jsonResult = parse_json(fileTxt);
 	if typeof(jsonResult) != TYPE_DICTIONARY:
 		_buildData();
 		return;
+	if not jsonResult.get("levelArr"):
+		_buildData();
+		return;
 	self.data = jsonResult;
+	print("data music vol" + str(data.musicVol))
+	print("data sound vol" + str(data.soundVol))
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear2db(data.musicVol));
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Sound"), linear2db(data.soundVol));
 
 func DeleteSave() -> void:
 	var dir = Directory.new();
@@ -76,7 +86,6 @@ func SetShownCompleteScreen():
 	SaveGame();
 
 func SaveThumbnails(parent):
-	print("saving thumbnails");
 	for i in range(Data.levelOrderResource.levels.size()):
 		var thumbnail = Data.levelOrderResource.levels[i].instance() as Node2D
 		thumbnail.position.x = 33;
@@ -94,5 +103,11 @@ func SaveLevelThumbnail(levelInstance):
 	thumbnail_image.flip_y();
 	thumbnail_image.save_png(thumbnailPath + (levelInstance.get_node("Metadata") as Metadata).levelName + ".png")
 	
+func SetSoundVolume(vol):
+	print("sound vol " + str(vol))
+	data.soundVol = vol;
 	
+func SetMusicVolume(vol):
+	print("music vol " + str(vol))
+	data.musicVol = vol;
 	
