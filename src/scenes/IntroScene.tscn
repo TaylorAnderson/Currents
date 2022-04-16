@@ -187,7 +187,7 @@ size = 32
 font_data = ExtResource( 3 )
 
 [node name="Intro" type="Node2D"]
-position = Vector2( -2, 0 )
+position = Vector2( -4, 0 )
 script = ExtResource( 2 )
 
 [node name="Bg" type="Sprite" parent="."]
@@ -262,6 +262,7 @@ __meta__ = {
 }
 
 [node name="R2" type="Label" parent="Currents Labels/HBoxContainer"]
+self_modulate = Color( 1, 1, 1, 0 )
 margin_left = 437.0
 margin_top = 10.0
 margin_right = 510.0
@@ -275,6 +276,7 @@ __meta__ = {
 }
 
 [node name="E" type="Label" parent="Currents Labels/HBoxContainer"]
+self_modulate = Color( 1, 1, 1, 0 )
 margin_left = 514.0
 margin_top = 10.0
 margin_right = 587.0
@@ -288,6 +290,7 @@ __meta__ = {
 }
 
 [node name="N" type="Label" parent="Currents Labels/HBoxContainer"]
+self_modulate = Color( 1, 1, 1, 0 )
 margin_left = 591.0
 margin_top = 10.0
 margin_right = 664.0
@@ -301,6 +304,7 @@ __meta__ = {
 }
 
 [node name="T" type="Label" parent="Currents Labels/HBoxContainer"]
+self_modulate = Color( 1, 1, 1, 0 )
 margin_left = 668.0
 margin_top = 10.0
 margin_right = 741.0
@@ -314,6 +318,7 @@ __meta__ = {
 }
 
 [node name="S" type="Label" parent="Currents Labels/HBoxContainer"]
+self_modulate = Color( 1, 1, 1, 0 )
 margin_left = 745.0
 margin_top = 10.0
 margin_right = 818.0
@@ -331,7 +336,7 @@ __meta__ = {
 anims/RESET = SubResource( 4 )
 
 [node name="Label2" type="Label" parent="."]
-self_modulate = Color( 0.211765, 0.25098, 0.560784, 1 )
+self_modulate = Color( 0.0627451, 0.368627, 0.52549, 0 )
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -345,9 +350,6 @@ text = "a game by
 taylor anderson, austin m, and colin zarzour"
 align = 1
 valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="PlayBtn" type="TextureButton" parent="."]
 margin_left = 412.0

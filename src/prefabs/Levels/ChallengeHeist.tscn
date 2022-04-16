@@ -64,4 +64,5 @@ __meta__ = {
 "_edit_lock_": true,
 "_editor_description_": ""
 }
-levelName = "Testing"
+levelName = "Heist"
+minPathsToSolve = 5

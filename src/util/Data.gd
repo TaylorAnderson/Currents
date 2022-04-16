@@ -6,6 +6,17 @@ var currentLevel:int
 var levelOrderResPath = "res://src/LevelOrder.tres";
 var levelOrderResource:LevelOrder;
 var thumbnailPath = "res://assets/thumbnails/"
+var levelsUnlocked = 1;
+var currentBlockStars = 0;
+var levelBlocks = [
+	{start=0, end=1},
+	{start= 1, end= 5},
+	{start= 6, end= 11},
+	{start= 12, end= 17},
+	{start=18, end=20}
+]
+var currentBlock = 0;
+var blockToUnlock = 0;
 func _ready() -> void:
 	levelOrderResource = load(levelOrderResPath);
 	DeleteSave();
@@ -53,8 +64,6 @@ func LoadGame() -> void:
 		_buildData();
 		return;
 	self.data = jsonResult;
-	print("data music vol" + str(data.musicVol))
-	print("data sound vol" + str(data.soundVol))
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear2db(data.musicVol));
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Sound"), linear2db(data.soundVol));
 
@@ -69,7 +78,9 @@ func OnLevelComplete(numPaths):
 	var metPar = numPaths <= data.levelArr[currentLevel].levelPaths;
 	data.levelArr[currentLevel].complete = true;
 	data.levelArr[currentLevel].completeOnPar = metPar or data.levelArr[currentLevel].completeOnPar;
-
+	var blockProgress = Data.CheckLevelBlockProgress();
+	if (blockProgress.current >= blockProgress.total):
+		blockToUnlock += 1;
 func GetCurrentLevelScene():
 	return levelOrderResource.levels[currentLevel]
 
@@ -110,4 +121,15 @@ func SetSoundVolume(vol):
 func SetMusicVolume(vol):
 	print("music vol " + str(vol))
 	data.musicVol = vol;
-	
+
+func CheckLevelBlockProgress():
+	var currentLevelBlock = levelBlocks[currentBlock];
+	return {total=(currentLevelBlock.end - currentLevelBlock.start), current = GetStarsInCurrentLevelBlock()}
+func GetStarsInCurrentLevelBlock():
+	var stars = 0;
+	for i in range(0, levelBlocks[currentBlock].end):
+		var lvlData = data.levelArr[i];
+		if lvlData.get("completed"): stars += 1;
+		if lvlData.get("completeOnPar"): stars += 1;
+	return stars;
+		

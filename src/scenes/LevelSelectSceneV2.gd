@@ -13,6 +13,10 @@ var currentLevel = 0;
 var paused = false;
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if Data.currentBlock < Data.blockToUnlock:
+		Data.currentBlock = Data.blockToUnlock;
+		var blockToUnlock = Data.levelBlocks[Data.blockToUnlock]
+		unlockLevels(blockToUnlock.start, blockToUnlock.end)
 	#MusicFader.fade_in(get_node("Music"), -10)
 	var postcardWidth = 0;
 	for i in range(Data.data.levelArr.size()):
@@ -40,6 +44,14 @@ func _ready():
 		var rowCompleteOnParIcon = th.get_node("Inner/Content/Icons/PathsCompleteIcon/Icon");
 		rowCompleteOnParIcon.visible = levelData.completeOnPar;
 		
+		var lock = th.get_node("Lock") as Node2D
+		lock.visible = Data.levelsUnlocked <= i
+		# if this level is at the start of the next block
+		if (i == Data.levelBlocks[Data.currentBlock].end):
+			th.get_node("Text").visible = true;
+			var levelTxt = th.get_node("Text/HBoxContainer/Label")
+			var levelBlockProgress = Data.CheckLevelBlockProgress();
+			levelTxt.text = str(levelBlockProgress.current) + "/" + str(levelBlockProgress.total);
 		var thumbnailImage = Image.new();
 		var err = thumbnailImage.load(Data.thumbnailPath + levelData.levelName + ".png");
 		if err == OK:
@@ -55,6 +67,7 @@ func _process(delta):
 	levelContainer.rect_position.x = lerp(levelContainer.rect_position.x, scrollAmt, 0.1)
 
 func _on_LeftArrow_pressed():
+	if currentLevel == 0: return;
 	$BtnSound.play();
 	scrollAmt += incrementVal;
 	currentLevel -= 1;
@@ -62,12 +75,16 @@ func _on_LeftArrow_pressed():
 
 
 func _on_RightArrow_pressed():
-	if (currentLevel >= levels.size()-1): return;
+	if (currentLevel >= Data.levelBlocks[Data.currentBlock].end): return;
 	$BtnSound.play();
 	scrollAmt -= incrementVal;
 	currentLevel += 1;
 	onLevelScrolled()
+func scrollToLevel(level):
 	
+	scrollAmt = -(incrementVal * level) - incrementVal/2 + Global.width/2;
+	currentLevel = level;
+	onLevelScrolled()
 func onLevelScrolled():
 	for i in range(levels.size()):
 		var lvl = levels[i];
@@ -90,3 +107,13 @@ func onLevelPressed(levelData):
 func togglePaused():
 	$PauseMenu.visible = !$PauseMenu.visible;
 	$BtnSound.play();
+func unlockLevel(levelNumber, scrollDelay = 1.0, explosionDelay = 1.5):
+	yield(get_tree().create_timer(scrollDelay), "timeout");
+	scrollToLevel(levelNumber);
+	yield(get_tree().create_timer(explosionDelay), "timeout");
+	levels[levelNumber].thumbnail.get_parent().unlock();
+func unlockLevels(start, end):
+	yield(get_tree().create_timer(1.0), "timeout");
+	for i in range(start, end):
+		unlockLevel(i, 0.1, 0.2);
+		yield(get_tree().create_timer(1.5), "timeout");
