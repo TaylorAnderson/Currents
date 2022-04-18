@@ -61,8 +61,7 @@ func _ready():
 			thumbnailTex.texture = texture;
 	
 	levelContainer.rect_position.x = Global.width/2 - postcardWidth/2;
-	scrollAmt = levelContainer.rect_position.x;
-	onLevelScrolled();
+	scrollToLevel(Data.levelSelected);
 func _process(delta):
 	levelContainer.rect_position.x = lerp(levelContainer.rect_position.x, scrollAmt, 0.1)
 
@@ -99,6 +98,7 @@ func onLevelPressed(levelData):
 	if paused: return;
 	$BtnSound.play();
 	var index = Data.data.levelArr.find(levelData)
+	Data.levelSelected = index;
 	#We do -1 because the GameScene only has functionality to load NEXT level
 	#And I'm too lazy to change it.
 	Data.SetCurrentLevel(index-1);
@@ -117,3 +117,4 @@ func unlockLevels(start, end):
 	for i in range(start, end):
 		unlockLevel(i, 0.1, 0.2);
 		yield(get_tree().create_timer(1.5), "timeout");
+	scrollToLevel(Data.levelSelected);

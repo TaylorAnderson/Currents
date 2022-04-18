@@ -64,7 +64,7 @@ size = 24
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=14]
-size = 24
+size = 32
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=10]
@@ -106,7 +106,7 @@ playBtn = NodePath("../buttons/DefaultButtons/PlayStateBtn")
 editBtn = NodePath("../buttons/DefaultButtons/EditStateBtn")
 nextLevelBtn = NodePath("../buttons/NextLevelBtn")
 pauseBtn = NodePath("../buttons/DefaultButtons/PauseButton")
-tutorialBtn = NodePath("../buttons/DefaultButtons/TutButton")
+tutorialBtn = NodePath("../buttons/DefaultButtons/TutButton/TutButton")
 defaultButtons = NodePath("../buttons/DefaultButtons")
 defaultUI = NodePath("../UILayer/DefaultUI")
 pathToggle = NodePath("../buttons/DefaultButtons/PathToggle")
@@ -120,7 +120,7 @@ levelManager = NodePath("../LevelManager")
 titleTxt = NodePath("../UILayer/DefaultUI/Title")
 minPathsTxt = NodePath("../UILayer/DefaultUI/MinPaths")
 tutorialWindow = NodePath("../UILayer/TutorialWindow")
-tutorialPrompt = NodePath("../UILayer/DefaultUI/TutorialBtnPrompt")
+tutorialPrompt = NodePath("../UILayer/DefaultUI/TutorialPrompt")
 bgAmbience = NodePath("../AmbienceTracks/BGAmbience")
 screenshotFrameTexture = ExtResource( 40 )
 
@@ -360,9 +360,10 @@ __meta__ = {
 
 [node name="buttons" type="Node2D" parent="."]
 position = Vector2( 16, 16 )
-z_index = 102
+z_index = 100
 
 [node name="DefaultButtons" type="Node2D" parent="buttons"]
+z_index = 1
 
 [node name="PlayStateBtn" type="TextureButton" parent="buttons/DefaultButtons"]
 margin_left = -16.0
@@ -406,21 +407,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TutButton" type="TextureButton" parent="buttons/DefaultButtons"]
-margin_left = -10.0
-margin_top = -10.0
-margin_right = 54.0
-margin_bottom = 54.0
-rect_pivot_offset = Vector2( 41, 41 )
-focus_mode = 0
-shortcut_in_tooltip = false
-enabled_focus_mode = 0
-texture_normal = ExtResource( 17 )
-script = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="PathToggle" type="TextureButton" parent="buttons/DefaultButtons"]
 visible = false
 margin_left = 122.0
@@ -437,6 +423,24 @@ __meta__ = {
 }
 currentTexture = ExtResource( 25 )
 windTexture = ExtResource( 21 )
+
+[node name="TutButton" type="Node2D" parent="buttons/DefaultButtons"]
+z_index = 102
+
+[node name="TutButton" type="TextureButton" parent="buttons/DefaultButtons/TutButton"]
+margin_left = -10.0
+margin_top = -10.0
+margin_right = 54.0
+margin_bottom = 54.0
+rect_pivot_offset = Vector2( 41, 41 )
+focus_mode = 0
+shortcut_in_tooltip = false
+enabled_focus_mode = 0
+texture_normal = ExtResource( 17 )
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="SaveBtn" type="TextureButton" parent="buttons"]
 visible = false
@@ -589,7 +593,7 @@ __meta__ = {
 }
 
 [node name="UILayer" type="Node2D" parent="."]
-z_index = 150
+z_index = 100
 
 [node name="DefaultUI" type="Node2D" parent="UILayer"]
 
@@ -653,15 +657,36 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 step = 1.0
 
-[node name="TutorialBtnPrompt" type="Label" parent="UILayer/DefaultUI"]
+[node name="TutorialPrompt" type="Node2D" parent="UILayer/DefaultUI"]
 visible = false
+z_index = 101
+z_as_relative = false
+
+[node name="ColorRect" type="ColorRect" parent="UILayer/DefaultUI/TutorialPrompt"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1024.0
+margin_bottom = 1000.0
+rect_min_size = Vector2( 1024, 1000 )
+mouse_filter = 2
+color = Color( 0, 0, 0, 0.87451 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UILayer/DefaultUI/TutorialPrompt"]
 self_modulate = Color( 1, 1, 1, 0.690196 )
-margin_left = 76.0
-margin_top = 19.0
-margin_right = 485.0
-margin_bottom = 62.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 108.0
+margin_right = 899.0
+margin_bottom = 575.0
+mouse_filter = 1
 custom_fonts/font = SubResource( 14 )
-text = "<- Learn how to play"
+text = "Press the tutorial button in the top left to learn how to play"
+align = 1
+valign = 1
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -699,8 +724,8 @@ margin_right = 564.0
 margin_bottom = 49.0
 custom_fonts/normal_font = SubResource( 10 )
 bbcode_enabled = true
-bbcode_text = "[center]Tips[/center]"
-text = "Tips"
+bbcode_text = "[center]Tutorial[/center]"
+text = "Tutorial"
 fit_content_height = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -766,9 +791,9 @@ z_index = 50
 [connection signal="pressed" from="buttons/DefaultButtons/PlayStateBtn" to="GameManager" method="onButtonPressed"]
 [connection signal="pressed" from="buttons/DefaultButtons/EditStateBtn" to="GameManager" method="onButtonPressed"]
 [connection signal="pressed" from="buttons/DefaultButtons/PauseButton" to="GameManager" method="pauseButtonPressed"]
-[connection signal="pressed" from="buttons/DefaultButtons/TutButton" to="GameManager" method="onTutorialBtnPressed"]
 [connection signal="pathToggled" from="buttons/DefaultButtons/PathToggle" to="GameManager" method="onPathToggled" binds= [ true ]]
 [connection signal="pressed" from="buttons/DefaultButtons/PathToggle" to="buttons/DefaultButtons/PathToggle" method="onPressed"]
+[connection signal="pressed" from="buttons/DefaultButtons/TutButton/TutButton" to="GameManager" method="onTutorialBtnPressed"]
 [connection signal="pressed" from="buttons/SaveBtn" to="GameManager" method="onSavePressed"]
 [connection signal="pressed" from="buttons/DeleteBtn" to="GameManager" method="_on_DeleteBtn_pressed"]
 [connection signal="pressed" from="buttons/NextLevelBtn" to="GameManager" method="_on_NextLevelBtn_pressed"]
