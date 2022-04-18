@@ -22,4 +22,10 @@ func unlock() -> void:
 	$UnlockSound.play();
 
 func onUnlockAnimCompleted() -> void:
-	$Lock.queue_free();
+	$Lock.visible = false;
+
+func _process(delta: float) -> void:
+	if ($Text.visible):
+		$Lock/LockSprite.position.y = 135;
+	else:
+		$Lock/LockSprite.position.y = 202;

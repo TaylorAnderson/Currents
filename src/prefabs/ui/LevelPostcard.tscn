@@ -293,15 +293,15 @@ bus = "Sound"
 
 [node name="Text" type="CenterContainer" parent="."]
 visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
 margin_top = 183.0
+margin_right = 763.0
+margin_bottom = 430.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Text"]
-margin_left = 258.0
-margin_top = 79.0
-margin_right = 509.0
-margin_bottom = 169.0
+margin_left = 256.0
+margin_top = 78.0
+margin_right = 507.0
+margin_bottom = 168.0
 custom_constants/separation = 50
 
 [node name="Icon" type="TextureRect" parent="Text/HBoxContainer"]

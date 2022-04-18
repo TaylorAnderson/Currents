@@ -187,7 +187,7 @@ size = 32
 font_data = ExtResource( 3 )
 
 [node name="Intro" type="Node2D"]
-position = Vector2( -4, 0 )
+position = Vector2( -2, 0 )
 script = ExtResource( 2 )
 
 [node name="Bg" type="Sprite" parent="."]
