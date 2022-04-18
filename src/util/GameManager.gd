@@ -41,7 +41,7 @@ export(NodePath) onready var minPathsTxt = get_node(minPathsTxt) as RichTextLabe
 
 export(NodePath) onready var tutorialWindow = get_node(tutorialWindow)
 
-export(NodePath) onready var tutorialPrompt = get_node(tutorialPrompt) as Label
+export(NodePath) onready var tutorialPrompt = get_node(tutorialPrompt) as Node2D
 
 onready var sndButtonClick = get_node("BtnSound") as AudioStreamPlayer
 onready var sndPlayButtonBlip = get_node("PlayModeBlip") as AudioStreamPlayer
@@ -257,6 +257,7 @@ func startGame() -> void:
 	goToNextLevel();
 	setupUI();
 	changeState(States.EDIT);
+	print(Data.currentLevel);
 	if (Data.currentLevel == 0):
 		tutorialPrompt.visible = true;
 	gameIntro.visible = false;
@@ -294,6 +295,7 @@ func onPathToggled(toggledByHand = false) -> void:
 		activePath.disabled = true;
 
 func onTutorialBtnPressed() -> void:
+	print("tutorial");
 	tutorialWindow.visible = true;
 	tutorialPrompt.visible = false;
 	togglePause(true);

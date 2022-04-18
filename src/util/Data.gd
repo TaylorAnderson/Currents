@@ -10,13 +10,14 @@ var levelsUnlocked = 1;
 var currentBlockStars = 0;
 var levelBlocks = [
 	{start=0, end=1},
-	{start= 1, end= 5},
-	{start= 6, end= 11},
+	{start= 1, end= 2},
+	{start= 3, end= 4},
 	{start= 12, end= 17},
 	{start=18, end=20}
 ]
 var currentBlock = 0;
 var blockToUnlock = 0;
+var levelSelected = 0;
 func _ready() -> void:
 	levelOrderResource = load(levelOrderResPath);
 	DeleteSave();
