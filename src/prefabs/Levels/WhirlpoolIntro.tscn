@@ -33,4 +33,4 @@ texture = ExtResource( 3 )
 
 [node name="Metadata" parent="." instance=ExtResource( 1 )]
 levelName = "A hole in the sea"
-minPathsToSolve = 1
+minPathsToSolve = 2

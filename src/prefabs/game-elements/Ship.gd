@@ -36,10 +36,9 @@ var currentStrengthMultiplier = 1;
 onready var sndExplosion = get_node("ExplosionSnd");
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print(get_node("IdleSound"));
 	z_as_relative = false;
 	
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if toBeKilled: dead = true;
 	if island != null and not setFrame:
 		setFrame = true;
@@ -83,12 +82,17 @@ func _process(delta: float) -> void:
 					var whirlpoolCenter = obstacle.global_position + Vector2.DOWN * obstacle.offsetY
 					var velToCenter = (whirlpoolCenter - global_position).normalized();
 					vel += velToCenter * 0.05;
+					if (global_position.distance_to(whirlpoolCenter) < radius + 10 and vel.length() < 0.7):
+						explode();
 			if obstacle is Treasure and not obstacle.collected:
 				if global_position.distance_to(obstacle.global_position) < radius + obstacle.radius:
 					obstacle.collect();
 					collectedTreasure = true;
 		if island:
-			if global_position.distance_to(island.dest.global_position) < radius + island.dest.radius:
+			var dist_to_island = global_position.distance_to(island.dest.global_position)
+			if dist_to_island < radius + island.dest.radius + 50:
+				accel -= (island.global_position - global_position).normalized() * 0.005;
+			if dist_to_island < radius + island.dest.radius:
 				island.dest.acceptShip(self);
 				queue_free();
 				dead = true;

@@ -54,4 +54,4 @@ __meta__ = {
 "_editor_description_": ""
 }
 levelName = "Gold rush"
-minPathsToSolve = 4
+minPathsToSolve = 5

@@ -57,5 +57,5 @@ __meta__ = {
 "_editor_description_": ""
 }
 levelName = "Busy, busy ocean"
-minPathsToSolve = 5
+minPathsToSolve = 6
 tutorialHint = "Consider using a combination of direct paths and nudges to navigate the ships around each other!"

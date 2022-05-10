@@ -10,11 +10,9 @@ enum States {
 	INTRO,
 }
 
-export(NodePath) onready var currents = get_node(currents);
-export(NodePath) onready var winds = get_node(winds)
+export( NodePath) onready var currents = get_node(currents);
 
 export(NodePath) onready var permCurrents = get_node(permCurrents);
-export(NodePath) onready var permWinds = get_node(permWinds)
 
 export(NodePath) onready var playBtn = get_node(playBtn) as TextureButton
 export(NodePath) onready var editBtn = get_node(editBtn) as TextureButton
@@ -72,9 +70,8 @@ signal onStateChanged(new_state)
 var startedGame = false;
 
 var shownLevelComplete = false;
-
+var menuOpen = false;
 onready var transition = get_node("/root/GameScene/UILayer/SceneTransition")
-
 
 func _ready() -> void:
 	bgAmbience.fadeIn(-5, 0.3);
@@ -82,7 +79,6 @@ func _ready() -> void:
 	defaultUI.visible = false;
 	gameIntro.visible = true;
 	onPathToggled(); # to set current path before we start
-
 func _process(delta: float) -> void:
 	if not startedGame: 
 		startedGame = true;
@@ -96,6 +92,7 @@ func _process(delta: float) -> void:
 
 	
 func onButtonPressed(playSound = true):
+	if self.paused: return;
 	switchDelay = 0.7
 	if playSound:
 		sndButtonClick.play();
@@ -121,9 +118,7 @@ func changeState(newState):
 		currentButton = playBtn;
 		allPoints = [];
 		allPoints.append_array(currents.getPoints());
-		allPoints.append_array(winds.getPoints());
 		allPoints.append_array(permCurrents.getPoints());
-		allPoints.append_array(permWinds.getPoints())
 		activePath.disabled = true;
 
 		for isle in islands:
@@ -162,16 +157,16 @@ func checkLevelComplete():
 			allIslandsComplete = false;
 	if allIslandsComplete:
 		var allLevelsComplete = true;
-		for level in Data.data.levelArr:
+		for level in Data.data["levelArr"]:
 			if (not level.complete):
 				allLevelsComplete = false;
-		if allLevelsComplete and not Data.data.shownComplete:
+		if allLevelsComplete and not Data.data["shownComplete"]:
 			Data.SetShownCompleteScreen();
 			transition.transition("res://src/scenes/GameCompleteScene.tscn")
 		else:
 			levelComplete = true;
+			Data.OnLevelComplete(currents.paths.size())
 			showLevelCompleteMenu();
-			Data.OnLevelComplete(currents.paths.size() + winds.paths.size())
 			Data.SaveGame();
 
 func showLevelCompleteMenu():
@@ -187,9 +182,7 @@ func showLevelCompleteMenu():
 
 func goToNextLevel():
 	currents.clear();
-	winds.clear();
 	permCurrents.clear();
-	permWinds.clear();
 	levelComplete = false;
 	shownLevelComplete = false;
 	levelManager.loadNextLevel();
@@ -199,7 +192,7 @@ func goToNextLevel():
 func processLevel():
 	var metadata = levelManager.currentLevel.get_node("Metadata") as Metadata
 	titleTxt.bbcode_text = "[center]" + metadata.levelName + "[/center]"
-	minPathsTxt.bbcode_text = "[center]Minimum paths: " + str(metadata.minPathsToSolve) + "[/center]";
+	minPathsTxt.bbcode_text = "[center]Par: " + str(metadata.minPathsToSolve) + "[/center]";
 	tutorialWindow.get_node("Description/Txt").bbcode_text="[center]" + str(metadata.tutorialHint) + "[/center]"
 	if (metadata.tutorialHint.length() == 0):
 		tutorialBtn.visible = false;
@@ -212,10 +205,9 @@ func processLevel():
 			pirateSpawners.append(ob);
 	var path = permanentPathRootPath + (levelManager.currentLevel.name) + ".json";
 	permCurrents.loadJson(path);
-	permWinds.loadJson(path);
 
 func _on_NextLevelBtn_pressed(playSound) -> void:
-	if (playSound): $BtnSound.play();
+	Data.levelSelected+=1;
 	transition.transition("", true);
 	yield(get_tree().create_timer(0.5), "timeout");
 	goToNextLevel();
@@ -234,7 +226,6 @@ func _on_DeleteBtn_pressed() -> void:
 func savePathJson():
 	var obj = {}
 	obj["current"] = currents.getJson();
-	obj["wind"] = winds.getJson();
 	var jsonToSave = to_json(obj);
 	var path = permanentPathRootPath + (levelManager.currentLevel as Node2D).name + ".json";
 	var file = File.new();
@@ -257,8 +248,10 @@ func startGame() -> void:
 	goToNextLevel();
 	setupUI();
 	changeState(States.EDIT);
-	print(Data.currentLevel);
+	if Data.currentLevel == 0 or Data.currentLevel == 1:
+		minPathsTxt.visible = false;
 	if (Data.currentLevel == 0):
+		togglePause(true);
 		tutorialPrompt.visible = true;
 	gameIntro.visible = false;
 	
@@ -270,7 +263,6 @@ func togglePause(forcePause = null):
 	$BtnSound.play();
 	paused = forcePause or !paused;
 	currents.disabled = paused or state != States.EDIT
-	winds.disabled = paused or state != States.EDIT
 	# defaultUI.visible = not paused;
 	
 	if paused:
@@ -284,18 +276,14 @@ func onPathToggled(toggledByHand = false) -> void:
 	if pathToggle.pathIsCurrent():
 		activePath = currents;
 		currents.isActive = true;
-		winds.isActive = false;
-	if pathToggle.pathIsWind():
-		activePath = winds;
-		currents.isActive = false;
-		winds.isActive = true;
+
 	if (state == States.EDIT):
 		activePath.disabled = false;
 	else:
 		activePath.disabled = true;
 
 func onTutorialBtnPressed() -> void:
-	print("tutorial");
+	#if paused: return;
 	tutorialWindow.visible = true;
 	tutorialPrompt.visible = false;
 	togglePause(true);
@@ -312,6 +300,8 @@ func onLevelSelectBtnPressed() -> void:
 
 
 func pauseButtonPressed() -> void:
+	# if we're already paused, dont do this
+	if paused: return;
 	$BtnSound.play();
 	pauseMenu.visible = true;
 	togglePause(true);

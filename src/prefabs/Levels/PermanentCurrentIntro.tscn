@@ -46,5 +46,5 @@ __meta__ = {
 "_editor_description_": ""
 }
 levelName = "Counter current"
-minPathsToSolve = 2
+minPathsToSolve = 3
 tutorialHint = "This level has an undercurrent -- it works like the currents you've placed before, but cannot be removed.  Try to work around it by moving your ship out of its path."

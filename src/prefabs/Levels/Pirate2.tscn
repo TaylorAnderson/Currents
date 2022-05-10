@@ -67,5 +67,5 @@ __meta__ = {
 "_editor_description_": ""
 }
 levelName = "Claustrophobia"
-minPathsToSolve = 5
+minPathsToSolve = 6
 tutorialHint = "Friendly ships are not the only ones who explode when they hit the rocks..."

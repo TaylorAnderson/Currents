@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/prefabs/level-entities/Island.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/prefabs/game-elements/Metadata.gd" type="Script" id=2]
 [ext_resource path="res://assets/sprites/frame-level.png" type="Texture" id=3]
-[ext_resource path="res://src/prefabs/level-entities/Rock.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/sprites/bg.png" type="Texture" id=6]
 
 [node name="TemplateLevel" type="Node2D"]
@@ -33,36 +32,6 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Rock" parent="Obstacles" instance=ExtResource( 4 )]
-position = Vector2( 113, 125 )
-
-[node name="Rock2" parent="Obstacles" instance=ExtResource( 4 )]
-position = Vector2( 806, 394 )
-
-[node name="Rock3" parent="Obstacles" instance=ExtResource( 4 )]
-position = Vector2( 818, 219 )
-
-[node name="Rock9" parent="Obstacles" instance=ExtResource( 4 )]
-position = Vector2( 722, 137 )
-
-[node name="Rock10" parent="Obstacles" instance=ExtResource( 4 )]
-position = Vector2( 813, 64 )
-
-[node name="Rock4" parent="Obstacles" instance=ExtResource( 4 )]
-position = Vector2( 118, 404 )
-
-[node name="Rock5" parent="Obstacles" instance=ExtResource( 4 )]
-position = Vector2( 196, 306 )
-
-[node name="Rock6" parent="Obstacles" instance=ExtResource( 4 )]
-position = Vector2( 135, 215 )
-
-[node name="Rock7" parent="Obstacles" instance=ExtResource( 4 )]
-position = Vector2( 209, 78 )
-
-[node name="Rock8" parent="Obstacles" instance=ExtResource( 4 )]
-position = Vector2( 732, 307 )
-
 [node name="Frame" type="Sprite" parent="."]
 position = Vector2( 470, 256 )
 texture = ExtResource( 3 )
@@ -79,6 +48,6 @@ __meta__ = {
 levelName = "Island neighbours"
 tutorialHint = "Welcome to Currents!
 
-Currents is a game about guiding ships on the open seas using currents and winds.  
+Currents is a game about guiding ships on the open seas using ocean currents  
 
-Click and hold on an island to see where it wants to send its ship -- then click play to send it out."
+Click and hold on an island to see where it wants to send its ship, then click play to send it out."

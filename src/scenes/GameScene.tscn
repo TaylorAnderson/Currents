@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=2]
+[gd_scene load_steps=52 format=2]
 
 [ext_resource path="res://src/prefabs/ui/PathToggle.gd" type="Script" id=1]
 [ext_resource path="res://assets/sprites/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=2]
@@ -18,11 +18,9 @@
 [ext_resource path="res://assets/sprites/pausebutton.png" type="Texture" id=16]
 [ext_resource path="res://assets/sprites/tut-btn.png" type="Texture" id=17]
 [ext_resource path="res://assets/sprites/editBtn.png" type="Texture" id=18]
-[ext_resource path="res://assets/sprites/wind-arrow.png" type="Texture" id=19]
 [ext_resource path="res://assets/sprites/frame.png" type="Texture" id=20]
 [ext_resource path="res://assets/sprites/path-toggle2.png" type="Texture" id=21]
 [ext_resource path="res://assets/sprites/saveBtn.png" type="Texture" id=22]
-[ext_resource path="res://assets/sprites/perm-wind-arrow.png" type="Texture" id=23]
 [ext_resource path="res://assets/sprites/path-start-end-prompt.png" type="Texture" id=24]
 [ext_resource path="res://assets/sprites/path-toggle1.png" type="Texture" id=25]
 [ext_resource path="res://assets/sprites/beginBtn.png" type="Texture" id=26]
@@ -36,7 +34,6 @@
 [ext_resource path="res://assets/sounds/restingwaterloopv4.wav" type="AudioStream" id=34]
 [ext_resource path="res://src/prefabs/AmbienceTrack.gd" type="Script" id=35]
 [ext_resource path="res://assets/sounds/drawwaterpathloopv6.wav" type="AudioStream" id=36]
-[ext_resource path="res://assets/sounds/drawwindpathloopv4.wav" type="AudioStream" id=37]
 [ext_resource path="res://assets/sounds/playmoderadarblipv3.wav" type="AudioStream" id=38]
 [ext_resource path="res://assets/sounds/levelcompletefanfarev5.wav" type="AudioStream" id=39]
 [ext_resource path="res://assets/sprites/sea-frame.png" type="Texture" id=40]
@@ -44,6 +41,7 @@
 [ext_resource path="res://src/scenes/WaveSpawner.gd" type="Script" id=42]
 [ext_resource path="res://src/prefabs/Wave.tscn" type="PackedScene" id=43]
 [ext_resource path="res://src/prefabs/PathParticles.tscn" type="PackedScene" id=44]
+[ext_resource path="res://assets/sprites/arrow.png" type="Texture" id=45]
 
 [sub_resource type="CanvasItemMaterial" id=9]
 
@@ -63,8 +61,15 @@ font_data = ExtResource( 2 )
 size = 24
 font_data = ExtResource( 2 )
 
+[sub_resource type="StyleBoxFlat" id=15]
+bg_color = Color( 0.0235294, 0.180392, 0.290196, 1 )
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_radius_bottom_left = 60
+
 [sub_resource type="DynamicFont" id=14]
-size = 32
+size = 40
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=10]
@@ -99,9 +104,7 @@ bus = "Music"
 position = Vector2( 3, 0 )
 script = ExtResource( 6 )
 currents = NodePath("../Currents")
-winds = NodePath("../Winds")
 permCurrents = NodePath("../PermanentCurrents")
-permWinds = NodePath("../PermanentWind")
 playBtn = NodePath("../buttons/DefaultButtons/PlayStateBtn")
 editBtn = NodePath("../buttons/DefaultButtons/EditStateBtn")
 nextLevelBtn = NodePath("../buttons/NextLevelBtn")
@@ -147,6 +150,16 @@ position = Vector2( 482, 270 )
 z_index = -100
 texture = ExtResource( 8 )
 
+[node name="GhostCurrents" parent="." instance=ExtResource( 31 )]
+self_modulate = Color( 1, 1, 1, 0.156863 )
+z_index = -50
+z_as_relative = false
+radius = 32
+color = Color( 0.168627, 0.560784, 0.839216, 1 )
+arrowTex = ExtResource( 12 )
+mouseButton = -20
+isGhostPath = true
+
 [node name="PermanentCurrents" parent="." instance=ExtResource( 31 )]
 z_index = -51
 z_as_relative = false
@@ -165,31 +178,10 @@ arrowTex = ExtResource( 12 )
 ambienceFadeInDuration = 0.2
 ambienceFadeOutDuration = 0.7
 ambienceTrack = ExtResource( 36 )
+ghostPathNodePath = NodePath("../GhostCurrents")
 
 [node name="Level" type="Node2D" parent="."]
 position = Vector2( 40, 30 )
-
-[node name="Winds" parent="." instance=ExtResource( 32 )]
-z_index = 98
-z_as_relative = false
-type = "wind"
-radius = 24
-color = Color( 0.168627, 0.560784, 0.839216, 0 )
-arrowTex = ExtResource( 19 )
-arrowInterval = 8
-strength = 0.75
-ambienceFadeInDuration = 0.2
-ambienceFadeOutDuration = 0.7
-ambienceTrack = ExtResource( 37 )
-
-[node name="PermanentWind" parent="." instance=ExtResource( 31 )]
-z_index = 99
-z_as_relative = false
-radius = 24
-color = Color( 1, 0, 0, 0 )
-arrowTex = ExtResource( 23 )
-arrowInterval = 10
-pathType = "wind"
 
 [node name="Frame" type="Sprite" parent="."]
 material = SubResource( 9 )
@@ -390,9 +382,6 @@ focus_mode = 0
 enabled_focus_mode = 0
 texture_normal = ExtResource( 18 )
 script = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="PauseButton" type="TextureButton" parent="buttons/DefaultButtons"]
 margin_left = 937.0
@@ -426,6 +415,7 @@ windTexture = ExtResource( 21 )
 
 [node name="TutButton" type="Node2D" parent="buttons/DefaultButtons"]
 z_index = 102
+z_as_relative = false
 
 [node name="TutButton" type="TextureButton" parent="buttons/DefaultButtons/TutButton"]
 margin_left = -10.0
@@ -438,9 +428,6 @@ shortcut_in_tooltip = false
 enabled_focus_mode = 0
 texture_normal = ExtResource( 17 )
 script = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="SaveBtn" type="TextureButton" parent="buttons"]
 visible = false
@@ -484,9 +471,6 @@ focus_mode = 0
 enabled_focus_mode = 0
 texture_normal = ExtResource( 28 )
 script = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="pauseMenu" parent="." instance=ExtResource( 30 )]
 visible = false
@@ -594,8 +578,14 @@ __meta__ = {
 
 [node name="UILayer" type="Node2D" parent="."]
 z_index = 100
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="DefaultUI" type="Node2D" parent="UILayer"]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Title" type="RichTextLabel" parent="UILayer/DefaultUI"]
 margin_left = 1.0
@@ -609,7 +599,7 @@ bbcode_enabled = true
 bbcode_text = "[center]Title[/center]"
 text = "Title"
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_lock_": true
 }
 
 [node name="VScrollBar2" type="VScrollBar" parent="UILayer/DefaultUI/Title"]
@@ -638,6 +628,7 @@ bbcode_enabled = true
 bbcode_text = "[center]Minimum paths: 2[/center]"
 text = "Minimum paths: 2"
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -661,6 +652,9 @@ step = 1.0
 visible = false
 z_index = 101
 z_as_relative = false
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="ColorRect" type="ColorRect" parent="UILayer/DefaultUI/TutorialPrompt"]
 anchor_right = 1.0
@@ -670,26 +664,33 @@ margin_bottom = 1000.0
 rect_min_size = Vector2( 1024, 1000 )
 mouse_filter = 2
 color = Color( 0, 0, 0, 0.87451 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+
+[node name="Panel" type="Panel" parent="UILayer/DefaultUI/TutorialPrompt"]
+visible = false
+margin_left = 111.0
+margin_top = 199.0
+margin_right = 904.0
+margin_bottom = 381.0
+custom_styles/panel = SubResource( 15 )
 
 [node name="Label" type="Label" parent="UILayer/DefaultUI/TutorialPrompt"]
-self_modulate = Color( 1, 1, 1, 0.690196 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 108.0
 margin_right = 899.0
 margin_bottom = 575.0
 mouse_filter = 1
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_fonts/font = SubResource( 14 )
-text = "Press the tutorial button in the top left to learn how to play"
+text = "Press the tutorial button to learn how to play"
 align = 1
 valign = 1
 autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
+
+[node name="Sprite" type="Sprite" parent="UILayer/DefaultUI/TutorialPrompt"]
+position = Vector2( 126, 104 )
+rotation = -0.921487
+texture = ExtResource( 45 )
 
 [node name="TutorialWindow" type="Node2D" parent="UILayer"]
 visible = false

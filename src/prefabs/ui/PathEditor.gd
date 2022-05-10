@@ -35,10 +35,15 @@ export(AudioStream) var ambienceTrack;
 onready var currentSnd = get_node("CurrentPlaceSnd")
 onready var windSnd = get_node("WindPlaceSnd");
 onready var ambienceSnd = get_node("PathAmbience")
+onready var deleteSnd = get_node("PathDeleteSound")
 var soundInterval = 7;
 var soundCounter = 0;
 var finishedOnePath = false;
 var isActive # whether we're the active pat
+
+export(NodePath) var ghostPathNodePath
+var ghostPath;
+export(bool) var isGhostPath = false;
 
 signal start_drawing
 signal end_drawing
@@ -46,8 +51,12 @@ signal end_drawing
 var set_track = false;
 func _ready() -> void:
 	padRadius = radius/4
+	if (ghostPathNodePath):
+		ghostPath = get_node(ghostPathNodePath);
 
 func _process(_delta: float) -> void:
+	if (isGhostPath):
+		visible = Data.path_ghosts;
 	if (Input.is_key_pressed(KEY_R) and not disabled):
 		paths = [];
 		update();
@@ -55,6 +64,7 @@ func _process(_delta: float) -> void:
 func clear():
 	paths = [];
 	currentPath = [];
+	if (ghostPath): ghostPath.clear();
 	update();
 
 func _draw() -> void:
@@ -67,9 +77,10 @@ func _draw() -> void:
 		for point in path:
 			arrowIntervalCounter+=1;
 			if (arrowIntervalCounter % arrowInterval == 0):
-				draw_set_transform(point.pos, point.vec.angle() + PI/2, Vector2.ONE);
-				draw_texture(arrowTex, Vector2.LEFT * arrowTex.get_width()/2 + Vector2.UP * arrowTex.get_height()/2)
-				draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
+				if not isGhostPath: 
+					draw_set_transform(point.pos, point.vec.angle() + PI/2, Vector2.ONE);
+					draw_texture(arrowTex, Vector2.LEFT * arrowTex.get_width()/2 + Vector2.UP * arrowTex.get_height()/2)
+					draw_set_transform(Vector2.ZERO, 0, Vector2.ONE)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if disabled or not isActive: return;
@@ -91,7 +102,6 @@ func _unhandled_input(event: InputEvent) -> void:
 					currentPath = [];
 					pass
 				else:
-					
 					finishedOnePath = true;
 			else:
 				deletePathOverMouse(mEvent.position);
@@ -144,7 +154,10 @@ func deletePathOverMouse(position:Vector2):
 				deletingPath = true;
 				break;
 		if deletingPath:
+			if ghostPath:
+				ghostPath.setPath(paths[i]);
 			paths.remove(i);
+			deleteSnd.play();
 			break;
 
 func getPoints():
@@ -154,6 +167,9 @@ func getPoints():
 			pointArr.append(point);
 	return pointArr;
 	
+func setPath(path):
+	self.paths = [path];
+	update();
 func getJson():
 	var objPoints = [];
 	for path in paths:
@@ -171,7 +187,6 @@ func getJson():
 func startDrawing():
 	if not set_track:
 		set_track = true;
-		print(ambienceSnd);
 		var player = ambienceSnd.get_node("Track") as AudioStreamPlayer;
 		player.stream = ambienceTrack;
 		player.play();
@@ -179,7 +194,6 @@ func startDrawing():
 	ambienceSnd.fadeIn(ambienceVolume, ambienceFadeInDuration)
 func stopDrawing():
 	emit_signal("end_drawing")
-	print(ambienceSnd);
 	ambienceSnd.fadeOut(ambienceFadeOutDuration)
 	
 	

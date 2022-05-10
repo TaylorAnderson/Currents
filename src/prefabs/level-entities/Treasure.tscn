@@ -76,7 +76,7 @@ script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 5 )
-frame = 1
+frame = 3
 playing = true
 
 [node name="Explosion" type="AnimatedSprite" parent="."]
@@ -90,3 +90,4 @@ __meta__ = {
 
 [node name="CollectSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+bus = "Sound"

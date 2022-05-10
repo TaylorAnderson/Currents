@@ -58,4 +58,4 @@ __meta__ = {
 "_editor_description_": ""
 }
 levelName = "Convergence"
-minPathsToSolve = 2
+minPathsToSolve = 3

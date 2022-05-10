@@ -34,13 +34,13 @@ __meta__ = {
 }
 
 [node name="Rock2" parent="Obstacles" instance=ExtResource( 3 )]
-position = Vector2( 475, 261 )
+position = Vector2( 475, 241 )
 
 [node name="Rock7" parent="Obstacles" instance=ExtResource( 3 )]
-position = Vector2( 473, 134 )
+position = Vector2( 473, 114 )
 
 [node name="Rock6" parent="Obstacles" instance=ExtResource( 3 )]
-position = Vector2( 471, 371 )
+position = Vector2( 471, 391 )
 
 [node name="Frame" type="Sprite" parent="."]
 position = Vector2( 470, 256 )
@@ -56,4 +56,4 @@ __meta__ = {
 "_editor_description_": ""
 }
 levelName = "A small obstacle"
-minPathsToSolve = 1
+minPathsToSolve = 2

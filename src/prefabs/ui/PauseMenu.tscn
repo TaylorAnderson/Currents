@@ -1,8 +1,7 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://src/prefabs/ui/Settings.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/sprites/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://assets/sprites/SpaceMono-Regular.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://assets/sprites/SpaceMono-Bold.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://src/prefabs/ui/PauseMenu.gd" type="Script" id=5]
 [ext_resource path="res://assets/sprites/roundedRectWhite.png" type="Texture" id=6]
@@ -23,14 +22,18 @@ size = 40
 font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=9]
+size = 20
 font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=10]
-font_data = ExtResource( 3 )
+size = 20
+font_data = ExtResource( 4 )
 
 [node name="PauseMenu" type="Node2D"]
+position = Vector2( -1, 0 )
 scale = Vector2( 1.3, 1.3 )
 z_index = 120
+z_as_relative = false
 script = ExtResource( 5 )
 settingsMenu = NodePath("settings")
 credits = NodePath("credits")
@@ -49,9 +52,6 @@ patch_margin_left = 80
 patch_margin_top = 80
 patch_margin_right = 80
 patch_margin_bottom = 80
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="pausemenu" type="NinePatchRect" parent="."]
 self_modulate = Color( 0, 0, 0, 1 )
@@ -138,7 +138,7 @@ position = Vector2( 404.615, 61.5385 )
 
 [node name="credits" type="Node2D" parent="."]
 visible = false
-position = Vector2( -50, -66.9231 )
+position = Vector2( -50, -123.077 )
 
 [node name="BG" type="NinePatchRect" parent="credits"]
 self_modulate = Color( 0, 0, 0, 1 )
@@ -160,18 +160,15 @@ __meta__ = {
 [node name="CenterContainer" type="CenterContainer" parent="credits/BG"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="credits/BG/CenterContainer"]
-margin_left = 30.0
-margin_top = 59.0
-margin_right = 198.0
-margin_bottom = 423.0
+margin_left = 24.0
+margin_top = 31.0
+margin_right = 204.0
+margin_bottom = 451.0
 
 [node name="credits" type="Label" parent="credits/BG/CenterContainer/VBoxContainer"]
-margin_right = 168.0
+margin_right = 180.0
 margin_bottom = 60.0
 custom_fonts/font = SubResource( 8 )
 text = "credits"
@@ -179,62 +176,65 @@ valign = 1
 
 [node name="spacer2" type="CenterContainer" parent="credits/BG/CenterContainer/VBoxContainer"]
 margin_top = 64.0
-margin_right = 168.0
+margin_right = 180.0
 margin_bottom = 74.0
 rect_min_size = Vector2( 0, 10 )
 
 [node name="role1" type="Label" parent="credits/BG/CenterContainer/VBoxContainer"]
+modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
 margin_top = 78.0
-margin_right = 168.0
-margin_bottom = 129.0
+margin_right = 180.0
+margin_bottom = 143.0
 custom_fonts/font = SubResource( 9 )
 text = "game design
 programming"
 valign = 1
 
 [node name="ta" type="Label" parent="credits/BG/CenterContainer/VBoxContainer"]
-margin_top = 133.0
-margin_right = 168.0
-margin_bottom = 157.0
+margin_top = 147.0
+margin_right = 180.0
+margin_bottom = 178.0
 custom_fonts/font = SubResource( 10 )
 text = "taylor anderson"
 valign = 1
 
 [node name="spacer" type="CenterContainer" parent="credits/BG/CenterContainer/VBoxContainer"]
-margin_top = 161.0
-margin_right = 168.0
-margin_bottom = 191.0
+margin_top = 182.0
+margin_right = 180.0
+margin_bottom = 212.0
 rect_min_size = Vector2( 0, 30 )
 
 [node name="role2" type="Label" parent="credits/BG/CenterContainer/VBoxContainer"]
-margin_top = 195.0
-margin_right = 168.0
-margin_bottom = 219.0
+modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
+margin_top = 216.0
+margin_right = 180.0
+margin_bottom = 247.0
 custom_fonts/font = SubResource( 9 )
 text = "game design"
 valign = 1
 
 [node name="cz" type="Label" parent="credits/BG/CenterContainer/VBoxContainer"]
-margin_top = 223.0
-margin_right = 168.0
-margin_bottom = 247.0
+margin_top = 251.0
+margin_right = 180.0
+margin_bottom = 282.0
 custom_fonts/font = SubResource( 10 )
 text = "colin zarzour"
 valign = 1
 
 [node name="spacer3" type="CenterContainer" parent="credits/BG/CenterContainer/VBoxContainer"]
-margin_top = 251.0
-margin_right = 168.0
-margin_bottom = 281.0
+margin_top = 286.0
+margin_right = 180.0
+margin_bottom = 316.0
 rect_min_size = Vector2( 0, 30 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="role3" type="Label" parent="credits/BG/CenterContainer/VBoxContainer"]
-margin_top = 285.0
-margin_right = 168.0
-margin_bottom = 336.0
+modulate = Color( 0.784314, 0.784314, 0.784314, 1 )
+margin_top = 320.0
+margin_right = 180.0
+margin_bottom = 385.0
 custom_fonts/font = SubResource( 9 )
 text = "music
 sounds"
@@ -244,9 +244,9 @@ __meta__ = {
 }
 
 [node name="ta2" type="Label" parent="credits/BG/CenterContainer/VBoxContainer"]
-margin_top = 340.0
-margin_right = 168.0
-margin_bottom = 364.0
+margin_top = 389.0
+margin_right = 180.0
+margin_bottom = 420.0
 custom_fonts/font = SubResource( 10 )
 text = "austin m"
 valign = 1

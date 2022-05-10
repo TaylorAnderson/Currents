@@ -1,14 +1,46 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=65 format=2]
 
 [ext_resource path="res://assets/thumbnails/Beginnings.png" type="Texture" id=1]
 [ext_resource path="res://src/TextureRectMask.tres" type="Material" id=2]
 [ext_resource path="res://assets/sprites/SpaceMono-Bold.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://assets/sprites/SpaceMono-BoldItalic.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://assets/thumbnails/X marks the rocks.png" type="Texture" id=5]
 [ext_resource path="res://assets/sprites/star.png" type="Texture" id=6]
 [ext_resource path="res://assets/sprites/level-postcard-mask.png" type="Texture" id=7]
 [ext_resource path="res://src/prefabs/ui/LevelPostcard.gd" type="Script" id=8]
 [ext_resource path="res://assets/sprites/lock-sheet.png" type="Texture" id=9]
 [ext_resource path="res://assets/sounds/explosionwhistledownv4.wav" type="AudioStream" id=10]
+[ext_resource path="res://assets/thumbnails/Vortex Island.png" type="Texture" id=11]
+[ext_resource path="res://assets/thumbnails/Testing testing.png" type="Texture" id=12]
+[ext_resource path="res://assets/thumbnails/Swiss Cheese Ocean.png" type="Texture" id=13]
+[ext_resource path="res://assets/thumbnails/The Guarded Isles.png" type="Texture" id=14]
+[ext_resource path="res://assets/thumbnails/There's something below....png" type="Texture" id=15]
+[ext_resource path="res://assets/thumbnails/Testing.png" type="Texture" id=16]
+[ext_resource path="res://assets/thumbnails/No paths.png" type="Texture" id=17]
+[ext_resource path="res://assets/thumbnails/Passing in the Night.png" type="Texture" id=18]
+[ext_resource path="res://assets/thumbnails/Pirate1.png" type="Texture" id=19]
+[ext_resource path="res://assets/thumbnails/Reduce Reuse Recycle.png" type="Texture" id=20]
+[ext_resource path="res://assets/thumbnails/Reduce, reuse, recycle.png" type="Texture" id=21]
+[ext_resource path="res://assets/thumbnails/Something on the horizon.png" type="Texture" id=22]
+[ext_resource path="res://assets/thumbnails/Circle the drain.png" type="Texture" id=23]
+[ext_resource path="res://assets/thumbnails/Busy, busy ocean.png" type="Texture" id=24]
+[ext_resource path="res://assets/thumbnails/A small obstacle.png" type="Texture" id=25]
+[ext_resource path="res://assets/thumbnails/An ocean apart.png" type="Texture" id=26]
+[ext_resource path="res://assets/thumbnails/Busy Busy Ocean.png" type="Texture" id=27]
+[ext_resource path="res://assets/thumbnails/Counter current.png" type="Texture" id=28]
+[ext_resource path="res://assets/thumbnails/Crossed Wires.png" type="Texture" id=29]
+[ext_resource path="res://assets/thumbnails/A bigger obstacle.png" type="Texture" id=30]
+[ext_resource path="res://assets/thumbnails/A hole in the sea.png" type="Texture" id=31]
+[ext_resource path="res://assets/thumbnails/A wild whirlpool appears.png" type="Texture" id=32]
+[ext_resource path="res://assets/thumbnails/Convergence.png" type="Texture" id=33]
+[ext_resource path="res://assets/thumbnails/Crossing traffic.png" type="Texture" id=34]
+[ext_resource path="res://assets/thumbnails/Ahoy!.png" type="Texture" id=35]
+[ext_resource path="res://assets/thumbnails/Claustrophobia.png" type="Texture" id=36]
+[ext_resource path="res://assets/thumbnails/Gold rush.png" type="Texture" id=37]
+[ext_resource path="res://assets/thumbnails/High Winds.png" type="Texture" id=38]
+[ext_resource path="res://assets/thumbnails/Island neighbours.png" type="Texture" id=39]
+[ext_resource path="res://assets/thumbnails/Almost there.png" type="Texture" id=40]
+[ext_resource path="res://assets/thumbnails/Heist.png" type="Texture" id=41]
 
 [sub_resource type="DynamicFont" id=1]
 size = 44
@@ -27,6 +59,10 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 shadow_offset = Vector2( 5, 5 )
+
+[sub_resource type="DynamicFont" id=23]
+size = 24
+font_data = ExtResource( 3 )
 
 [sub_resource type="AtlasTexture" id=4]
 flags = 4
@@ -137,7 +173,308 @@ rect_min_size = Vector2( 768, 432 )
 rect_pivot_offset = Vector2( 307.2, 172.8 )
 script = ExtResource( 8 )
 
+[node name="Textures" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 768, 432 )
+
+[node name="ABiggerObstacle" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 30 )
+
+[node name="AHoleInTheSea" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 31 )
+
+[node name="ASmallObstacle" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 25 )
+
+[node name="AWildWhirlpoolAppears" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 32 )
+
+[node name="Ahoy!" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 35 )
+
+[node name="AnOceanApart" type="TextureRect" parent="Textures"]
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 26 )
+
+[node name="Beginnings" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 1 )
+
+[node name="BusyBusyOcean" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 27 )
+
+[node name="Busy,BusyOcean" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 24 )
+
+[node name="CircleTheDrain" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 23 )
+
+[node name="Claustrophobia" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 36 )
+
+[node name="Convergence" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 33 )
+
+[node name="CounterCurrent" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 28 )
+
+[node name="CrossedWires" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 29 )
+
+[node name="CrossingTraffic" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 34 )
+
+[node name="GoldRush" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 37 )
+
+[node name="HighWinds" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 38 )
+
+[node name="IslandNeighbours" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 39 )
+
+[node name="NoPaths" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 17 )
+
+[node name="PassingInTheNight" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 18 )
+
+[node name="Pirate1" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 19 )
+
+[node name="ReduceReuseRecycle" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 20 )
+
+[node name="Reduce,Reuse,Recycle" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 21 )
+
+[node name="SomethingOnTheHorizon" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 22 )
+
+[node name="SwissCheeseOcean" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 13 )
+
+[node name="TestingTesting" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 12 )
+
+[node name="Testing" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 16 )
+
+[node name="TheGuardedIsles" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 14 )
+
+[node name="There\'sSomethingBelow" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 15 )
+
+[node name="VortexIsland" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 11 )
+
+[node name="XMarksTheRocks" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 768, 432 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 5 )
+
+[node name="AlmostThere" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 40 )
+
+[node name="IslandNeighbours2" type="TextureRect" parent="Textures"]
+visible = false
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 39 )
+
+[node name="Heist" type="TextureRect" parent="Textures"]
+visible = false
+material = ExtResource( 2 )
+rect_scale = Vector2( 0.75, 0.75 )
+texture = ExtResource( 41 )
+
 [node name="Tex" type="TextureRect" parent="."]
+visible = false
 material = ExtResource( 2 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -167,9 +504,9 @@ __meta__ = {
 }
 
 [node name="Content" type="VBoxContainer" parent="Inner"]
-margin_top = 123.0
+margin_top = 72.0
 margin_right = 768.0
-margin_bottom = 309.0
+margin_bottom = 359.0
 rect_min_size = Vector2( 768, 0 )
 rect_pivot_offset = Vector2( -755, -272 )
 custom_constants/separation = 10
@@ -199,20 +536,40 @@ text = "Par: 3"
 align = 1
 valign = 1
 
-[node name="Icons" type="HBoxContainer" parent="Inner/Content"]
+[node name="Paths" type="Label" parent="Inner/Content"]
 margin_top = 136.0
 margin_right = 768.0
 margin_bottom = 186.0
+rect_min_size = Vector2( 100, 50 )
+custom_fonts/font = SubResource( 2 )
+text = "Paths: 0"
+align = 1
+valign = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="Inner/Content"]
+margin_top = 196.0
+margin_right = 768.0
+margin_bottom = 196.0
+
+[node name="Icons" type="HBoxContainer" parent="Inner/Content"]
+margin_top = 206.0
+margin_right = 768.0
+margin_bottom = 287.0
 rect_pivot_offset = Vector2( -676, -368 )
 alignment = 1
 
-[node name="CompleteIcon" type="CenterContainer" parent="Inner/Content/Icons"]
-margin_left = 332.0
-margin_right = 382.0
+[node name="CompleteIcon" type="VBoxContainer" parent="Inner/Content/Icons"]
+margin_left = 305.0
+margin_right = 355.0
+margin_bottom = 81.0
+custom_constants/separation = -10
+
+[node name="Icon" type="CenterContainer" parent="Inner/Content/Icons/CompleteIcon"]
+margin_right = 50.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 50, 50 )
 
-[node name="BG" type="Panel" parent="Inner/Content/Icons/CompleteIcon"]
+[node name="BG" type="Panel" parent="Inner/Content/Icons/CompleteIcon/Icon"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 42.0
@@ -220,24 +577,27 @@ margin_bottom = 42.0
 rect_min_size = Vector2( 35, 35 )
 custom_styles/panel = SubResource( 3 )
 
-[node name="Icon" type="TextureRect" parent="Inner/Content/Icons/CompleteIcon"]
+[node name="Icon" type="TextureRect" parent="Inner/Content/Icons/CompleteIcon/Icon"]
 visible = false
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 45.0
-margin_bottom = 45.0
-rect_min_size = Vector2( 40, 40 )
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
 texture = ExtResource( 6 )
 expand = true
 stretch_mode = 1
 
-[node name="PathsCompleteIcon" type="CenterContainer" parent="Inner/Content/Icons"]
-margin_left = 386.0
-margin_right = 436.0
+[node name="OnParIcon" type="VBoxContainer" parent="Inner/Content/Icons"]
+margin_left = 359.0
+margin_right = 409.0
+margin_bottom = 81.0
+custom_constants/separation = -5
+
+[node name="Icon" type="CenterContainer" parent="Inner/Content/Icons/OnParIcon"]
+margin_right = 50.0
 margin_bottom = 50.0
 rect_min_size = Vector2( 50, 50 )
 
-[node name="BG" type="Panel" parent="Inner/Content/Icons/PathsCompleteIcon"]
+[node name="BG" type="Panel" parent="Inner/Content/Icons/OnParIcon/Icon"]
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 42.0
@@ -245,27 +605,70 @@ margin_bottom = 42.0
 rect_min_size = Vector2( 35, 35 )
 custom_styles/panel = SubResource( 3 )
 
-[node name="Icon" type="TextureRect" parent="Inner/Content/Icons/PathsCompleteIcon"]
+[node name="Icon" type="TextureRect" parent="Inner/Content/Icons/OnParIcon/Icon"]
 visible = false
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 45.0
-margin_bottom = 45.0
-rect_min_size = Vector2( 40, 40 )
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
 texture = ExtResource( 6 )
 expand = true
 stretch_mode = 1
+
+[node name="Label" type="Label" parent="Inner/Content/Icons/OnParIcon"]
+margin_top = 45.0
+margin_right = 50.0
+margin_bottom = 81.0
+custom_fonts/font = SubResource( 23 )
+text = "3"
+align = 1
+
+[node name="UnderParIcon" type="VBoxContainer" parent="Inner/Content/Icons"]
+margin_left = 413.0
+margin_right = 463.0
+margin_bottom = 81.0
+custom_constants/separation = -5
+
+[node name="Icon" type="CenterContainer" parent="Inner/Content/Icons/UnderParIcon"]
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+
+[node name="BG" type="Panel" parent="Inner/Content/Icons/UnderParIcon/Icon"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 42.0
+margin_bottom = 42.0
+rect_min_size = Vector2( 35, 35 )
+custom_styles/panel = SubResource( 3 )
+
+[node name="Icon" type="TextureRect" parent="Inner/Content/Icons/UnderParIcon/Icon"]
+visible = false
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 1
+
+[node name="Label" type="Label" parent="Inner/Content/Icons/UnderParIcon"]
+margin_top = 45.0
+margin_right = 50.0
+margin_bottom = 81.0
+custom_fonts/font = SubResource( 23 )
+text = "<3"
+align = 1
 
 [node name="Btn" type="TextureButton" parent="."]
 self_modulate = Color( 1, 1, 1, 0.00392157 )
-anchor_right = 1.0
-anchor_bottom = 1.0
+margin_right = 768.0
+margin_bottom = 433.0
 texture_normal = ExtResource( 7 )
 expand = true
 
 [node name="Tween" type="Tween" parent="."]
 
 [node name="Lock" type="Node2D" parent="."]
+visible = false
 
 [node name="Tex" type="TextureRect" parent="Lock"]
 self_modulate = Color( 0, 0, 0, 0.596078 )

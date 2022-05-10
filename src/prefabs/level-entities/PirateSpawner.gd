@@ -6,7 +6,6 @@ onready var gm = get_node("/root/GameScene/GameManager")
 onready var sndPirateSpawned = get_node("PirateRevealSnd")
 var treasureDir;
 func enterEditMode():
-	print(self.get_path())
 	var treasure;
 	for o in gm.obstacles:
 		if o is Treasure:

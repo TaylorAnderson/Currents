@@ -30,6 +30,8 @@ texture = ExtResource( 3 )
 [node name="Metadata" parent="." instance=ExtResource( 1 )]
 levelName = "Almost there"
 minPathsToSolve = 1
-tutorialHint = "In this level, the ship needs some help to reach its destination.  
+tutorialHint = "In this level, the ship needs some help to reach its destination.
 
-Draw from border to border to create a CURRENT to push the ship to the other island."
+Draw from border to border to create a CURRENT to push the ship to its destination.
+
+You can also delete currents by tapping on them."

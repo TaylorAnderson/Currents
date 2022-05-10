@@ -7,7 +7,6 @@ func _ready() -> void:
 	self.type = ShipType.Pirate
 	self.currentStrengthMultiplier = 0.02;
 func _process(delta):
-	print("in child");
 	if not dead:
 		var foundTreasure = false;
 		for o in gm.obstacles:

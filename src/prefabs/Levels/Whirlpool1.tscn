@@ -40,4 +40,4 @@ texture = ExtResource( 3 )
 
 [node name="Metadata" parent="." instance=ExtResource( 1 )]
 levelName = "Swiss cheese ocean"
-minPathsToSolve = 5
+minPathsToSolve = 6

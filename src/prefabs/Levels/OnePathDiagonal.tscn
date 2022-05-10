@@ -46,4 +46,4 @@ __meta__ = {
 "_editor_description_": ""
 }
 levelName = "An ocean apart"
-minPathsToSolve = 1
+minPathsToSolve = 2

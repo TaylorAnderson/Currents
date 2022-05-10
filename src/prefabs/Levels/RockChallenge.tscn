@@ -42,9 +42,6 @@ position = Vector2( 471, 272 )
 [node name="Rock6" parent="Obstacles" instance=ExtResource( 2 )]
 position = Vector2( 473, 309 )
 
-[node name="Rock7" parent="Obstacles" instance=ExtResource( 2 )]
-position = Vector2( 476, 348 )
-
 [node name="Frame" type="Sprite" parent="."]
 position = Vector2( 470, 256 )
 texture = ExtResource( 4 )
@@ -52,6 +49,5 @@ texture = ExtResource( 4 )
 [node name="Metadata" parent="." instance=ExtResource( 3 )]
 position = Vector2( 108, 114 )
 levelName = "A bigger obstacle"
-minPathsToSolve = 2
-tutorialHint = "Try nudging ships to their destinations, rather than setting them strict paths to follow.  
-Ships will follow straightaways just fine, but often stray off when a path curves."
+minPathsToSolve = 3
+tutorialHint = "Sometimes drawing paths directly where you want your ship to go doesn't yield the best results.  Try drawing counter currents to bounce your ship to its destination."

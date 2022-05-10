@@ -62,13 +62,10 @@ func transition(scenePath, onDryRun = false):
 	waveSnd.play();
 func onAnimationFinished():
 	$MouseBlock.visible = false;
-	print("hello");
-	print(transitioning);
 	if transitioning:
 		if not onDryRun:
 			get_tree().change_scene(currentPath);
 		else:
-			print("hewwo");
 			endTransition();
 	transitioning = false;
 	onDryRun = false;

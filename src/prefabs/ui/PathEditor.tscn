@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/prefabs/ui/PathEditor.gd" type="Script" id=1]
 [ext_resource path="res://assets/sounds/currentclickv3(1).wav" type="AudioStream" id=2]
 [ext_resource path="res://assets/sounds/windclickv2.wav" type="AudioStream" id=3]
+[ext_resource path="res://assets/sounds/bubblepopclickv2.wav" type="AudioStream" id=4]
 [ext_resource path="res://src/prefabs/AmbienceTrack.gd" type="Script" id=5]
 
 [node name="PathEditor" type="Node2D"]
@@ -16,6 +17,11 @@ bus = "Sound"
 [node name="WindPlaceSnd" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 3 )
 volume_db = -25.0
+bus = "Sound"
+
+[node name="PathDeleteSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -15.0
 bus = "Sound"
 
 [node name="PathAmbience" type="Node2D" parent="."]

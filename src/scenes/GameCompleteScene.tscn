@@ -518,7 +518,7 @@ position = Vector2( 110, 212 )
 rotation = -0.232157
 z_index = 100
 frames = SubResource( 13 )
-frame = 2
+frame = 1
 playing = true
 offset = Vector2( -38.6782, -24 )
 
@@ -527,7 +527,7 @@ position = Vector2( 993, 235 )
 rotation = 0.163987
 z_index = 100
 frames = SubResource( 13 )
-frame = 2
+frame = 1
 playing = true
 offset = Vector2( -38.6782, -24 )
 

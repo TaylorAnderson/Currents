@@ -20,11 +20,11 @@ destPath = NodePath("../Island2")
 
 [node name="Island2" parent="Islands" instance=ExtResource( 2 )]
 position = Vector2( 818, 100 )
-islandColor = 3
+islandColor = 0
 
 [node name="Island3" parent="Islands" instance=ExtResource( 2 )]
 position = Vector2( 816, 401 )
-islandColor = 3
+islandColor = 2
 
 [node name="Island4" parent="Islands" instance=ExtResource( 2 )]
 position = Vector2( 117, 101 )
@@ -42,4 +42,4 @@ texture = ExtResource( 3 )
 
 [node name="Metadata" parent="." instance=ExtResource( 1 )]
 levelName = "Circle the drain"
-minPathsToSolve = 1
+minPathsToSolve = 3

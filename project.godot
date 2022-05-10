@@ -125,6 +125,7 @@ _global_script_class_icons={
 config/name="Currents"
 run/main_scene="res://src/scenes/IntroScene.tscn"
 config/icon="res://assets/sprites/icon.png"
+config/windows_native_icon="res://assets/sprites/icon.ico"
 
 [autoload]
 
@@ -136,11 +137,21 @@ Screenshotter="*res://src/util/Screenshotter.gd"
 [display]
 
 window/size/height=576
-window/size/resizable=false
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
 
 [gdnative]
 
 singletons=[ "res://addons/godot-git-plugin/git_api.gdnlib" ]
+
+[global]
+
+icon=false
+"default font"=true
+
+[gui]
+
+theme/custom_font="res://assets/SpaceMonoFont.tres"
 
 [input]
 
@@ -161,7 +172,12 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+quality/filters/sharpen_intensity=1.0
+quality/driver/driver_name="GLES2"
+quality/intended_usage/framebuffer_allocation=0
+quality/intended_usage/framebuffer_allocation.mobile=0
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
 quality/filters/anisotropic_filter_level=8
+quality/filters/msaa=1
 environment/default_environment="res://assets/sprites/default_env.tres"

@@ -7,7 +7,7 @@
 [ext_resource path="res://assets/sprites/water-particle.png" type="Texture" id=5]
 [ext_resource path="res://assets/sounds/explosionwhistledownv4.wav" type="AudioStream" id=6]
 [ext_resource path="res://src/prefabs/game-elements/ShipHitDestParticles.tscn" type="PackedScene" id=7]
-[ext_resource path="res://assets/sounds/boatengineputterbitcrushv3.wav" type="AudioStream" id=8]
+[ext_resource path="res://assets/sounds/drawwindpathloopv4.wav" type="AudioStream" id=8]
 [ext_resource path="res://assets/sprites/light.png" type="Texture" id=9]
 
 [sub_resource type="AtlasTexture" id=20]
@@ -190,7 +190,7 @@ scale_amount_curve = SubResource( 28 )
 
 [node name="IdleSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 8 )
-volume_db = 5.0
+volume_db = 0.5
 autoplay = true
 bus = "Sound"
 

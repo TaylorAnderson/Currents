@@ -63,4 +63,4 @@ __meta__ = {
 "_editor_description_": ""
 }
 levelName = "Reduce, reuse, recycle"
-minPathsToSolve = 3
+minPathsToSolve = 4

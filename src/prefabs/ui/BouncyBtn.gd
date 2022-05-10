@@ -10,7 +10,6 @@ func _ready():
 	rect_pivot_offset.y = rect_size.y/2;
 	
 func _pressed() -> void:
-	print("hello");
 	tween.interpolate_property(self, "rect_scale", initScale, initScale * 1.1, 0.07);
 	tween.start()
 	yield(tween, "tween_all_completed")

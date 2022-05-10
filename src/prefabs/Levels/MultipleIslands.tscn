@@ -55,7 +55,7 @@ __meta__ = {
 "_editor_description_": ""
 }
 levelName = "Passing in the night"
-minPathsToSolve = 1
+minPathsToSolve = 2
 tutorialHint = "This level features multiple islands with multiple destinations, so it's important to click and hold on an island to preview it's destination. 
 
 A  level is only completed when all ships reach their destinations."

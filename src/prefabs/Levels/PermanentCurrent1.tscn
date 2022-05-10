@@ -60,5 +60,5 @@ __meta__ = {
 "_editor_description_": ""
 }
 levelName = "Crossing traffic"
-minPathsToSolve = 2
+minPathsToSolve = 3
 tutorialHint = "Sometimes you have no choice but to navigate the undercurrent.  Try to use your currents to balance out the forces."

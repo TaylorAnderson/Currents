@@ -65,4 +65,4 @@ __meta__ = {
 "_editor_description_": ""
 }
 levelName = "Heist"
-minPathsToSolve = 5
+minPathsToSolve = 6

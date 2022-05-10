@@ -11,16 +11,21 @@ onready var scrollAmt = 0;
 onready var levels = [];
 var currentLevel = 0;
 var paused = false;
+var playingUnlockAnim = false;
+var aboutToUnlock = false;
+var blockToUnlock = null;
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	if Data.currentBlock < Data.blockToUnlock:
-		Data.currentBlock = Data.blockToUnlock;
-		var blockToUnlock = Data.levelBlocks[Data.blockToUnlock]
-		unlockLevels(blockToUnlock.start, blockToUnlock.end)
 	#MusicFader.fade_in(get_node("Music"), -10)
 	var postcardWidth = 0;
-	for i in range(Data.data.levelArr.size()):
-		var levelData = Data.data.levelArr[i]
+	if Data.currentBlock > Data.lastBlockSinceLevelSelect:
+		Data.lastBlockSinceLevelSelect = Data.currentBlock;
+		Data.SaveGame();
+		aboutToUnlock = true;
+		blockToUnlock = Data.levelBlocks[Data.currentBlock]
+
+	for i in range(Data.data["levelArr"].size()):
+		var levelData = Data.data["levelArr"][i]
 		var th = levelThumbnail.instance() as Control;
 		levels.append({
 			data=levelData,
@@ -38,34 +43,63 @@ func _ready():
 		var rowMinPaths = th.get_node("Inner/Content/MinPaths") as Label;
 		rowMinPaths.text = "Par: " + str(levelData.levelPaths)
 		
-		var rowCompleteIcon = th.get_node("Inner/Content/Icons/CompleteIcon/Icon");
+		var rowPaths = th.get_node("Inner/Content/Paths") as Label;
+		if (levelData.get("pathsUsed")):
+			rowPaths.text = "Paths: " + str(levelData.get("pathsUsed"))
+		else:
+			rowPaths.visible = false;
+		
+		var completeCheckbox = th.get_node("Inner/Content/Icons/CompleteIcon/Icon") as CenterContainer
+		var parCheckbox = th.get_node("Inner/Content/Icons/OnParIcon/Icon") as CenterContainer
+		
+		var parLabel = th.get_node("Inner/Content/Icons/OnParIcon/Label") as Label
+		var underParLabel = th.get_node("Inner/Content/Icons/UnderParIcon/Label") as Label
+		parLabel.text = str(levelData.levelPaths);
+		underParLabel.text = "<" + str(levelData.levelPaths);
+		if i == 0 or i == 1: 
+			th.get_node("Inner/Content/Icons/OnParIcon").visible = false; 
+			th.get_node("Inner/Content/Icons/UnderParIcon").visible = false;
+			rowMinPaths.visible = false;
+			rowPaths.visible = false;
+		var rowCompleteIcon = completeCheckbox.get_node("Icon");
 		rowCompleteIcon.visible = levelData.complete;
 
-		var rowCompleteOnParIcon = th.get_node("Inner/Content/Icons/PathsCompleteIcon/Icon");
+		var rowCompleteOnParIcon = parCheckbox.get_node("Icon");
 		rowCompleteOnParIcon.visible = levelData.completeOnPar;
 		
+		var rowCompleteUnderParIcon = th.get_node("Inner/Content/Icons/UnderParIcon/Icon/Icon")
+		rowCompleteUnderParIcon.visible = levelData.completeUnderPar
+		print(levelData.get("completeUnderPar"))
+		var showText = i == Data.levelBlocks[Data.currentBlock].end+1
+
 		var lock = th.get_node("Lock") as Node2D
-		lock.visible = Data.levelsUnlocked <= i
-		# if this level is at the start of the next block
-		if (i == Data.levelBlocks[Data.currentBlock].end):
+		lock.visible = i >= Data.levelBlocks[Data.currentBlock].end+1;
+		if (aboutToUnlock):
+			# we want to show a lock on what we're about to UNlock, even though we know
+			# that that level isnt ACTUALLY locked
+			# this whole system is hell, and im sorry
+			lock.visible = i >= Data.levelBlocks[Data.currentBlock].start
+		if (showText):
 			th.get_node("Text").visible = true;
 			var levelTxt = th.get_node("Text/HBoxContainer/Label")
+			
 			var levelBlockProgress = Data.CheckLevelBlockProgress();
 			levelTxt.text = str(levelBlockProgress.current) + "/" + str(levelBlockProgress.total);
-		var thumbnailImage = Image.new();
-		var err = thumbnailImage.load(Data.thumbnailPath + levelData.levelName + ".png");
-		if err == OK:
-			var texture = ImageTexture.new()
-			texture.create_from_image(thumbnailImage, 0)
-			var thumbnailTex = th.get_node("Tex") as TextureRect
-			thumbnailTex.texture = texture;
+		for tex in th.get_node("Textures").get_children():
+			if (tex.name.to_lower() == levelData.levelName.replace(" ", "").to_lower()):
+				tex.visible = true;
 	
+
 	levelContainer.rect_position.x = Global.width/2 - postcardWidth/2;
-	scrollToLevel(Data.levelSelected);
+	scrollToLevel(Data.levelSelected, true);
+	if (aboutToUnlock):
+		unlockLevels(blockToUnlock.start, blockToUnlock.end+1)
+		
 func _process(delta):
 	levelContainer.rect_position.x = lerp(levelContainer.rect_position.x, scrollAmt, 0.1)
 
 func _on_LeftArrow_pressed():
+	if playingUnlockAnim: return;
 	if currentLevel == 0: return;
 	$BtnSound.play();
 	scrollAmt += incrementVal;
@@ -74,16 +108,19 @@ func _on_LeftArrow_pressed():
 
 
 func _on_RightArrow_pressed():
-	if (currentLevel >= Data.levelBlocks[Data.currentBlock].end): return;
+	if playingUnlockAnim: return;
+	if currentLevel >= Data.levelBlocks[Data.currentBlock].end+1 or currentLevel >= Data.data["levelArr"].size()-1: return;
 	$BtnSound.play();
 	scrollAmt -= incrementVal;
 	currentLevel += 1;
 	onLevelScrolled()
-func scrollToLevel(level):
-	
+
+func scrollToLevel(level, instant=false):
 	scrollAmt = -(incrementVal * level) - incrementVal/2 + Global.width/2;
+	if (instant): levelContainer.rect_position.x = scrollAmt
 	currentLevel = level;
 	onLevelScrolled()
+
 func onLevelScrolled():
 	for i in range(levels.size()):
 		var lvl = levels[i];
@@ -97,7 +134,7 @@ func onLevelScrolled():
 func onLevelPressed(levelData):
 	if paused: return;
 	$BtnSound.play();
-	var index = Data.data.levelArr.find(levelData)
+	var index = Data.data["levelArr"].find(levelData)
 	Data.levelSelected = index;
 	#We do -1 because the GameScene only has functionality to load NEXT level
 	#And I'm too lazy to change it.
@@ -108,13 +145,17 @@ func togglePaused():
 	$PauseMenu.visible = !$PauseMenu.visible;
 	$BtnSound.play();
 func unlockLevel(levelNumber, scrollDelay = 1.0, explosionDelay = 1.5):
+	if levelNumber > levels.size() - 1: return;
 	yield(get_tree().create_timer(scrollDelay), "timeout");
 	scrollToLevel(levelNumber);
 	yield(get_tree().create_timer(explosionDelay), "timeout");
 	levels[levelNumber].thumbnail.get_parent().unlock();
 func unlockLevels(start, end):
+	playingUnlockAnim = true;
 	yield(get_tree().create_timer(1.0), "timeout");
 	for i in range(start, end):
 		unlockLevel(i, 0.1, 0.2);
 		yield(get_tree().create_timer(1.5), "timeout");
-	scrollToLevel(Data.levelSelected);
+	scrollToLevel(Data.levelSelected+1);
+	yield(get_tree().create_timer(1), "timeout");
+	playingUnlockAnim = false;

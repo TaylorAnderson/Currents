@@ -15,8 +15,6 @@ func onSettingsBtnPressed() -> void:
 	var settings = get_node("SettingsMenu")
 	settings.visible = true;
 	
-
-
 func onSettingsXPressed() -> void:
 	$BtnSound.play()
 	var settings = get_node("SettingsMenu")

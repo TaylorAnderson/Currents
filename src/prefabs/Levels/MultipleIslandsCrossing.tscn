@@ -56,4 +56,4 @@ __meta__ = {
 "_editor_description_": ""
 }
 levelName = "Crossed wires"
-minPathsToSolve = 2
+minPathsToSolve = 3
